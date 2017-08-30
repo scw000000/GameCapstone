@@ -19,7 +19,7 @@ public class LevelLoading : MonoBehaviour {
 
     // Hard coded, should be fixed later
     public void StartLoadLevel(string levelName) {
-        StartCoroutine(LoadLevel("Assets/Scenes/Level2.unity"));
+        StartCoroutine(LoadLevel("Assets/PongSpecific/PongStage.unity"));
     }
 
     public IEnumerator LoadLevel (string levelName){

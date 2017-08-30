@@ -4,7 +4,6 @@ using System.Collections;
 public class AvatarControl : MonoBehaviour
    {
    public float MovingSpeed = 15.0f;
-   public float ScalingSpeed = 3.0f;
    public const float RotatingSpeed = 500.0f;
    private Rigidbody RigidBody = null;
    private GameObject CameraRoot;
