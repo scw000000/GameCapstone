@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 61a96c3018543bc48938508ce4e2f0b2
+timeCreated: 1504204703
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _FadePattern: {fileID: 2800000, guid: 10c0c82a108631b418faed052657be5d, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
