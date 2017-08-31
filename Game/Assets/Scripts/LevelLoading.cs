@@ -1,20 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelLoading : MonoBehaviour {
     public GameObject LoadingScreenPrefab;
     private GameObject LoadingScreenInstance;
     private AsyncOperation AsyncOp = null;
+
     // Use this for initialization
     void Start () {
         // For testing purpose
-        StartLoadLevel("");
+        //StartLoadLevel("");
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        
+
 	}
 
     // Hard coded, should be fixed later
