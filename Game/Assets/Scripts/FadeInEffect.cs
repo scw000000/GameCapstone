@@ -28,7 +28,7 @@ public class FadeInEffect : MonoBehaviour {
 
     void EndTransition() {
         Debug.Log("Transition End");
-        Destroy(gameObject);
+        Destroy(this);
     }
 
     // Postprocess the image
