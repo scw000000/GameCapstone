@@ -41,6 +41,9 @@ GameObject:
   - component: {fileID: 65910695791874328}
   - component: {fileID: 114630444684774334}
   - component: {fileID: 114906595688216630}
+  - component: {fileID: 114818084958880830}
+  - component: {fileID: 114138781319181634}
+  - component: {fileID: 114144545656913390}
   m_Layer: 8
   m_Name: PongPlayer
   m_TagString: Untagged
@@ -60,6 +63,7 @@ GameObject:
   - component: {fileID: 124567778085586546}
   - component: {fileID: 92602052267739450}
   - component: {fileID: 81351360456817872}
+  - component: {fileID: 114175804692892850}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -260,6 +264,56 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1792363052877294}
   m_Enabled: 1
+--- !u!114 &114138781319181634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1520435924764106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b99e59b46a8e24ca9671b087f0ff59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114144545656913390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1520435924764106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b81fc901b3fb6b48a7e292281700b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RenderCamera: {fileID: 20378420109405892}
+--- !u!114 &114175804692892850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792363052877294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d01430cb7446d4787e1549b55f0a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  format: 0
+  stereo: 0
+  stereoFormat: 1
+  frameSize: 3
+  _cubemapSize: 1
+  panoramaProjection: 0
+  encodeQuality: 1
+  _antiAliasing: 0
+  _targetFramerate: 2
+  cubemap2Equirectangular: {fileID: 0}
+  isDedicated: 1
+  mode: 0
+  streamingAddress: 
+  interPupillaryDistance: 0.0635
+  stereoPackMaterial: {fileID: 0}
+  offlineRender: 0
 --- !u!114 &114630444684774334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,6 +326,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovingSpeed: 15
+--- !u!114 &114818084958880830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1520435924764106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce1c4f59cc9242fd926bcc78fcf4ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 1
+  _videoCaptures:
+  - {fileID: 114175804692892850}
+  _audioCapture: {fileID: 0}
 --- !u!114 &114906595688216630
 MonoBehaviour:
   m_ObjectHideFlags: 1

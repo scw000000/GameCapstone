@@ -20,9 +20,10 @@ namespace RockVR.Video
             get
             {
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-                return persistentDataPath + "/RockVR/Video/";
+                return persistentDataPath + "/VideoCapture/";
 #else
-                return myDocumentsPath + "/RockVR/Video/";
+                return persistentDataPath + "/VideoCapture/";
+                //return myDocumentsPath + "/RockVR/Video/";
 #endif
             }
         }
