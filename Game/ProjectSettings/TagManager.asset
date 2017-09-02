@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Deadly
+  - Wall
+  - PlayerTag
   layers:
   - Default
   - TransparentFX
