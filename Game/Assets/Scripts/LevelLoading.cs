@@ -67,4 +67,13 @@ public class LevelLoading : MonoBehaviour {
         AsyncOp.allowSceneActivation = true;
         yield return null;
     }
+
+	public void Quit () 
+	{
+		#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+		#else
+		Application.Quit();
+		#endif
+	}
 }
