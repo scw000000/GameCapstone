@@ -108,7 +108,7 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &636111790
+--- !u!1 &615924887
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 1000010682323656, guid: de22bd77f0f87f345abe1d33ad15f9df,
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1864240934}
-  - component: {fileID: 636111791}
+  - component: {fileID: 615924888}
   - component: {fileID: 1864240933}
   m_Layer: 0
   m_Name: DedicatedCapture
@@ -126,13 +126,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!20 &636111791
+--- !u!20 &615924888
 Camera:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 20000013275511618, guid: de22bd77f0f87f345abe1d33ad15f9df,
     type: 2}
   m_PrefabInternal: {fileID: 1864240932}
-  m_GameObject: {fileID: 636111790}
+  m_GameObject: {fileID: 615924887}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -543,7 +543,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de22bd77f0f87f345abe1d33ad15f9df, type: 2}
-  m_RootGameObject: {fileID: 636111790}
+  m_RootGameObject: {fileID: 615924887}
   m_IsPrefabParent: 0
 --- !u!114 &1864240933
 MonoBehaviour:
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 114000012063238170, guid: de22bd77f0f87f345abe1d33ad15f9df,
     type: 2}
   m_PrefabInternal: {fileID: 1864240932}
-  m_GameObject: {fileID: 636111790}
+  m_GameObject: {fileID: 615924887}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0d01430cb7446d4787e1549b55f0a70, type: 3}
@@ -579,7 +579,7 @@ Transform:
   m_PrefabParentObject: {fileID: 4000010119163582, guid: de22bd77f0f87f345abe1d33ad15f9df,
     type: 2}
   m_PrefabInternal: {fileID: 1864240932}
-  m_GameObject: {fileID: 636111790}
+  m_GameObject: {fileID: 615924887}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
