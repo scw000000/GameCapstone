@@ -57,6 +57,34 @@ public class PongGameManager : MonoBehaviour {
     {
     }
 
+    public void Quit()
+    {
+        PlayerPrefs.SetFloat("PlayerX", PlayerInstance.transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY", PlayerInstance.transform.position.y);
+        PlayerPrefs.SetFloat("PlayerZ", PlayerInstance.transform.position.z);
+        PlayerPrefs.SetFloat("EnemyX", EnemyInstance.transform.position.x);
+        PlayerPrefs.SetFloat("EnemyY", EnemyInstance.transform.position.y);
+        PlayerPrefs.SetFloat("EnemyZ", EnemyInstance.transform.position.z);
+        Destroy(PlayerInstance);
+        Destroy(EnemyInstance);
+    }
+
+    public void SaveGame()
+    {
+        PlayerPrefs.SetFloat("PlayerX", PlayerInstance.transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY", PlayerInstance.transform.position.y);
+        PlayerPrefs.SetFloat("PlayerZ", PlayerInstance.transform.position.z);
+        PlayerPrefs.SetFloat("EnemyX", EnemyInstance.transform.position.x);
+        PlayerPrefs.SetFloat("EnemyY", EnemyInstance.transform.position.y);
+        PlayerPrefs.SetFloat("EnemyZ", EnemyInstance.transform.position.z);
+    }
+    public void LoadGame()
+    {
+        PlayerInstance.transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
+        EnemyInstance.transform.position = new Vector3(PlayerPrefs.GetFloat("EnemyX"), PlayerPrefs.GetFloat("EnemyY"), PlayerPrefs.GetFloat("EnemyZ"));
+    }
+
+
     private IEnumerator GameLoop()
     {
         yield return StartCoroutine(GameStart());

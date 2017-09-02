@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelLoading : MonoBehaviour {
@@ -23,6 +24,12 @@ public class LevelLoading : MonoBehaviour {
     // Hard coded, should be fixed later
     public void StartLoadLevel(string levelName) {
         StartCoroutine(LoadLevel("Assets/PongSpecific/PongStage.unity"));
+    }
+
+    // Hard coded, should be fixed later
+    public void BackToMainMenu(string levelName)
+    {
+        SceneManager.LoadScene("Assets/Scenes/MainMenu.unity");
     }
 
     public IEnumerator LoadLevel (string levelName){
