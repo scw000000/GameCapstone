@@ -32,6 +32,12 @@ public class LevelLoading : MonoBehaviour {
         SceneManager.LoadScene("Assets/Scenes/MainMenu.unity");
     }
 
+    // Hard coded, should be fixed later
+    public void GameOverMenu(string levelName)
+    {
+        SceneManager.LoadScene("Assets/Scenes/GameOverMenu.unity");
+    }
+
     public IEnumerator LoadLevel (string levelName){
         Debug.Log("Loadlevel start");
         AsyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelName);
