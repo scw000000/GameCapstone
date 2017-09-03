@@ -5,8 +5,10 @@ using UnityEngine;
 public class PongGameManager : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject PlayerPrefab;
+    public GameObject CameraPrefab;
     public GameObject EnemyPrefab;
     public GameObject HUDPrefab;
+    private GameObject CameraInstance;
     private GameObject PlayerInstance;
     private GameObject EnemyInstance;
     private GameObject BallInstance;
@@ -36,6 +38,7 @@ public class PongGameManager : MonoBehaviour {
         // Fist Set score to 0, might have to update it later when loading save data
         PlayerScore = 0;
         AIScore = 0;
+
         if (SpawnPlayer())
         {
             StartCoroutine(GameLoop());
@@ -56,7 +59,18 @@ public class PongGameManager : MonoBehaviour {
             return false;
         }
         PlayerInstance = Instantiate(PlayerPrefab, PlayerSpawnLocation.transform.position, PlayerSpawnLocation.transform.rotation) as GameObject;
-        PlayerCameraInstance = PlayerInstance.transform.Find("Camera").gameObject;
+        //PlayerCameraInstance = PlayerInstance.transform.Find("Camera").gameObject;
+        PlayerCameraInstance = Instantiate(CameraPrefab);
+        var camFollowComp = PlayerCameraInstance.GetComponent<CameraFollow>();
+        var imgCapComp = PlayerInstance.GetComponent<ImageCapture>();
+        imgCapComp.RenderCamera = PlayerCameraInstance.GetComponent<Camera>();
+        var videoCapCtrlComp = PlayerInstance.GetComponent<RockVR.Video.VideoCaptureCtrl>();
+        videoCapCtrlComp.videoCaptures[0] = PlayerCameraInstance.GetComponent<RockVR.Video.VideoCapture>();
+        var videoCapComp = PlayerInstance.GetComponent<VideoCapture>();
+        videoCapComp.MainCamera = PlayerCameraInstance;
+        camFollowComp.FollowingRoot = PlayerInstance.transform.Find("CameraRoot").gameObject;
+        // Disable movement until round start;
+        SetCamFollowSpeed(0f);
         if (EnemyPrefab == null || EnemySpawnLocation == null)
         {
             Debug.LogError("Need to Specify enemy or spawn location");
@@ -67,6 +81,11 @@ public class PongGameManager : MonoBehaviour {
         BallInstance = Instantiate(BallPrefab);
         BallInstance.GetComponent<Ball>().AttachRoot = PlayerInstance.transform.Find("BallAttachRoot").gameObject;
         return true;
+    }
+
+    private void SetCamFollowSpeed(float newSpeed) {
+        var camFollowComp = PlayerCameraInstance.GetComponent<CameraFollow>();
+        camFollowComp.FollowingSpeed = newSpeed;
     }
 
     public void PauseGame()
@@ -200,6 +219,7 @@ public class PongGameManager : MonoBehaviour {
     private IEnumerator RoundStart()
     {
         Scored = false;
+        SetCamFollowSpeed(1f);
         // Wait until transion ends
         var FadeInComp = PlayerCameraInstance.GetComponent<FadeInEffect>();
         Debug.Log("Transition start");
@@ -228,6 +248,7 @@ public class PongGameManager : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         Debug.Log("GO!");
         textComp.text = "GO!";
+        SetCamFollowSpeed(10f);
         SetPlayerInput(true);
         yield return new WaitForSeconds(1f);
         Destroy(CountDownInstance);
@@ -260,6 +281,8 @@ public class PongGameManager : MonoBehaviour {
         FadeInComp.Updating = false;
         BallInstance.SendMessage("Respawn");
         ScoreMessageText.enabled = false;
+        PlayerCameraInstance.transform.position = Vector3.zero;
+        PlayerCameraInstance.transform.rotation = Quaternion.identity;
         Debug.Log("Transition end");
         yield return null;
     }

@@ -19,6 +19,8 @@ public class ImageCapture : MonoBehaviour {
 	}
 
     void CaptureImage() {
+        var ppComp = RenderCamera.GetComponent< UnityEngine.PostProcessing.PostProcessingBehaviour >();
+        //ppComp.enabled = false;
         // capture the virtuCam and save it as a square PNG.
         int ouputWidth = RenderCamera.pixelWidth;
         int ouputHeight = RenderCamera.pixelHeight;
@@ -50,7 +52,7 @@ public class ImageCapture : MonoBehaviour {
         var createdFile = System.IO.File.Create(newFileName);
         createdFile.Close();
         System.IO.File.WriteAllBytes(newFileName, bytes);
-
+        ppComp.enabled = true;
         Debug.Log("Image Captured!");
     }
 }
