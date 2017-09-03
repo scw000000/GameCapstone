@@ -6,8 +6,10 @@ public class PongGameManager : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject PlayerPrefab;
     public GameObject EnemyPrefab;
+
     private GameObject PlayerInstance;
     private GameObject EnemyInstance;
+    private GameObject BallInstance;
     private GameObject PlayerCameraInstance;
     public GameObject PlayerSpawnLocation;
     public GameObject EnemySpawnLocation;
@@ -49,6 +51,9 @@ public class PongGameManager : MonoBehaviour {
             return false;
         }
         EnemyInstance = Instantiate(EnemyPrefab, EnemySpawnLocation.transform.position, EnemySpawnLocation.transform.rotation) as GameObject;
+
+        BallInstance = Instantiate(BallPrefab);
+        BallInstance.GetComponent<Ball>().AttachRoot = PlayerInstance.transform.Find("BallAttachRoot").gameObject;
         return true;
     }
 
