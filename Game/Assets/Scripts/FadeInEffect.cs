@@ -6,9 +6,10 @@ public class FadeInEffect : MonoBehaviour {
     public string ShaderFilePath;
     public UnityEngine.AnimationCurve TransitionCurve;
     public float TransitionTime = 10f;
-    private float CurrentTime = 0f;
+    public float CurrentTime = 0f;
     private Material Material;
-    
+    public bool Reverse = false;
+    public bool Updating = false;
     // Creates a private material used to the effect
     void Awake() {
         Material = new Material(Shader.Find(ShaderFilePath));
@@ -17,18 +18,20 @@ public class FadeInEffect : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Debug.Log(TransitionTime);
-        Invoke("EndTransition", TransitionTime);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        CurrentTime += ( Time.deltaTime / TransitionTime );
+        if (Updating) {
+            // Debug.Log(CurrentTime);
+            CurrentTime += (Time.deltaTime / TransitionTime);
+        }
     }
 
     void EndTransition() {
         Debug.Log("Transition End");
-        Destroy(this);
+        // Updating = false;
+        // Destroy(this);
     }
 
     // Postprocess the image
@@ -37,7 +40,7 @@ public class FadeInEffect : MonoBehaviour {
         //Graphics.Blit(source, destination);
         
         //Material.SetFloat("_Threshold", TransitionCurve.Evaluate(CurrentTime));
-        Material.SetFloat("_Threshold", TransitionCurve.Evaluate(CurrentTime));
+        Material.SetFloat("_Threshold", TransitionCurve.Evaluate(Reverse?1f - CurrentTime : CurrentTime));
         Graphics.Blit(source, destination, Material);
     }
 }

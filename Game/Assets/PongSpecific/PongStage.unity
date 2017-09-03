@@ -237,6 +237,12 @@ Prefab:
       propertyPath: BallSpawnLocation
       value: 
       objectReference: {fileID: 786453665}
+    - target: {fileID: 114424744270250392, guid: 0b68162f0313b334296bc0f3d1e12fb1,
+        type: 2}
+      propertyPath: CountDownPrefab
+      value: 
+      objectReference: {fileID: 1601330845773684, guid: e0c5443e25600c045a706a074084e728,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b68162f0313b334296bc0f3d1e12fb1, type: 2}
   m_IsPrefabParent: 0
