@@ -19,26 +19,27 @@ public class Ball : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		UpdatePosition ();
-	}
+        if (isAttached)
+        {
+            if (AttachRoot)
+            {
+                transform.position = AttachRoot.transform.position + locShift;
 
-	void UpdatePosition(){
-
-		if (isAttached) {
-			if (AttachRoot) {
-				transform.position = AttachRoot.transform.position + locShift;
-
-				if (Input.GetKeyDown (KeyCode.Space)) {
-					Launch ();
-				}
-			}
-		} else {
-			// transform.Translate (velocity*Time.deltaTime);
-			if(Input.GetKeyDown (KeyCode.R)){
-				Respawn();
-			}
-		}
-	}
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    Launch();
+                }
+            }
+        }
+        else
+        {
+            // transform.Translate (velocity*Time.deltaTime);
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Respawn();
+            }
+        }
+    }
 
 	void Launch(){
 		if(isAttached){

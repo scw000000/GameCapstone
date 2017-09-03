@@ -22,6 +22,10 @@ public class PongAIController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float targetX = gameObject.transform.position.x;
+        // Dont move if close enough
+        if (Mathf.Abs(targetX - Ball.transform.position.x ) <= 0.3f) {
+            return;
+        }
         // Move right
         if (gameObject.transform.position.x < Ball.transform.position.x) {
             targetX += MovingSpeed * Time.deltaTime;

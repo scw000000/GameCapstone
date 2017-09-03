@@ -6,10 +6,15 @@ public class PongGameManager : MonoBehaviour {
     public GameObject BallPrefab;
     public GameObject PlayerPrefab;
     public GameObject EnemyPrefab;
-
+    public GameObject HUDPrefab;
     private GameObject PlayerInstance;
     private GameObject EnemyInstance;
     private GameObject BallInstance;
+    private GameObject HUDInstance;
+    private UnityEngine.UI.Text PlayerScoreText;
+    private UnityEngine.UI.Text AIScoreText;
+    private UnityEngine.UI.Text ScoreMessageText;
+
     private GameObject PlayerCameraInstance;
     public GameObject PlayerSpawnLocation;
     public GameObject EnemySpawnLocation;
@@ -21,9 +26,16 @@ public class PongGameManager : MonoBehaviour {
     private GameObject GameOverScreenInstance;
 
     public string EndGameCreditSceneName;
+
+    private int PlayerScore = 0;
+    private int AIScore = 0;
+    private bool Scored = false;
     // Use this for initialization
     void Start()
     {
+        // Fist Set score to 0, might have to update it later when loading save data
+        PlayerScore = 0;
+        AIScore = 0;
         if (SpawnPlayer())
         {
             StartCoroutine(GameLoop());
@@ -65,6 +77,28 @@ public class PongGameManager : MonoBehaviour {
     {
     }
 
+    public void Score(bool isPlayerScore) {
+        
+        Scored = true;
+        if (isPlayerScore) {
+            ++PlayerScore;
+            ScoreMessageText.text = "Player Scored!";
+            Debug.Log("Player Scored!");
+        }
+        else {
+            ++AIScore;
+            ScoreMessageText.text = "AI Scored!";
+            Debug.Log("AI Scored!");
+        }
+        ScoreMessageText.enabled = true;
+        UpdateSocreBorad();
+    }
+
+    public void UpdateSocreBorad() {
+        PlayerScoreText.text = "Player: " + PlayerScore;
+        AIScoreText.text = "AI: " + AIScore;
+    }
+
     public void SetPlayerInput(bool isEnabled) {
         var playerControl = PlayerInstance.GetComponent<PongPlayerControl>();
         playerControl.enabled = isEnabled;
@@ -82,17 +116,23 @@ public class PongGameManager : MonoBehaviour {
 
     public void SaveGame()
     {
-        PlayerPrefs.SetFloat("PlayerX", PlayerInstance.transform.position.x);
-        PlayerPrefs.SetFloat("PlayerY", PlayerInstance.transform.position.y);
-        PlayerPrefs.SetFloat("PlayerZ", PlayerInstance.transform.position.z);
-        PlayerPrefs.SetFloat("EnemyX", EnemyInstance.transform.position.x);
-        PlayerPrefs.SetFloat("EnemyY", EnemyInstance.transform.position.y);
-        PlayerPrefs.SetFloat("EnemyZ", EnemyInstance.transform.position.z);
+        //PlayerPrefs.SetFloat("PlayerX", PlayerInstance.transform.position.x);
+        //PlayerPrefs.SetFloat("PlayerY", PlayerInstance.transform.position.y);
+        //PlayerPrefs.SetFloat("PlayerZ", PlayerInstance.transform.position.z);
+        //PlayerPrefs.SetFloat("EnemyX", EnemyInstance.transform.position.x);
+        //PlayerPrefs.SetFloat("EnemyY", EnemyInstance.transform.position.y);
+        //PlayerPrefs.SetFloat("EnemyZ", EnemyInstance.transform.position.z);
+
+        PlayerPrefs.SetInt("PlayerScore", PlayerScore);
+        PlayerPrefs.SetInt("AIScore", AIScore);
     }
     public void LoadGame()
     {
-        PlayerInstance.transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
-        EnemyInstance.transform.position = new Vector3(PlayerPrefs.GetFloat("EnemyX"), PlayerPrefs.GetFloat("EnemyY"), PlayerPrefs.GetFloat("EnemyZ"));
+        //PlayerInstance.transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
+        //EnemyInstance.transform.position = new Vector3(PlayerPrefs.GetFloat("EnemyX"), PlayerPrefs.GetFloat("EnemyY"), PlayerPrefs.GetFloat("EnemyZ"));
+
+        PlayerScore = PlayerPrefs.GetInt("PlayerScore");
+        AIScore = PlayerPrefs.GetInt("AIScore");
     }
 
 
@@ -108,9 +148,18 @@ public class PongGameManager : MonoBehaviour {
     private IEnumerator GameStart()
     {
         Debug.Log("Game Start!");
+        LoadGame();
         SetPlayerInput(false);
-        yield return new WaitForSeconds(1f);
+        // Attach HUD
+        HUDInstance = Instantiate(HUDPrefab, PlayerCameraInstance.transform.position, PlayerCameraInstance.transform.rotation);
+        HUDInstance.transform.SetParent(PlayerCameraInstance.transform, false);
+        PlayerScoreText = HUDInstance.transform.Find("PlayerScore").GetComponent<UnityEngine.UI.Text>();
+        AIScoreText = HUDInstance.transform.Find("AIScore").GetComponent<UnityEngine.UI.Text>();
+        ScoreMessageText = HUDInstance.transform.Find("ScoreMessage").GetComponent<UnityEngine.UI.Text>();
+        ScoreMessageText.enabled = false;
+        UpdateSocreBorad();
         Debug.Log("Game Start End!");
+        yield return null;
     }
 
     private IEnumerator GameRunning()
@@ -150,6 +199,7 @@ public class PongGameManager : MonoBehaviour {
 
     private IEnumerator RoundStart()
     {
+        Scored = false;
         // Wait until transion ends
         var FadeInComp = PlayerCameraInstance.GetComponent<FadeInEffect>();
         Debug.Log("Transition start");
@@ -187,7 +237,7 @@ public class PongGameManager : MonoBehaviour {
     {
         while (true) {
             // loop until someone scored
-            if (Input.GetKeyDown(KeyCode.T)) {
+            if (Scored || Input.GetKeyDown(KeyCode.T)) {
                 SetPlayerInput(false);
                 break;
             }
@@ -204,9 +254,12 @@ public class PongGameManager : MonoBehaviour {
         FadeInComp.Updating = true;
         FadeInComp.Reverse = true;
         yield return new WaitForSeconds(FadeInComp.TransitionTime);
-        // Reset player and AI transform
+        // Reset player, AI and ball transform
+        // Do it in here because player won't see it
         InitializeTransform();
         FadeInComp.Updating = false;
+        BallInstance.SendMessage("Respawn");
+        ScoreMessageText.enabled = false;
         Debug.Log("Transition end");
         yield return null;
     }

@@ -89,4 +89,9 @@ public class LevelLoading : MonoBehaviour {
 		Application.Quit();
 		#endif
 	}
+
+    public void ClearSaveData() {
+        PlayerPrefs.SetInt("PlayerScore", 0);
+        PlayerPrefs.SetInt("AIScore", 0);
+    }
 }
