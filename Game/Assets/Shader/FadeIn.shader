@@ -49,8 +49,9 @@
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
-				//float patternIntensity = dot(tex2D(_FadePattern, i.uv).rgb, float3(0.3, 0.59, 0.11));
-				float patternIntensity = 1 - tex2D(_FadePattern, i.uv).a;
+				//float patternIntensity = 1 - dot(tex2D(_FadePattern, i.uv).rgb, float3(0.3, 0.59, 0.11));
+				float patternIntensity = tex2D(_FadePattern, i.uv).b;
+				// float patternIntensity = 1 - tex2D(_FadePattern, i.uv).a;
 				if (patternIntensity < _Threshold ) {
 					//col = float4(patternIntensity, patternIntensity, patternIntensity, 1);
 				    

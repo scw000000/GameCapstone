@@ -1161,7 +1161,7 @@ Transform:
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1424332231
 GameObject:
@@ -1361,6 +1361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b99e59b46a8e24ca9671b087f0ff59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TempCameraPrefab: {fileID: 0}
+  MainCamera: {fileID: 0}
 --- !u!114 &1818355189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1510,7 +1512,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4596313940730470, guid: 16495414b5294b0458bbc54f1625d99e, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1896144473760254, guid: 16495414b5294b0458bbc54f1625d99e, type: 2}
       propertyPath: m_Name

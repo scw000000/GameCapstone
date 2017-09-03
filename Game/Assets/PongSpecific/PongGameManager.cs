@@ -281,10 +281,10 @@ public class PongGameManager : MonoBehaviour {
         FadeInComp.Updating = false;
         BallInstance.SendMessage("Respawn");
         ScoreMessageText.enabled = false;
+        Debug.Log("Transition end");
+        yield return new WaitForSeconds(0.5f);
         PlayerCameraInstance.transform.position = Vector3.zero;
         PlayerCameraInstance.transform.rotation = Quaternion.identity;
-        Debug.Log("Transition end");
-        yield return null;
     }
 
 }
