@@ -60,6 +60,14 @@ public class PongGameManager : MonoBehaviour {
     {
     }
 
+    public void SetPlayerInput(bool isEnabled) {
+        var playerControl = PlayerInstance.GetComponent<PongPlayerControl>();
+        playerControl.enabled = isEnabled;
+
+        var playerMenuControl = gameObject.GetComponent<PongPauseMenuController>();
+        playerMenuControl.enabled = isEnabled;
+    }
+
     public void Quit()
     {
         SaveGame();
@@ -95,6 +103,7 @@ public class PongGameManager : MonoBehaviour {
     private IEnumerator GameStart()
     {
         Debug.Log("Game Start!");
+        SetPlayerInput(false);
         yield return new WaitForSeconds(1f);
         Debug.Log("Game Start End!");
     }
@@ -149,9 +158,6 @@ public class PongGameManager : MonoBehaviour {
         yield return new WaitForSeconds(FadeInComp.TransitionTime);
         Debug.Log("Transition end");
 
-        // Reset player and AI transform
-        InitializeTransform();
-
         // Starting countdown
         CountDownInstance = Instantiate(CountDownPrefab, PlayerCameraInstance.transform.position, PlayerCameraInstance.transform.rotation);
         CountDownInstance.transform.SetParent(PlayerCameraInstance.transform, false);
@@ -167,6 +173,7 @@ public class PongGameManager : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         Debug.Log("GO!");
         textComp.text = "GO!";
+        SetPlayerInput(true);
         yield return new WaitForSeconds(1f);
         Destroy(CountDownInstance);
     }
@@ -176,6 +183,7 @@ public class PongGameManager : MonoBehaviour {
         while (true) {
             // loop until someone scored
             if (Input.GetKeyDown(KeyCode.T)) {
+                SetPlayerInput(false);
                 break;
             }
             yield return null;
@@ -191,6 +199,8 @@ public class PongGameManager : MonoBehaviour {
         FadeInComp.Updating = true;
         FadeInComp.Reverse = true;
         yield return new WaitForSeconds(FadeInComp.TransitionTime);
+        // Reset player and AI transform
+        InitializeTransform();
         FadeInComp.Updating = false;
         Debug.Log("Transition end");
         yield return null;
