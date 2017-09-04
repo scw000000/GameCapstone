@@ -10,6 +10,8 @@ public class FadeInEffect : MonoBehaviour {
     private Material Material;
     public bool Reverse = false;
     public bool Updating = false;
+    public Texture FadeInTexture;
+    RenderTexture IntermediateRT;
     // Creates a private material used to the effect
     void Awake() {
         Material = new Material(Shader.Find(ShaderFilePath));
@@ -18,6 +20,8 @@ public class FadeInEffect : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        IntermediateRT = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.Default);
+        Material.SetTexture("_FadePattern", FadeInTexture);
     }
 	
 	// Update is called once per frame
@@ -37,9 +41,6 @@ public class FadeInEffect : MonoBehaviour {
     // Postprocess the image
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        //Graphics.Blit(source, destination);
-        
-        //Material.SetFloat("_Threshold", TransitionCurve.Evaluate(CurrentTime));
         Material.SetFloat("_Threshold", TransitionCurve.Evaluate(Reverse?1f - CurrentTime : CurrentTime));
         Graphics.Blit(source, destination, Material);
     }

@@ -3,7 +3,7 @@
 	Properties
 	{
 		_MainTex ("ScreenTexture", 2D) = "white" {}
-		_FadePattern("FadePattern", 2D) = "white" {}
+		_FadePattern("FadePattern", 2D) = "red" {}
 		_FadeColor("FadeColor", Color) = (0,0,0,1)
 		_Threshold("Threshold", Float) = 0
 	}
@@ -11,7 +11,7 @@
 	{
 		// No culling or depth
 		Cull Off ZWrite Off ZTest Always
-
+		// ZTest Always Cull Off ZWrite Off Fog{ Mode Off }
 		Pass
 		{
 			CGPROGRAM
@@ -19,12 +19,6 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
-
-
-			uniform sampler2D _MainTex;
-			uniform sampler2D _FadePattern;
-			uniform float _Threshold;
-			uniform float4 _FadeColor;
 
 			struct appdata
 			{
@@ -37,6 +31,11 @@
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
 			};
+
+			sampler2D _MainTex;
+			sampler2D _FadePattern;
+			float _Threshold;
+			float4 _FadeColor;
 
 			v2f vert (appdata v)
 			{
