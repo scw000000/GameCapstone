@@ -33,7 +33,7 @@ Material:
     m_Floats:
     - _Emission: 1
     - _EmissionLM: 1
-    - _Shininess: 0.20801204
+    - _Shininess: 0.018
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
