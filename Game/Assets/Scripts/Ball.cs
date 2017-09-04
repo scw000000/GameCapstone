@@ -82,6 +82,8 @@ public class Ball : MonoBehaviour {
         // Make the force constant
         newVelocity *= ReflectSpeedScalar;
         ballRigidBody.velocity = newVelocity;
+        // Sound on Contact
+        GetComponent<AudioSource>().Play();
     }
 	void Respawn(){
 		// player = GameObject.Find ("Player");
