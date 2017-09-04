@@ -124,6 +124,8 @@ public class PongGameManager : MonoBehaviour {
 
         var playerMenuControl = gameObject.GetComponent<PongPauseMenuController>();
         playerMenuControl.enabled = isEnabled;
+
+        BallInstance.GetComponent<Ball>()._isLaunchable = isEnabled;
     }
 
     public void Quit()

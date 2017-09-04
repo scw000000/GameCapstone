@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6a15b1f15432b6f4b9a8066e1e6ca4df, type: 2}
+  - {fileID: 2100000, guid: bdadbd86e36176342bd968015867f5e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   ReflectSpeedScalar: 30
   MaxPaddleReflectionAngle: 40
   ReflectShiftSpeedScalar: 10
+  _isLaunchable: 0
 --- !u!135 &135242478241776824
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -11,11 +11,12 @@ public class Ball : MonoBehaviour {
     public float ReflectShiftSpeedScalar = 10f;
     private bool isAttached;
 	private Vector3 locShift;
+    public bool _isLaunchable = true;
 	// Use this for initialization
 	void Start () {
 		isAttached = true;
-		// locShift = new Vector3 (0.0f,0.0f,1.0f);
-	}
+        // locShift = new Vector3 (0.0f,0.0f,1.0f);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,7 +26,7 @@ public class Ball : MonoBehaviour {
             {
                 transform.position = AttachRoot.transform.position + locShift;
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (_isLaunchable && Input.GetKeyDown(KeyCode.Space))
                 {
                     Launch();
                 }
