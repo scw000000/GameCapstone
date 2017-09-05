@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public GameObject PlayerPrefab;
-    private GameObject PlayerInstance;
-    public GameObject SpawnLocation;
+    public GameObject _playerPrefab;
+    private GameObject _playerInstance;
+    public GameObject _cameraSetPrefab;
+    private GameObject _cameraSetInstance;
+    public GameObject _spawnLocation;
 
-    public GameObject GameOverScreenPrefab;
-    private GameObject GameOverScreenInstance;
+    public GameObject _gameOverScreenPrefab;
+    private GameObject _gameOverScreenInstance;
 
-    public string EndGameCreditSceneName;
+    public string _endGameCreditSceneName;
 	// Use this for initialization
 	void Start () {
         if( SpawnPlayer()) {
@@ -25,11 +27,14 @@ public class GameManager : MonoBehaviour {
 	}
 
     private bool SpawnPlayer() {
-        if (PlayerPrefab == null || SpawnLocation == null) {
+        if (_playerPrefab == null || _spawnLocation == null) {
             Debug.LogError("Need to Specify player or spawn location");
             return false;
         }
-        PlayerInstance = Instantiate(PlayerPrefab, SpawnLocation.transform.position, SpawnLocation.transform.rotation) as GameObject;
+        _playerInstance = Instantiate(_playerPrefab, _spawnLocation.transform.position, _spawnLocation.transform.rotation) as GameObject;
+        // We don't want to attach the camera set directly because it will make the camera not smooth
+        _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
+        _playerInstance.SendMessage("SetUpCamera", _cameraSetInstance);
         return true;
     }
 
@@ -40,11 +45,11 @@ public class GameManager : MonoBehaviour {
     }
 
     private IEnumerator GameLoop() {
-        yield return StartCoroutine(GameStart());
+        yield return GameStart();
 
-        yield return StartCoroutine(GameRunning());
+        yield return GameRunning();
 
-        yield return StartCoroutine(GameEnding());
+        yield return GameEnding();
     }
 
     private IEnumerator GameStart() {
@@ -55,7 +60,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator GameRunning() {
         Debug.Log("Game Running!");
-        var statusComponent = PlayerInstance.GetComponent<PlayerStatus>();
+        var statusComponent = _playerInstance.GetComponent<PlayerStatus>();
         
         //Keep Looping while the player is alive
         while (statusComponent != null && statusComponent.IsAlive()) {
@@ -67,10 +72,10 @@ public class GameManager : MonoBehaviour {
     // Bring up game over menu
     private IEnumerator GameEnding() {
         Debug.Log("Game Ending!");
-        GameOverScreenInstance = Instantiate(GameOverScreenPrefab);
+        _gameOverScreenInstance = Instantiate(_gameOverScreenPrefab);
         yield return new WaitForSeconds(3f);
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(EndGameCreditSceneName);
-        Destroy(GameOverScreenInstance);
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_endGameCreditSceneName);
+        Destroy(_gameOverScreenInstance);
         Debug.Log("Game Ending End!");
     }
 }

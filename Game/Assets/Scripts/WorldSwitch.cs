@@ -3,43 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldSwitch : MonoBehaviour {
-    public GameObject CameraSetPrefab;
-
-    private GameObject CameraRoot;
-    private GameObject CameraSet;
-    private GameObject HoldingObject;
-    private Camera CameraA;
-    private Camera CameraB;
-    public RenderTexture RenderTexture;
+    private GameObject _cameraRoot;
+    private GameObject _cameraSetInstance;
+    private GameObject _holdingObject;
+    private Camera _cameraA;
+    private Camera _cameraB;
+    public RenderTexture _renderTexture;
 	// Use this for initialization
 	void Start () {
-        if (CameraSetPrefab == null) {
-            Debug.LogError("CameraSetPrefab is not defined");
-            return;
-        }
-        CameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
-        if (CameraRoot == null) {
-            Debug.LogError("Cannot find camera root");
-        }
         
-        CameraSet = Instantiate(CameraSetPrefab, CameraRoot.transform.position, CameraRoot.transform.rotation);
-        HoldingObject = CameraSet.transform.Find("Holder").gameObject;
-        HoldingObject.layer = LayerMask.NameToLayer("WorldA");
-        // cameraSetInstance.transform.parent = CameraRoot.transform;
-        CameraA = CameraSet.transform.Find("CameraA").gameObject.GetComponent<Camera>();
-        CameraB = CameraSet.transform.Find("CameraB").gameObject.GetComponent<Camera>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        // update postion here to get smooth camera control
-        CameraSet.transform.position = CameraRoot.transform.position;
-        CameraSet.transform.rotation = Quaternion.Slerp(CameraSet.transform.rotation, CameraRoot.transform.rotation, 10f * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.X)) {
             var collider = gameObject.GetComponent<CapsuleCollider>();
             var overlappers = Physics.OverlapCapsule(gameObject.transform.position, gameObject.transform.position, collider.radius);
             bool switchable = true;
-            // Only when the player is not
+            // Only alow switch when the player is not in overlapp with object in another world
             foreach (var overlap in overlappers) {
                 if (overlap.gameObject.layer != gameObject.layer) {
                     switchable = false;
@@ -47,11 +28,11 @@ public class WorldSwitch : MonoBehaviour {
             }
             if (switchable) {
                 Debug.Log("Switch!");
-                gameObject.layer = LayerMask.NameToLayer((CameraA.targetTexture == null ? "WorldB" : "WorldA"));
-                HoldingObject.layer = gameObject.layer;
-                var sceneCamera = CameraA.targetTexture == null ? CameraA : CameraB;
-                var backgroundCamera = sceneCamera.GetInstanceID() == CameraA.GetInstanceID() ? CameraB : CameraA;
-                sceneCamera.targetTexture = RenderTexture;
+                gameObject.layer = LayerMask.NameToLayer((_cameraA.targetTexture == null ? "WorldB" : "WorldA"));
+                _holdingObject.layer = gameObject.layer;
+                var sceneCamera = _cameraA.targetTexture == null ? _cameraA : _cameraB;
+                var backgroundCamera = sceneCamera.GetInstanceID() == _cameraA.GetInstanceID() ? _cameraB : _cameraA;
+                sceneCamera.targetTexture = _renderTexture;
                 backgroundCamera.targetTexture = null;
             }
             else{
@@ -60,4 +41,17 @@ public class WorldSwitch : MonoBehaviour {
             
         }
 	}
+
+    public void SetUpCamera(GameObject cameraSetInstance) {
+        _cameraSetInstance = cameraSetInstance;
+        _cameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
+        _holdingObject = _cameraSetInstance.transform.Find("Holder").gameObject;
+        _holdingObject.layer = LayerMask.NameToLayer("WorldA");
+        _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
+        _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
+
+        // Tell camera set to follow the root
+        _cameraSetInstance.SendMessage("SetupRoot", _cameraRoot);
+        
+    }
 }

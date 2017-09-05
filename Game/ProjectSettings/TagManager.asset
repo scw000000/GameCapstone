@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Deadly
-  - PlayerTag
-  - Ball
   layers:
   - Default
   - TransparentFX

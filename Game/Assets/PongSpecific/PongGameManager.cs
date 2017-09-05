@@ -68,7 +68,7 @@ public class PongGameManager : MonoBehaviour {
         videoCapCtrlComp.videoCaptures[0] = PlayerCameraInstance.GetComponent<RockVR.Video.VideoCapture>();
         var videoCapComp = PlayerInstance.GetComponent<VideoCapture>();
         videoCapComp.MainCamera = PlayerCameraInstance;
-        camFollowComp.FollowingRoot = PlayerInstance.transform.Find("CameraRoot").gameObject;
+        // camFollowComp._followingRoot = PlayerInstance.transform.Find("CameraRoot").gameObject;
         // Disable movement until round start;
         SetCamFollowSpeed(0f);
         if (EnemyPrefab == null || EnemySpawnLocation == null)
@@ -85,7 +85,7 @@ public class PongGameManager : MonoBehaviour {
 
     private void SetCamFollowSpeed(float newSpeed) {
         var camFollowComp = PlayerCameraInstance.GetComponent<CameraFollow>();
-        camFollowComp.FollowingSpeed = newSpeed;
+        camFollowComp._followingSpeed = newSpeed;
     }
 
     public void PauseGame()

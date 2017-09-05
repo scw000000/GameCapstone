@@ -74,6 +74,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4643182378188444}
+  - component: {fileID: 114407829916324474}
   m_Layer: 0
   m_Name: CameraSet
   m_TagString: Untagged
@@ -275,6 +276,18 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1178688150629566}
   m_Enabled: 1
+--- !u!114 &114407829916324474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1946943962444736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d8e3a81fb05754582d74397c5d5db4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _followingSpeed: 10
 --- !u!124 &124300335592846016
 Behaviour:
   m_ObjectHideFlags: 1
