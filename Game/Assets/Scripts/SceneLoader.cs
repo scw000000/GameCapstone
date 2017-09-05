@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour {
 	void Update() {
 
         // If the player has pressed the space bar and a new scene is not loading yet...
-        if (Input.GetKeyUp(KeyCode.Space) && loadScene == false) {
+        if (loadScene == false) {
 
             // ...set the loadScene boolean to true to prevent loading a new scene more than once...
             loadScene = true;

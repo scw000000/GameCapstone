@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dea45834c408f4a82c10d8d9cfa28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 1
+  scene: 0
   loadingText: {fileID: 1077214272}
 --- !u!4 &283319540
 Transform:

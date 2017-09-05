@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class LevelLoading : MonoBehaviour {
     public GameObject LoadingScreenPrefab;
     private GameObject LoadingScreenInstance;
+	public GameObject Mainmenu;
+	public Text LoadingText;
     private AsyncOperation AsyncOp = null;
 
     // Use this for initialization
@@ -17,8 +19,7 @@ public class LevelLoading : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-
+		LoadingText.color = new Color(LoadingText.color.r, LoadingText.color.g, LoadingText.color.b, Mathf.PingPong(Time.time, 1));
 	}
 
     // Hard coded, should be fixed later
@@ -47,6 +48,7 @@ public class LevelLoading : MonoBehaviour {
         }
         // Disable sceen switch until we are good to go;
         AsyncOp.allowSceneActivation = false;
+		Mainmenu.SetActive (false);
         InitLoadingScreen();
         Debug.Log("Start updating loading screen");
         yield return StartCoroutine(UpdateLoadingScreen() );
@@ -59,7 +61,9 @@ public class LevelLoading : MonoBehaviour {
             Debug.LogError("Need to Specify a loading screen");
             return;
         }
+		LoadingScreenPrefab.SetActive (true);
         LoadingScreenInstance = Instantiate(LoadingScreenPrefab) as GameObject;
+
     }
 
     private IEnumerator UpdateLoadingScreen() {
@@ -71,6 +75,8 @@ public class LevelLoading : MonoBehaviour {
             Debug.Log(currentProgress);
             yield return null;
         }
+
+
         Debug.Log("Load Complete");
     }
 
