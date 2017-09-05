@@ -19,8 +19,11 @@ public class LevelLoading : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		LoadingText.color = new Color(LoadingText.color.r, LoadingText.color.g, LoadingText.color.b, Mathf.PingPong(Time.time, 1));
-	}
+        if (LoadingText != null)
+        {
+            LoadingText.color = new Color(LoadingText.color.r, LoadingText.color.g, LoadingText.color.b, Mathf.PingPong(Time.time, 1));
+        }
+    }
 
     // Hard coded, should be fixed later
     public void StartLoadLevel(string levelName) {
