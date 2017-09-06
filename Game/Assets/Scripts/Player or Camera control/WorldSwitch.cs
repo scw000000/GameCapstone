@@ -11,7 +11,8 @@ public class WorldSwitch : MonoBehaviour {
     public RenderTexture _renderTexture;
 	// Use this for initialization
 	void Start () {
-        
+        _renderTexture.width = Screen.width;
+        _renderTexture.height = Screen.height;
     }
 	
 	// Update is called once per frame
@@ -40,7 +41,7 @@ public class WorldSwitch : MonoBehaviour {
             }
             
         }
-	}
+    }
 
     public void SetUpCamera(GameObject cameraSetInstance) {
         _cameraSetInstance = cameraSetInstance;
@@ -48,10 +49,15 @@ public class WorldSwitch : MonoBehaviour {
         _holdingObject = _cameraSetInstance.transform.Find("Holder").gameObject;
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
         _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
+        // var worldSwitchEffect = cameraSetInstance.transform.Find("CameraA").gameObject.AddComponent<WorldSwitchSphere>();
+        // worldSwitchEffect._theOtherWorldTexture = _theOtherWorldTexture;
         _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
-
+        _cameraA.targetTexture = null;
+        _cameraB.targetTexture = _renderTexture;
+        var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
+        var holderMat = holder.GetComponent<Renderer>().material;
+        holderMat.SetTexture("_MainTex", _renderTexture);
         // Tell camera set to follow the root
         _cameraSetInstance.SendMessage("SetupRoot", _cameraRoot);
-        
     }
 }

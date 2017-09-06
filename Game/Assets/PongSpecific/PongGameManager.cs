@@ -225,14 +225,14 @@ public class PongGameManager : MonoBehaviour {
         // Wait until transion ends
         var FadeInComp = PlayerCameraInstance.GetComponent<FadeInEffect>();
         Debug.Log("Transition start");
-        FadeInComp.CurrentTime = 0f;
-        FadeInComp.Updating = true;
-        FadeInComp.Reverse = false;
-        yield return new WaitForSeconds(FadeInComp.TransitionTime);
-        FadeInComp.Updating = false;
+        FadeInComp._currentTime = 0f;
+        FadeInComp._updating = true;
+        FadeInComp._reverse = false;
+        yield return new WaitForSeconds(FadeInComp._transitionTime);
+        FadeInComp._updating = false;
 
-        Debug.Log("Trans time: " + FadeInComp.TransitionTime);
-        yield return new WaitForSeconds(FadeInComp.TransitionTime);
+        Debug.Log("Trans time: " + FadeInComp._transitionTime);
+        yield return new WaitForSeconds(FadeInComp._transitionTime);
         Debug.Log("Transition end");
 
         // Starting countdown
@@ -273,14 +273,14 @@ public class PongGameManager : MonoBehaviour {
         // Wait until transion ends
         var FadeInComp = PlayerCameraInstance.GetComponent<FadeInEffect>();
         Debug.Log("Transition start");
-        FadeInComp.CurrentTime = 0f;
-        FadeInComp.Updating = true;
-        FadeInComp.Reverse = true;
-        yield return new WaitForSeconds(FadeInComp.TransitionTime);
+        FadeInComp._currentTime = 0f;
+        FadeInComp._updating = true;
+        FadeInComp._reverse = true;
+        yield return new WaitForSeconds(FadeInComp._transitionTime);
         // Reset player, AI and ball transform
         // Do it in here because player won't see it
         InitializeTransform();
-        FadeInComp.Updating = false;
+        FadeInComp._updating = false;
         BallInstance.SendMessage("Respawn");
         ScoreMessageText.enabled = false;
         Debug.Log("Transition end");
