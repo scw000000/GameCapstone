@@ -15,9 +15,14 @@ public class WorldSwitchSphere : MonoBehaviour {
     public float _gradientColorUVShift;
     public bool _isUpdating = true;
     public AnimationCurve _animationCurve { get; set; }
+    public AnimationCurve _fovCurve { get; set; }
     private float _maxSphereRadius;
     private float _switchTime = 4f;
     private float _currentTime = 0f;
+    public Camera _theOtherCamera { get; set; }
+    private Camera _myCamera;
+    public float _minFOV;
+    public float _maxFOV;
     public void SetTheOtherWorldTexture( RenderTexture theOtherWorldTexture) {
         _theOtherWorldTexture = theOtherWorldTexture;
        //       
@@ -29,8 +34,8 @@ public class WorldSwitchSphere : MonoBehaviour {
         _material = new Material(Shader.Find(_shaderFilePath));
         _material.SetTexture("_TheOtherWorldTex", _theOtherWorldTexture);
         _material.SetTexture("_TheOtherWorldDepthTex", _theOtherWorldDepthTexture);
-        var sceneCamera = gameObject.GetComponent<Camera>();
-        _maxSphereRadius = sceneCamera.farClipPlane;
+        _myCamera = gameObject.GetComponent<Camera>();
+        _maxSphereRadius = _myCamera.farClipPlane;
         _material.SetFloat("_SphereRadius", 0);
         _material.SetFloat("_SphereWidth", _sphereWidth);
         _material.SetColor("_BarColor", _barColor);
@@ -56,16 +61,18 @@ public class WorldSwitchSphere : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (_isUpdating) {
-            _currentTime += Time.deltaTime;
+            _currentTime += Time.deltaTime / _switchTime;
         }
         // temperal put in here for debugging
-        _material.SetFloat("_SphereRadius", (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime / _switchTime))));
+        _material.SetFloat("_SphereRadius", (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime))));
         _material.SetFloat("_SphereWidth", _sphereWidth);
         _material.SetColor("_BarColor", _barColor);
         _material.SetFloat("_BarAlpha", _barAlpha);
         _material.SetFloat("_GradientColorShift", _gradientColorShift);
         _material.SetFloat("_GradientColorUVShift", _gradientColorUVShift);
 
+        _myCamera.fieldOfView = Mathf.Lerp(_minFOV, _maxFOV, _fovCurve.Evaluate(_currentTime));
+        _theOtherCamera.fieldOfView = _myCamera.fieldOfView;
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination) {

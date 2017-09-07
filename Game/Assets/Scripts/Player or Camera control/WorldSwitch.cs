@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class WorldSwitch : MonoBehaviour {
     public AnimationCurve _speedCurve;
+    public AnimationCurve _fovCurve;
     public Color _barColor;
     public float _barAlpha = 0.3f;
     public float _gradientColorShift = 1f;
     public float _gradientColorUVShift = 1f;
-
+    public float _maxFOV;
+    public float _minFOV;
     private GameObject _cameraRoot;
     private GameObject _cameraSetInstance;
     private GameObject _holdingObject;
@@ -58,13 +60,18 @@ public class WorldSwitch : MonoBehaviour {
         }
 
         Camera[] cameras = new Camera[] { _cameraA, _cameraB };
-        foreach (var cam in cameras)
+        for(int i = 0; i < cameras.Length; ++i)
         {
+            var cam = cameras[i];
             var worldSwitchEffect = cam.gameObject.GetComponent<WorldSwitchSphere>();
             worldSwitchEffect._barColor = _barColor;
             worldSwitchEffect._barAlpha = _barAlpha;
             worldSwitchEffect._gradientColorShift = _gradientColorShift;
             worldSwitchEffect._gradientColorUVShift = _gradientColorUVShift;
+            worldSwitchEffect._fovCurve = _fovCurve;
+            worldSwitchEffect._maxFOV = _maxFOV;
+            worldSwitchEffect._minFOV = _minFOV;
+            worldSwitchEffect._theOtherCamera = cameras[1 - i];
         }
 
         if (Input.GetKeyDown(KeyCode.F)) {
@@ -98,6 +105,9 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
             worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
             worldSwitchEffect._animationCurve = _speedCurve;
+            worldSwitchEffect._fovCurve = _fovCurve;
+            worldSwitchEffect._maxFOV = _maxFOV;
+            worldSwitchEffect._minFOV = _minFOV;
             worldSwitchEffect._barColor = _barColor;
             worldSwitchEffect._barAlpha = _barAlpha;
             worldSwitchEffect._gradientColorShift = _gradientColorShift;
@@ -105,28 +115,6 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect.enabled = false;
             worldSwitchEffect.Init();
         }
-
-        //var worldSwitchEffect = _cameraA.gameObject.AddComponent<WorldSwitchSphere>();
-        //worldSwitchEffect.enabled = false;
-        //worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
-        //worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
-        //worldSwitchEffect._animationCurve = _speedCurve;
-        //worldSwitchEffect._barColor = _barColor;
-        //worldSwitchEffect._barAlpha = _barAlpha;
-        //worldSwitchEffect._gradientColorShift = _gradientColorShift;
-        //worldSwitchEffect._gradientColorUVShift = _gradientColorUVShift;
-        //worldSwitchEffect.Init();
-
-        //worldSwitchEffect = _cameraB.gameObject.AddComponent<WorldSwitchSphere>();
-        //worldSwitchEffect.enabled = false;
-        //worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
-        //worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
-        //worldSwitchEffect._animationCurve = _speedCurve;
-        //worldSwitchEffect._barColor = _barColor;
-        //worldSwitchEffect._barAlpha = _barAlpha;
-        //worldSwitchEffect._gradientColorShift = _gradientColorShift;
-        //worldSwitchEffect._gradientColorUVShift = _gradientColorUVShift;
-        //worldSwitchEffect.Init();
 
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
         var holderMat = holder.GetComponent<Renderer>().material;

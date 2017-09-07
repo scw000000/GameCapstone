@@ -152,10 +152,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  _barColor: {r: 0, g: 0, b: 0, a: 0}
-  _barAlpha: 0.3
-  _gradientColorShift: 1
-  _gradientColorUVShift: 1
+  _barColor: {r: 0.021247858, g: 0.7683416, b: 0.9632353, a: 0}
+  _barAlpha: 0.2
+  _gradientColorShift: 2
+  _gradientColorUVShift: 3
+  _maxFOV: 120
 --- !u!136 &136163040993545040
 CapsuleCollider:
   m_ObjectHideFlags: 1
