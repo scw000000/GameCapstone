@@ -7,11 +7,13 @@ public class WorldSwitchSphere : MonoBehaviour {
     private Material _material;
     public RenderTexture _theOtherWorldTexture;
     RenderTexture _theOtherWorldDepthTexture;
-    public float _sphereRadius = 0f;
+   // public float _sphereRadius = 0f;
     public float _sphereWidth = 15f;
-    public Color _barColor = new Color(0, 1, 0);
-    public Color _midColor = new Color(0, 0, 1);
-    public float _edgeSharpness = 10f;
+    public Color _barColor { get; set; }
+    public float _barAlpha;
+    public float _gradientColorShift;
+    public float _gradientColorUVShift;
+    public bool _isUpdating = true;
     public AnimationCurve _animationCurve { get; set; }
     private float _maxSphereRadius;
     private float _switchTime = 4f;
@@ -29,13 +31,21 @@ public class WorldSwitchSphere : MonoBehaviour {
         _material.SetTexture("_TheOtherWorldDepthTex", _theOtherWorldDepthTexture);
         var sceneCamera = gameObject.GetComponent<Camera>();
         _maxSphereRadius = sceneCamera.farClipPlane;
+        _material.SetFloat("_SphereRadius", 0);
+        _material.SetFloat("_SphereWidth", _sphereWidth);
         _material.SetColor("_BarColor", _barColor);
-        _material.SetColor("_MidColor", _midColor);
-        _material.SetFloat("_EdgeSharpness", _edgeSharpness);
+        _material.SetFloat("_BarAlpha", _barAlpha);
+        _material.SetFloat("_GradientColorShift", _gradientColorShift);
+        _material.SetFloat("_GradientColorUVShift", _gradientColorUVShift);
     }
 
     public void Reset() {
         _currentTime = 0f;
+        _isUpdating = true;
+    }
+
+    public void SetUpdating(bool enabled) {
+        _isUpdating = enabled;
     }
 
     // Use this for initialization
@@ -45,16 +55,23 @@ public class WorldSwitchSphere : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _currentTime += Time.deltaTime;
+        if (_isUpdating) {
+            _currentTime += Time.deltaTime;
+        }
+        // temperal put in here for debugging
         _material.SetFloat("_SphereRadius", (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime / _switchTime))));
         _material.SetFloat("_SphereWidth", _sphereWidth);
+        _material.SetColor("_BarColor", _barColor);
+        _material.SetFloat("_BarAlpha", _barAlpha);
+        _material.SetFloat("_GradientColorShift", _gradientColorShift);
+        _material.SetFloat("_GradientColorUVShift", _gradientColorUVShift);
+
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination) {
         var inverseView = gameObject.GetComponent<Camera>().worldToCameraMatrix.inverse;
+
         _material.SetMatrix("_InverseViewMat", inverseView);
-        // _material.SetVector("_SphereCenter", gameObject.transform.position);
-        
         Graphics.Blit(source, destination, _material);
     }
 }

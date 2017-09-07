@@ -127,19 +127,35 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.007232666
+      inSlope: 0.03446012
+      outSlope: 0.03446012
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.27792892
+      value: 0.14016926
+      inSlope: 2.1436956
+      outSlope: 2.1436956
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.3600089
+      value: 0.3489512
+      inSlope: 3.072732
+      outSlope: 3.072732
       tangentMode: 0
     - serializedVersion: 2
       time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
+      value: 1.0072327
+      inSlope: 1
+      outSlope: 1
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  _barColor: {r: 0, g: 0, b: 0, a: 0}
+  _barAlpha: 0.3
+  _gradientColorShift: 1
+  _gradientColorUVShift: 1
 --- !u!136 &136163040993545040
 CapsuleCollider:
   m_ObjectHideFlags: 1

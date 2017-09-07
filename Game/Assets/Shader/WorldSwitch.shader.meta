@@ -1,9 +1,13 @@
 fileFormatVersion: 2
 guid: 12759ea962d4cdb4b8427016787aa45a
-timeCreated: 1504655438
+timeCreated: 1504805260
 licenseType: Free
 ShaderImporter:
-  defaultTextures: []
+  defaultTextures:
+  - _MainTex: {instanceID: 0}
+  - _TheOtherWorldTex: {instanceID: 0}
+  - _TheOtherWorldDepthTex: {instanceID: 0}
+  - _GradientTexture: {fileID: 2800000, guid: afe938cf4d450bc4da810e72132d7984, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

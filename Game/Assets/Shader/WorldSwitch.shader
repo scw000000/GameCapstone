@@ -5,11 +5,13 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_TheOtherWorldTex("The other world texture", 2D) = "black"{}
 		_TheOtherWorldDepthTex("The other World depth texture", 2D) = "black"{}
+		_GradientTexture("Gradient texture", 2D) = "blue"{}
 		_SphereRadius("Sphere radius", Float) = 1
 		_SphereWidth("Sphere width", Float) = 1
-		_EdgeSharpness("Edge sharpness", Float) = 2
-		_MidColor("Mid color", Color) = (0, 0, 1, 1)
 		_BarColor("Bar color", Color) = (0, 1, 0, 1)
+		_BarAlpha("Bar alpha", Float) = 0.5
+		_GradientColorShift("Gradient color shift", Float) = 1
+		_GradientColorUVShift("Gradient color uv shift", Float) = 1
 	}
 	SubShader
 	{
@@ -40,13 +42,14 @@
 			sampler2D _CameraDepthTexture;
 			sampler2D _TheOtherWorldTex;
 			sampler2D _TheOtherWorldDepthTex;
-			sampler2D _CameraGBufferTexture2;
-			sampler2D _CameraGBufferTexture0;
+			sampler2D _GradientTexture;
 			float _SphereRadius;
 			float _SphereWidth;
-			float _EdgeSharpness;
+			float _GradientColorShift;
+			float _GradientColorUVShift;
 			float4x4 _InverseViewMat;
-			float4 _MidColor;
+			float4 _BarColor;
+			float _BarAlpha;
 
 			v2f vert (appdata v)
 			{
@@ -73,6 +76,7 @@
 				return mul(_InverseViewMat, float4(vpos, 1));
 			}
 
+			// Return 0, 1 integer value based on screen space
 			float4 HorBar(float y) {
 				// Frac: return decimal part, which is [0,1)
 				return 1 - saturate(round(abs(frac(y * 100))));
@@ -80,46 +84,28 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-			float mainSceneDepth = tex2D(_CameraDepthTexture, i.uv).r;
-			
-			float mainWorldDepth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
-			float4 mainWorldPos = GetWorldPos(mainWorldDepth, i.uv);
-			float otherWorldDepth = SAMPLE_DEPTH_TEXTURE(_TheOtherWorldDepthTex, i.uv);
-			float4 otherWorldPos = GetWorldPos(otherWorldDepth, i.uv);
-			// return tex2D(_MainTex, i.uv);
-			// return tex2D(_TheOtherWorldTex, i.uv);
-			// return float4(1.0, 0.0, 0.0, 1);
-			// return tex2D(_TheOtherWorldTex, i.uv);
-			float otherWorldDist = distance(otherWorldPos.xyz, _WorldSpaceCameraPos);
+			float4 mainWorldPos = GetWorldPos(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv), i.uv);
+			float4 otherWorldPos = GetWorldPos(SAMPLE_DEPTH_TEXTURE(_TheOtherWorldDepthTex, i.uv), i.uv);
 			float mainWorldDist = distance(mainWorldPos.xyz, _WorldSpaceCameraPos);
 			if (mainWorldDist < _SphereRadius) {
 				if (mainWorldDist > _SphereRadius - _SphereWidth) {
 					float alpha = 1 - (_SphereRadius - mainWorldDist) / _SphereWidth;
-					//return lerp(tex2D(_TheOtherWorldTex, i.uv), tex2D(_MainTex, i.uv), alpha);
-					half4 gradientColor = lerp(_MidColor, tex2D(_TheOtherWorldTex, i.uv), pow(alpha, _EdgeSharpness));
-					return lerp(tex2D(_MainTex, i.uv), gradientColor, alpha);// +HorBar(i.uv.y) * float4(0, 1, 0, 1);
-																			 //return lerp(tex2D(_MainTex, i.uv), tex2D(_TheOtherWorldTex, i.uv), alpha);
+					float npAlpha = (alpha - 0.5) * 2;
+					float4 gradientColor = lerp(tex2D(_GradientTexture, float2(pow(alpha, _GradientColorUVShift), 0)), HorBar(i.uv.y) * _BarColor, _BarAlpha);
+					return lerp(tex2D(_MainTex, i.uv), gradientColor, pow(alpha, _GradientColorShift));
 				}
 				return tex2D(_MainTex, i.uv);
-				// return float4(1.0, 0.0 ,0.0, 1);
 			}
+			float otherWorldDist = distance(otherWorldPos.xyz, _WorldSpaceCameraPos);
 			if (otherWorldDist < _SphereRadius) {
 				if (otherWorldDist > _SphereRadius - _SphereWidth) {
 					float alpha = 1 - (_SphereRadius - otherWorldDist) / _SphereWidth;
-					//return lerp(tex2D(_TheOtherWorldTex, i.uv), tex2D(_MainTex, i.uv), alpha);
-					half4 gradientColor = lerp(_MidColor, tex2D(_TheOtherWorldTex, i.uv), pow(alpha, _EdgeSharpness));
-					return lerp(tex2D(_MainTex, i.uv), gradientColor, alpha);// +HorBar(i.uv.y) * float4(0, 1, 0, 1);
-					//return lerp(tex2D(_MainTex, i.uv), tex2D(_TheOtherWorldTex, i.uv), alpha);
+					float4 gradientColor = lerp(tex2D(_GradientTexture, float2(pow(alpha, _GradientColorUVShift), 0)), HorBar(i.uv.y) * _BarColor, _BarAlpha);
+					return lerp(tex2D(_MainTex, i.uv), gradientColor, pow(alpha, _GradientColorShift));
 				}
-				// return tex2D(_CameraGBufferTexture0, i.uv);
 				return tex2D(_MainTex, i.uv);
-				// return float4(1.0, 0.0 ,0.0, 1);
 			}
-			
-			// return float4(1.0, 0.0, 0.0, 1);
 			return tex2D(_TheOtherWorldTex, i.uv);
-			//fixed4 mainCol = tex2D(_MainTex, i.uv);
-			//	return tex2D(_CameraDepthTexture, i.uv);
 			}
 			ENDCG
 		}
