@@ -122,7 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed980bf49fbbdf4c99a6d5d8b87cf95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderTexture: {fileID: 8400000, guid: aae7f8b7f2ec23248802cef55c825fee, type: 2}
 --- !u!136 &136163040993545040
 CapsuleCollider:
   m_ObjectHideFlags: 1

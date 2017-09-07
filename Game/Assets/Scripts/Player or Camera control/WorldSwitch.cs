@@ -8,11 +8,13 @@ public class WorldSwitch : MonoBehaviour {
     private GameObject _holdingObject;
     private Camera _cameraA;
     private Camera _cameraB;
-    public RenderTexture _renderTexture;
-	// Use this for initialization
-	void Start () {
-        _renderTexture.width = Screen.width;
-        _renderTexture.height = Screen.height;
+    private RenderTexture _renderTexture;
+    private RenderTexture _depthTexture;
+    private Camera _sceneCamera;
+    // Use this for initialization
+    void Start () {
+     //   _renderTexture.width = Screen.width;
+     //   _renderTexture.height = Screen.height;
     }
 	
 	// Update is called once per frame
@@ -29,12 +31,18 @@ public class WorldSwitch : MonoBehaviour {
             }
             if (switchable) {
                 Debug.Log("Switch!");
-                gameObject.layer = LayerMask.NameToLayer((_cameraA.targetTexture == null ? "WorldB" : "WorldA"));
+                bool isCamASceneCam = _sceneCamera.GetInstanceID() == _cameraA.GetInstanceID();
+                gameObject.layer = LayerMask.NameToLayer((isCamASceneCam? "WorldB" : "WorldA"));
                 _holdingObject.layer = gameObject.layer;
-                var sceneCamera = _cameraA.targetTexture == null ? _cameraA : _cameraB;
-                var backgroundCamera = sceneCamera.GetInstanceID() == _cameraA.GetInstanceID() ? _cameraB : _cameraA;
-                sceneCamera.targetTexture = _renderTexture;
+                var backgroundCamera = isCamASceneCam ? _cameraB : _cameraA;
+                _sceneCamera.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
                 backgroundCamera.targetTexture = null;
+                _sceneCamera = backgroundCamera;
+
+                var worldSwitchEffect = _sceneCamera.gameObject.AddComponent<WorldSwitchSphere>();
+                worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
+                worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
+                worldSwitchEffect.Init();
             }
             else{
                 Debug.Log("Cannot switch");
@@ -49,14 +57,21 @@ public class WorldSwitch : MonoBehaviour {
         _holdingObject = _cameraSetInstance.transform.Find("Holder").gameObject;
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
         _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
-        // var worldSwitchEffect = cameraSetInstance.transform.Find("CameraA").gameObject.AddComponent<WorldSwitchSphere>();
-        // worldSwitchEffect._theOtherWorldTexture = _theOtherWorldTexture;
+        _sceneCamera = _cameraA;
         _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
         _cameraA.targetTexture = null;
-        _cameraB.targetTexture = _renderTexture;
+        _renderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
+        _renderTexture.Create();
+        _depthTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.Depth);
+        _depthTexture.Create();
+        _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
+
+        
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
         var holderMat = holder.GetComponent<Renderer>().material;
         holderMat.SetTexture("_MainTex", _renderTexture);
+        
+        
         // Tell camera set to follow the root
         _cameraSetInstance.SendMessage("SetupRoot", _cameraRoot);
     }
