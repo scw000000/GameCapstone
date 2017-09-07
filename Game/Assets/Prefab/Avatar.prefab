@@ -152,11 +152,60 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  _fovCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: -0.0008443482
+      value: 0.39667815
+      inSlope: 0.03446012
+      outSlope: 0.03446012
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.098479934
+      value: 0.9954983
+      inSlope: -0.082876414
+      outSlope: -0.082876414
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.1373676
+      value: 0.0001721438
+      inSlope: -0.0977608
+      outSlope: -0.0977608
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.18424252
+      value: 0.4446018
+      inSlope: -0.8066777
+      outSlope: -0.8066777
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.19573139
+      value: 0.40745425
+      inSlope: -0.075848944
+      outSlope: -0.075848944
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.44859233
+      value: 0.397266
+      inSlope: 0.03637188
+      outSlope: 0.03637188
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1.0011394
+      value: 0.3969776
+      inSlope: -0.020810941
+      outSlope: -0.020810941
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   _barColor: {r: 0.021247858, g: 0.7683416, b: 0.9632353, a: 0}
   _barAlpha: 0.2
   _gradientColorShift: 2
   _gradientColorUVShift: 3
-  _maxFOV: 120
+  _maxFOV: 90
+  _minFOV: 40
 --- !u!136 &136163040993545040
 CapsuleCollider:
   m_ObjectHideFlags: 1
