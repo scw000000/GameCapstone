@@ -47,6 +47,13 @@ public class WorldSwitchSphere : MonoBehaviour {
     public void Reset() {
         _currentTime = 0f;
         _isUpdating = true;
+        Invoke("DisableSelf", _switchTime);
+    }
+
+    public void DisableSelf() {
+        _currentTime = 0f;
+        _isUpdating = false;
+        enabled = false;
     }
 
     public void SetUpdating(bool enabled) {
@@ -80,5 +87,8 @@ public class WorldSwitchSphere : MonoBehaviour {
 
         _material.SetMatrix("_InverseViewMat", inverseView);
         Graphics.Blit(source, destination, _material);
+        // var ppComponent = gameObject.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+       // ppComponent.OnRenderImage(source, destination);
+        //OnRenderImage
     }
 }

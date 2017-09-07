@@ -58,7 +58,7 @@ public class WorldSwitch : MonoBehaviour {
             }
             
         }
-
+        // Temporal for debugging
         Camera[] cameras = new Camera[] { _cameraA, _cameraB };
         for(int i = 0; i < cameras.Length; ++i)
         {
