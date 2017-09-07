@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldSwitch : MonoBehaviour {
+    public AnimationCurve _speedCurve;
     private GameObject _cameraRoot;
     private GameObject _cameraSetInstance;
     private GameObject _holdingObject;
@@ -37,12 +38,13 @@ public class WorldSwitch : MonoBehaviour {
                 var backgroundCamera = isCamASceneCam ? _cameraB : _cameraA;
                 _sceneCamera.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
                 backgroundCamera.targetTexture = null;
+                var sceneSwitchComp = _sceneCamera.gameObject.GetComponent<WorldSwitchSphere>();
+                sceneSwitchComp.enabled = false;
+                var backSwitchComp = backgroundCamera.gameObject.GetComponent<WorldSwitchSphere>();
+                backSwitchComp.Reset();
+                backSwitchComp.enabled = true;
                 _sceneCamera = backgroundCamera;
 
-                var worldSwitchEffect = _sceneCamera.gameObject.AddComponent<WorldSwitchSphere>();
-                worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
-                worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
-                worldSwitchEffect.Init();
             }
             else{
                 Debug.Log("Cannot switch");
@@ -66,7 +68,20 @@ public class WorldSwitch : MonoBehaviour {
         _depthTexture.Create();
         _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
 
-        
+        var worldSwitchEffect = _cameraA.gameObject.AddComponent<WorldSwitchSphere>();
+        worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
+        worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
+        worldSwitchEffect._animationCurve = _speedCurve;
+        worldSwitchEffect.Init();
+        worldSwitchEffect.enabled = false;
+
+        worldSwitchEffect = _cameraB.gameObject.AddComponent<WorldSwitchSphere>();
+        worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
+        worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
+        worldSwitchEffect._animationCurve = _speedCurve;
+        worldSwitchEffect.Init();
+        worldSwitchEffect.enabled = false;
+
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
         var holderMat = holder.GetComponent<Renderer>().material;
         holderMat.SetTexture("_MainTex", _renderTexture);

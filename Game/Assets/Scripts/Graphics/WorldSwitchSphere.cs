@@ -11,9 +11,10 @@ public class WorldSwitchSphere : MonoBehaviour {
     public float _sphereWidth = 15f;
     public Color _barColor = new Color(0, 1, 0);
     public Color _midColor = new Color(0, 0, 1);
-    public float _edgeSharpness = 3f;
+    public float _edgeSharpness = 10f;
+    public AnimationCurve _animationCurve { get; set; }
     private float _maxSphereRadius;
-    private float _switchTime = 20f;
+    private float _switchTime = 4f;
     private float _currentTime = 0f;
     public void SetTheOtherWorldTexture( RenderTexture theOtherWorldTexture) {
         _theOtherWorldTexture = theOtherWorldTexture;
@@ -21,8 +22,6 @@ public class WorldSwitchSphere : MonoBehaviour {
         }
     public void SetTheOtherWorldDepthTexture( RenderTexture theOtherWorldDepthTex ) {
         _theOtherWorldDepthTexture = theOtherWorldDepthTex;
-            //_theOtherWorldDepthTex = value;
-        //    
     }
     public void Init() {
         _material = new Material(Shader.Find(_shaderFilePath));
@@ -30,25 +29,24 @@ public class WorldSwitchSphere : MonoBehaviour {
         _material.SetTexture("_TheOtherWorldDepthTex", _theOtherWorldDepthTexture);
         var sceneCamera = gameObject.GetComponent<Camera>();
         _maxSphereRadius = sceneCamera.farClipPlane;
-        var inverseView = sceneCamera.worldToCameraMatrix.inverse;
-        _material.SetMatrix("_InverseViewMat", inverseView);
-        var test = _material.GetMatrix("_InverseViewMat");
         _material.SetColor("_BarColor", _barColor);
         _material.SetColor("_MidColor", _midColor);
         _material.SetFloat("_EdgeSharpness", _edgeSharpness);
+    }
 
-        // Shader.SetGlobalMatrix("_InverseViewMat", inverseView);
+    public void Reset() {
+        _currentTime = 0f;
     }
 
     // Use this for initialization
     void Start () {
-        Destroy(this, _switchTime);
+       
     }
 	
 	// Update is called once per frame
 	void Update () {
         _currentTime += Time.deltaTime;
-        _material.SetFloat("_SphereRadius", Mathf.Lerp(0, _maxSphereRadius, _currentTime / _switchTime));
+        _material.SetFloat("_SphereRadius", (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime / _switchTime))));
         _material.SetFloat("_SphereWidth", _sphereWidth);
     }
 
