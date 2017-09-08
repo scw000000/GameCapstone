@@ -5,12 +5,14 @@ using UnityEngine;
 public class WorldSwitch : MonoBehaviour {
     public AnimationCurve _speedCurve;
     public AnimationCurve _fovCurve;
+    public UnityEngine.PostProcessing.PostProcessingProfile _ppProfile;
     public Color _barColor;
     public float _barAlpha = 0.3f;
     public float _gradientColorShift = 1f;
     public float _gradientColorUVShift = 1f;
     public float _maxFOV;
     public float _minFOV;
+    public float _vignetteTime = 1f;
     private GameObject _cameraRoot;
     private GameObject _cameraSetInstance;
     private GameObject _holdingObject;
@@ -98,7 +100,7 @@ public class WorldSwitch : MonoBehaviour {
         _depthTexture.Create();
         _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
 
-        Camera[] cameras = new Camera[] { _cameraA, _cameraB };
+        Camera[] cameras = new Camera[] { _cameraB, _cameraA };
         foreach (var cam in cameras)
         {
             var worldSwitchEffect = cam.gameObject.AddComponent<WorldSwitchSphere>();
@@ -114,6 +116,9 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect._gradientColorUVShift = _gradientColorUVShift;
             worldSwitchEffect.enabled = false;
             worldSwitchEffect.Init();
+            worldSwitchEffect._vignetteTime = _vignetteTime;
+            var ppComp = cam.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+            ppComp.profile = _ppProfile;
         }
 
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;

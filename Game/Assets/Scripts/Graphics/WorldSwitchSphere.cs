@@ -18,6 +18,7 @@ public class WorldSwitchSphere : MonoBehaviour {
     public AnimationCurve _fovCurve { get; set; }
     private float _maxSphereRadius;
     private float _switchTime = 4f;
+    public float _vignetteTime;
     private float _currentTime = 0f;
     public Camera _theOtherCamera { get; set; }
     private Camera _myCamera;
@@ -47,17 +48,22 @@ public class WorldSwitchSphere : MonoBehaviour {
     public void Reset() {
         _currentTime = 0f;
         _isUpdating = true;
-        Invoke("DisableSelf", _switchTime);
+        SetVignette(true);
+        // Invoke("DisableSelf", _switchTime);
     }
 
     public void DisableSelf() {
         _currentTime = 0f;
-        _isUpdating = false;
         enabled = false;
     }
 
     public void SetUpdating(bool enabled) {
         _isUpdating = enabled;
+    }
+
+    private void SetVignette(bool enabled) {
+        var ppComp = gameObject.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+        ppComp.profile.vignette.enabled = enabled;
     }
 
     // Use this for initialization
@@ -69,6 +75,12 @@ public class WorldSwitchSphere : MonoBehaviour {
 	void Update () {
         if (_isUpdating) {
             _currentTime += Time.deltaTime / _switchTime;
+            if (_currentTime * _switchTime >= _vignetteTime) {
+                SetVignette(false);
+            }
+            if (_currentTime >= 1f) {
+                DisableSelf();
+            }
         }
         // temperal put in here for debugging
         _material.SetFloat("_SphereRadius", (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime))));
