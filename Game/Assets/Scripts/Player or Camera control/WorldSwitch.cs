@@ -19,7 +19,7 @@ public class WorldSwitch : MonoBehaviour {
     private Camera _cameraA;
     private Camera _cameraB;
     private RenderTexture _renderTexture;
-    private RenderTexture _depthTexture;
+    public RenderTexture _depthTexture;
     private Camera _sceneCamera;
     // Use this for initialization
     void Start () {
@@ -92,13 +92,15 @@ public class WorldSwitch : MonoBehaviour {
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
         _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
         _sceneCamera = _cameraA;
-        _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
         _cameraA.targetTexture = null;
+        _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
         _renderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
         _renderTexture.Create();
         _depthTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.Depth);
         _depthTexture.Create();
         _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
+        // Why will this work????
+        _cameraB.targetTexture = _renderTexture;
 
         Camera[] cameras = new Camera[] { _cameraB, _cameraA };
         foreach (var cam in cameras)
