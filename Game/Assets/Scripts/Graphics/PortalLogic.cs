@@ -14,6 +14,7 @@ public class PortalLogic : MonoBehaviour {
     private Camera _cameraA;
     private Camera _cameraB;
     private GameObject _player;
+    private GameObject []_goInside;
     // Use this for initialization
     void Start () {
         _worldALayer = LayerMask.NameToLayer("WorldA");
@@ -61,6 +62,24 @@ public class PortalLogic : MonoBehaviour {
 
     void ClosePortal() {
         Shader.SetGlobalFloat("_SphereRadius", 0f);
+        var collider = gameObject.GetComponent<SphereCollider>();
+        var overlappers = Physics.OverlapSphere(gameObject.transform.position, collider.radius * _portalCurrentRadius);
+        // Only alow switch when the player is not in overlapp with object in another world
+        foreach (var overlap in overlappers)
+        {
+            if (overlap.gameObject.GetComponent<Rigidbody>() != null && (overlap.gameObject.layer == _worldALayer || overlap.gameObject.layer == _worldBLayer))
+            {
+                Debug.Log("Get out of here!");
+                if (_player.GetComponent<WorldSwitch>()._insidePortal)
+                {
+                    overlap.gameObject.layer = _player.layer == _worldALayer ? _worldBLayer : _worldALayer;
+                }
+                else
+                {
+                    overlap.gameObject.layer = _player.layer;
+                }
+            }
+        }
         Destroy(gameObject);
     }
 	
@@ -111,7 +130,7 @@ public class PortalLogic : MonoBehaviour {
     }
 
     private void OnTriggerExit(Collider other){
-        // Debug.Log("Leave");
+        Debug.Log("Leave");
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(false);
@@ -126,6 +145,4 @@ public class PortalLogic : MonoBehaviour {
             }
         }
     }
-
-
 }

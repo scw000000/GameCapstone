@@ -22,10 +22,14 @@ public class WorldSwitch : MonoBehaviour {
     private RenderTexture _renderTexture;
     public RenderTexture _depthTexture;
     private Camera _sceneCamera;
+    private int _worldALayer;
+    private int _worldBLayer;
     // Use this for initialization
     void Start () {
-     //   _renderTexture.width = Screen.width;
-     //   _renderTexture.height = Screen.height;
+        //   _renderTexture.width = Screen.width;
+        //   _renderTexture.height = Screen.height;
+        _worldALayer = LayerMask.NameToLayer("WorldA");
+        _worldBLayer = LayerMask.NameToLayer("WorldB");
     }
 	
 	// Update is called once per frame
@@ -60,9 +64,13 @@ public class WorldSwitch : MonoBehaviour {
 
     public void SetPortalStatus(bool isInside) {
         if (_insidePortal != isInside){
-            PerformSwitch(false);
+            SwitchCollisionVolume();
         }
         _insidePortal = isInside;
+    }
+
+    public void SwitchCollisionVolume() {
+        gameObject.layer = gameObject.layer == _worldALayer?_worldBLayer:_worldALayer;
     }
 
     public void PerformSwitch(bool enableAnimation) {
@@ -81,10 +89,8 @@ public class WorldSwitch : MonoBehaviour {
         {
             Debug.Log("Switch!");
             bool isCamASceneCam = _sceneCamera.GetInstanceID() == _cameraA.GetInstanceID();
-            gameObject.layer = LayerMask.NameToLayer((isCamASceneCam ? "WorldB" : "WorldA"));
+            SwitchCollisionVolume();
             _holdingObject.layer = gameObject.layer;
-
-
             var backgroundCamera = isCamASceneCam ? _cameraB : _cameraA;
             backgroundCamera.cullingMask = -1;
             _sceneCamera.cullingMask = -1 ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldB" : "WorldA")));

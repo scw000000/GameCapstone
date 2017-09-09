@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114520241661299234}
   m_Layer: 8
   m_Name: Avatar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   _maxFOV: 90
   _minFOV: 40
   _vignetteTime: 0.5
+  _insidePortal: 0
   _depthTexture: {fileID: 0}
 --- !u!136 &136163040993545040
 CapsuleCollider:

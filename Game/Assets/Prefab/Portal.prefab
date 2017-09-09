@@ -63,16 +63,10 @@ MonoBehaviour:
       outSlope: 2.654154
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.3525227
-      value: 0.4286099
-      inSlope: 0.055134192
-      outSlope: 0.055134192
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.59108275
-      value: 0.80769867
-      inSlope: 1.8791397
-      outSlope: 1.8791397
+      time: 0.29415363
+      value: 0.7177068
+      inSlope: 1.3270923
+      outSlope: 1.3270923
       tangentMode: 0
     - serializedVersion: 2
       time: 1
@@ -83,7 +77,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  _portalRadiusAnimTime: 0.5
+  _portalRadiusAnimTime: 0.3
   _portalLifeTime: 3
 --- !u!135 &135413376073912968
 SphereCollider:
