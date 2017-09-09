@@ -90,9 +90,9 @@ public class WorldSwitch : MonoBehaviour {
             Debug.Log("Switch!");
             bool isCamASceneCam = _sceneCamera.GetInstanceID() == _cameraA.GetInstanceID();
             SwitchCollisionVolume();
-            _holdingObject.layer = gameObject.layer;
+            _holdingObject.layer = _holdingObject.layer == _worldALayer? _worldBLayer: _worldALayer;
             var backgroundCamera = isCamASceneCam ? _cameraB : _cameraA;
-            backgroundCamera.cullingMask = -1;
+            backgroundCamera.cullingMask = -1 ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldA" : "WorldB")));
             _sceneCamera.cullingMask = -1 ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldB" : "WorldA")));
             // _sceneCamera.cullingMask = -1;
             _sceneCamera.renderingPath = RenderingPath.Forward;
@@ -128,7 +128,7 @@ public class WorldSwitch : MonoBehaviour {
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
         _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
         _cameraA.renderingPath = RenderingPath.DeferredShading;
-        _cameraA.cullingMask = -1;
+        _cameraA.cullingMask = -1 ^ (1 << LayerMask.NameToLayer("WorldB"));
         _sceneCamera = _cameraA;
         _cameraA.targetTexture = null;
         _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();

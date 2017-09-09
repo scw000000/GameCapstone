@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 486450251}
   - component: {fileID: 486450249}
   m_Layer: 9
-  m_Name: Cube (1)
+  m_Name: YellowFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 496857341}
   - component: {fileID: 496857339}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: BlueFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
