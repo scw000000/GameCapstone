@@ -5,9 +5,10 @@ public class AvatarControl : MonoBehaviour
    {
    public float _movingSpeed = 15.0f;
    public const float _rotatingSpeed = 500.0f;
+   public GameObject _portalBulletPrefab;
    private Rigidbody _rigidBody = null;
    private GameObject _cameraRoot;
-
+    
     // Use this for initialization
     void Start()
       {
@@ -48,6 +49,11 @@ public class AvatarControl : MonoBehaviour
             gameObject.transform.RotateAround( gameObject.transform.position, new Vector3( 0.0f, 1.0f, 0.0f ), Input.GetAxis("Mouse X") * Time.deltaTime * _rotatingSpeed );
             _cameraRoot.transform.RotateAround(_cameraRoot.transform.position, gameObject.transform.right, -1.0f * Input.GetAxis("Mouse Y") * Time.deltaTime * _rotatingSpeed );
          }
+
+      if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            var forwardVec = _cameraRoot.transform.forward;
+            Instantiate(_portalBulletPrefab, _cameraRoot.transform.position + forwardVec * 2, _cameraRoot.transform.rotation);
+        }
 
       }
    }

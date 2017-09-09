@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1739382662160426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4889919884025172}
@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movingSpeed: 10
+  _portalBulletPrefab: {fileID: 1417724531640528, guid: a94ab941393d4b944af2d9bb12504664,
+    type: 2}
 --- !u!114 &114520241661299234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,6 +210,7 @@ MonoBehaviour:
   _maxFOV: 90
   _minFOV: 40
   _vignetteTime: 0.5
+  _depthTexture: {fileID: 0}
 --- !u!136 &136163040993545040
 CapsuleCollider:
   m_ObjectHideFlags: 1

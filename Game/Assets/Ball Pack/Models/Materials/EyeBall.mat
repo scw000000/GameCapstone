@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: EyeBall
-  m_Shader: {fileID: 3, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: de795a51dfddbf94a836c97a37100ea4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -28,10 +28,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _EmissionLM: 0
+    - _Glossiness: 0.5
+    - _InOrOutScalar: 1
+    - _Metallic: 0
     - _Shininess: 0.12245336
+    - _SphereRadius: 5
     m_Colors:
     - _Color: {r: 0.9125874, g: 0.9125874, b: 0.9125874, a: 1}
     - _SpecColor: {r: 0.75174826, g: 0.75174826, b: 0.75174826, a: 1}
+    - _SphereCenter: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6

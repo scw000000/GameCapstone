@@ -54,8 +54,21 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator GameStart() {
         Debug.Log("Game Start!");
+        // Disable portal effect at start
+
+        SetupPortalSetting();
         yield return new WaitForSeconds(1f);
         Debug.Log("Game Start End!");
+    }
+
+    private void SetupPortalSetting() {
+        Shader.SetGlobalFloat("_SphereRadius", 0f);
+        var goArray = FindObjectsOfType<GameObject>();
+        foreach (var go in goArray) {
+                if (go.GetComponent<MeshRenderer>() != null && go.GetComponent<RenderTextureControl>() == null) {
+                    go.AddComponent<RenderTextureControl>();
+                }
+        }
     }
 
     private IEnumerator GameRunning() {
