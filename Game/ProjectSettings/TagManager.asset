@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Deadly
+  - Bounce
+  - Spawn
+  - Split
   layers:
   - Default
   - TransparentFX
