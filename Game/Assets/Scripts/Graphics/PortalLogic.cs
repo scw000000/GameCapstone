@@ -16,7 +16,6 @@ public class PortalLogic : MonoBehaviour {
     private Camera _cameraA;
     private Camera _cameraB;
     private GameObject _player;
-    private GameObject []_goInside;
     // Use this for initialization
     void Start () {
         _worldALayer = LayerMask.NameToLayer("WorldA");
@@ -33,7 +32,6 @@ public class PortalLogic : MonoBehaviour {
         yield return Expand();
         yield return Idle();
         yield return Shrink();
-        yield return null;
     }
     // Init and expanding animation
     IEnumerator Expand() {
@@ -71,7 +69,7 @@ public class PortalLogic : MonoBehaviour {
         // Only alow switch when the player is not in overlapp with object in another world
         foreach (var overlap in overlappers)
         {
-            Debug.Log("reset " + overlap.gameObject.name);
+           // Debug.Log("reset " + overlap.gameObject.name);
             UpdateNonPlayerGOLeavePortal(overlap.gameObject);
         }
         Destroy(gameObject);
@@ -96,23 +94,26 @@ public class PortalLogic : MonoBehaviour {
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(true);
         }
-        else {
-
+        else
+        {
             UpdateNonPlayerGOInPortal(other.gameObject);
         }
     }
 
     void OnTriggerStay(Collider other){
+       // Debug.Log(other.gameObject.name + " stay test");
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(true);
         }
         else
+        {
             UpdateNonPlayerGOInPortal(other.gameObject);
+        }
     }
 
     void OnTriggerExit(Collider other){
-        Debug.Log("Leave");
+        // Debug.Log("Leave");
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(false);
@@ -124,33 +125,33 @@ public class PortalLogic : MonoBehaviour {
     }
 
     void UpdateNonPlayerGOInPortal(GameObject go) {
-        Debug.Log(go.name + "testing in portal");
+       // Debug.Log(go.name + "testing in portal");
         if (_player.GetInstanceID() != go.gameObject.GetInstanceID())
         {
-            if (go.gameObject.layer == _worldALayer || go.gameObject.layer == _worldBLayer)
+            if (go.layer == _worldALayer || go.layer == _worldBLayer)
             {
                 if (go.GetComponent<Rigidbody>() != null)
                 {
                     // Both go and player inside portal, make them in same world
                     if (_player.GetComponent<WorldSwitch>()._insidePortal)
                     {
-                        go.gameObject.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
+                        go.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
                         // other.gameObject.layer = _player.layer == _worldALayer ? _worldBLayer : _worldALayer;
                     }// player outside and go inside, make them in different world
                     else
                     {
-                        go.gameObject.layer = _player.layer == _worldALayer ? _worldBPortalLayer : _worldAPortalLayer;
+                        go.layer = _player.layer == _worldALayer ? _worldBPortalLayer : _worldAPortalLayer;
                     }
                 }
                 else
                 {
                     if (_player.GetComponent<WorldSwitch>()._insidePortal && go.layer == _player.layer)
                     {
-                        go.gameObject.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
+                        go.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
                     }// player outside and go inside, make them in different world
                     else if (!_player.GetComponent<WorldSwitch>()._insidePortal && go.layer != _player.layer)
                     {
-                        go.gameObject.layer = _player.layer == _worldALayer ? _worldBPortalLayer : _worldAPortalLayer;
+                        go.layer = _player.layer == _worldALayer ? _worldBPortalLayer : _worldAPortalLayer;
                     }
                 }
                    
@@ -168,7 +169,7 @@ public class PortalLogic : MonoBehaviour {
                 }
                 else {
                     // If the rigid body is shared by two meshes, things get quite tricky
-                    // because you cannot dicide it's world based on a's world anymore
+                    // because you cannot dicide it's world based on player's world anymore
                     // or you'll move the child mesh around the world
                     if (_player.GetComponent<WorldSwitch>()._insidePortal){
                         if ((_player.layer == _worldALayer && go.layer == _worldBPortalLayer)
@@ -189,7 +190,7 @@ public class PortalLogic : MonoBehaviour {
             //else {
                 for (int i = 0; i < go.transform.childCount; ++i)
                 {
-                    Debug.Log(go.transform.GetChild(i).gameObject.name);
+                    // Debug.Log(go.transform.GetChild(i).gameObject.name);
                     UpdateNonPlayerGOInPortal(go.transform.GetChild(i).gameObject);
                 }
            // }
@@ -198,7 +199,7 @@ public class PortalLogic : MonoBehaviour {
     }
 
     void UpdateNonPlayerGOLeavePortal(GameObject go){
-        Debug.Log(go.name + "out portal");
+      //  Debug.Log(go.name + "out portal");
         if (_player.GetInstanceID() != go.GetInstanceID() && (go.layer == _worldAPortalLayer || go.layer == _worldBPortalLayer))
         {
             if (go.GetComponent<Rigidbody>() != null){
@@ -212,13 +213,13 @@ public class PortalLogic : MonoBehaviour {
             }
             else {
                 // Return it to it's original world, don't be influenced by player world
-                go.layer = go.gameObject.layer == _worldAPortalLayer ? _worldALayer : _worldBLayer;
+                go.layer = go.layer == _worldAPortalLayer ? _worldALayer : _worldBLayer;
             }
             
         }
         for (int i = 0; i < go.transform.childCount; ++i)
         {
-                Debug.Log(go.transform.GetChild(i).gameObject.name);
+               // Debug.Log(go.transform.GetChild(i).gameObject.name);
                 UpdateNonPlayerGOLeavePortal(go.transform.GetChild(i).gameObject);
         }
     }
