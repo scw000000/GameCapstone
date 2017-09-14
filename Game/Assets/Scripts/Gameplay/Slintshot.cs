@@ -8,24 +8,38 @@ public class Slintshot : MonoBehaviour {
 
     private LineRenderer left;
     private LineRenderer right;
-    private GameObject ball;
+    private Transform ball;
     private GameObject player;
     private bool canGrab;
 	// Use this for initialization
 	void Start () {
         left = transform.Find("LeftAttachPoint").transform.GetComponent<LineRenderer>();
+        if (left == null)
+        {
+            Debug.Log("left not found");
+        }
         right = transform.Find("RightAttachPoint").transform.GetComponent<LineRenderer>();
-        ball = 
+        if (right == null)
+        {
+            Debug.Log("left not found");
+        }
+        ball = transform.Find("Ball");
+        if (ball == null)
+        {
+            Debug.Log("left not found");
+        }
+
         player = GameObject.FindGameObjectWithTag("Player");
         canGrab = false;
     }
 
-    private void OnTriggerEnter(Collision obj)
+    private void OnTriggerEnter(Collider obj)
     {
         Physics.IgnoreCollision(obj.transform.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
+        canGrab = true;
     }
 
-    void OnTriggerStay(Collision obj)
+    void OnTriggerStay(Collider obj)
     {
         if (obj.gameObject.tag.Equals("Player"))
         {
@@ -36,37 +50,50 @@ public class Slintshot : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        /*ball = transform.Find("Ball");
+        if (ball == null)
+        {
+            Debug.Log("ball not found");
+        }
+        left.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y+0.2f, ball.localPosition.z+2.0f));
+        right.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y+0.2f, ball.localPosition.z-2.0f));
+        */
         if (canGrab)
         {
             if (Input.GetKey(KeyCode.E))
             {
-                grabPos = Camera.main.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
-                ball.transform.position = grabPos;
-                left.SetPosition(0, new Vector3(grabPos.x, grabPos.y, grabPos.z));
-                right.SetPosition(0, new Vector3(grabPos.x, grabPos.y, grabPos.z));
+                //grabPos = Camera.main.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
+                Vector3 shift = new Vector3(-3.0f,0.0f,0.0f);
+                grabPos = player.transform.position + shift; 
+                ball.position = grabPos;
+                left.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z + 2.0f));
+                right.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z - 2.0f));
             }
 
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.E))
             {
+                Vector3 shift = new Vector3(-3.0f, 0.0f, 0.0f);
+                grabPos = player.transform.position + shift;
 
+                ball.position = grabPos;
 
-                ball.transform.position = grabPos;
-
-                left.SetPosition(0, new Vector3(grabPos.x, grabPos.y, grabPos.z ));
-                right.SetPosition(0, new Vector3(grabPos.x, grabPos.y, grabPos.z));
-
-                Vector3 Vec3L = new Vector3(-2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
-                Vector3 Vec3R = new Vector3(2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
+                left.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z + 2.0f));
+                right.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z - 2.0f));
+                
+                Vector3 Vec3L = new Vector3(left.transform.position.x - grabPos.x, left.transform.position.y - grabPos.y, left.transform.position.z- grabPos.z);
+                Vector3 Vec3R = new Vector3(right.transform.position.x- grabPos.x, right.transform.position.y - grabPos.y, right.transform.position.z- grabPos.z);
+                //Vector3 Vec3L = new Vector3(-2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
+                //Vector3 Vec3R = new Vector3(2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
                 Vector3 Dir = (Vec3L + Vec3R).normalized;
 
-                ball.transform.GetComponent<Rigidbody>().useGravity = true;
-                ball.transform.GetComponent<Rigidbody>().AddForce(Dir * 9.0f, ForceMode.Impulse);
+                ball.GetComponent<Rigidbody>().useGravity = true;
+                ball.GetComponent<Rigidbody>().AddForce(Dir * 30.0f, ForceMode.Impulse);
 
-                left.SetPosition(0, new Vector3(0F, 1.8F, 0F));
-                right.SetPosition(0, new Vector3(0F, 1.8F, 0F));
+                left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
+                right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
             }
 
-            canGrab = false;
+            //canGrab = false;
         }
 	}
 }
