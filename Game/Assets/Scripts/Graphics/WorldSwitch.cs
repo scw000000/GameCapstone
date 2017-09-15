@@ -14,6 +14,7 @@ public class WorldSwitch : MonoBehaviour {
     public float _minFOV;
     public float _vignetteTime = 1f;
     public bool _insidePortal = false;
+    public Texture2D _gradientTexutre;
     private GameObject _cameraRoot;
     private GameObject _cameraSetInstance;
     private GameObject _holdingObject;
@@ -84,7 +85,6 @@ public class WorldSwitch : MonoBehaviour {
             {
                 switchable = false;
             }
-            Debug.Log(overlap.gameObject.name);
         }
         if (switchable)
         {
@@ -158,8 +158,9 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect._gradientColorShift = _gradientColorShift;
             worldSwitchEffect._gradientColorUVShift = _gradientColorUVShift;
             worldSwitchEffect.enabled = false;
-            worldSwitchEffect.Init();
+            worldSwitchEffect._gradientTexutre = _gradientTexutre;
             worldSwitchEffect._vignetteTime = _vignetteTime;
+            worldSwitchEffect.Init();
             var ppComp = cam.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
             ppComp.profile = _ppProfile;
         }

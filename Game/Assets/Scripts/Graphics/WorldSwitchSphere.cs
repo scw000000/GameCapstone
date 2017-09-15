@@ -24,6 +24,7 @@ public class WorldSwitchSphere : MonoBehaviour {
     private Camera _myCamera;
     public float _minFOV;
     public float _maxFOV;
+    public Texture2D _gradientTexutre;
     public void SetTheOtherWorldTexture( RenderTexture theOtherWorldTexture) {
         _theOtherWorldTexture = theOtherWorldTexture;
        //       
@@ -43,6 +44,7 @@ public class WorldSwitchSphere : MonoBehaviour {
         _material.SetFloat("_BarAlpha", _barAlpha);
         _material.SetFloat("_GradientColorShift", _gradientColorShift);
         _material.SetFloat("_GradientColorUVShift", _gradientColorUVShift);
+        _material.SetTexture("_GradientTexture", _gradientTexutre);
     }
 
     public void Reset() {

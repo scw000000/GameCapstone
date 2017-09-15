@@ -27,7 +27,7 @@ public class LevelLoading : MonoBehaviour {
 
     // Hard coded, should be fixed later
     public void StartLoadLevel(string levelName) {
-        StartCoroutine(LoadLevel("Assets/PongSpecific/PongStage.unity"));
+        StartCoroutine(LoadLevel("Assets/Scenes/StartingCave.unity"));
     }
 
     // Hard coded, should be fixed later
@@ -100,7 +100,7 @@ public class LevelLoading : MonoBehaviour {
 	}
 
     public void ClearSaveData() {
-        PlayerPrefs.SetInt("PlayerScore", 0);
-        PlayerPrefs.SetInt("AIScore", 0);
+        // PlayerPrefs.SetInt("PlayerScore", 0);
+        // PlayerPrefs.SetInt("AIScore", 0);
     }
 }

@@ -441,6 +441,7 @@ MonoBehaviour:
   _minFOV: 40
   _vignetteTime: 0.5
   _insidePortal: 0
+  _gradientTexutre: {fileID: 2800000, guid: afe938cf4d450bc4da810e72132d7984, type: 3}
   _depthTexture: {fileID: 0}
 --- !u!114 &114532905875728470
 MonoBehaviour:
