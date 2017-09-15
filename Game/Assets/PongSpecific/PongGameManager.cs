@@ -61,7 +61,7 @@ public class PongGameManager : MonoBehaviour {
         PlayerInstance = Instantiate(PlayerPrefab, PlayerSpawnLocation.transform.position, PlayerSpawnLocation.transform.rotation) as GameObject;
         //PlayerCameraInstance = PlayerInstance.transform.Find("Camera").gameObject;
         PlayerCameraInstance = Instantiate(CameraPrefab);
-        var camFollowComp = PlayerCameraInstance.GetComponent<CameraFollow>();
+        // var camFollowComp = PlayerCameraInstance.GetComponent<CameraFollow>();
         var imgCapComp = PlayerInstance.GetComponent<ImageCapture>();
         imgCapComp.RenderCamera = PlayerCameraInstance.GetComponent<Camera>();
         var videoCapCtrlComp = PlayerInstance.GetComponent<RockVR.Video.VideoCaptureCtrl>();

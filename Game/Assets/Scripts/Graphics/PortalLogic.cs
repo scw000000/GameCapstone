@@ -13,8 +13,8 @@ public class PortalLogic : MonoBehaviour {
     private int _worldBLayer;
     private int _worldAPortalLayer;
     private int _worldBPortalLayer;
-    private Camera _cameraA;
-    private Camera _cameraB;
+    // private Camera _cameraA;
+    // private Camera _cameraB;
     private GameObject _player;
     // Use this for initialization
     void Start () {
@@ -23,8 +23,8 @@ public class PortalLogic : MonoBehaviour {
         _worldAPortalLayer = LayerMask.NameToLayer("WorldAInPortal");
         _worldBPortalLayer = LayerMask.NameToLayer("WorldBInPortal");
         StartCoroutine("PortalLifeCircle");
-        _cameraA = GameObject.Find("CameraA").GetComponent<Camera>();
-        _cameraB = GameObject.Find("CameraB").GetComponent<Camera>();
+        // _cameraA = GameObject.Find("CameraA").GetComponent<Camera>();
+        // _cameraB = GameObject.Find("CameraB").GetComponent<Camera>();
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -64,7 +64,7 @@ public class PortalLogic : MonoBehaviour {
 
     void ClosePortal() {
         Shader.SetGlobalFloat("_SphereRadius", 0f);
-        var collider = gameObject.GetComponent<SphereCollider>();
+        // var collider = gameObject.GetComponent<SphereCollider>();
         var overlappers = Physics.OverlapSphere(gameObject.transform.position, 0.1f * _portalCurrentRadius);
         // Only alow switch when the player is not in overlapp with object in another world
         foreach (var overlap in overlappers)

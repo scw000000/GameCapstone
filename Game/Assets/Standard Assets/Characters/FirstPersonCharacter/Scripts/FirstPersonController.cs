@@ -42,7 +42,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-
+        private float m_EjectSpeed;
+        private bool m_Eject;
         // Use this for initialization
         private void Start()
         {
@@ -56,6 +57,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            m_EjectSpeed = 0f;
+            m_Eject = false;
         }
 
 
@@ -115,8 +118,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MoveDir.x = desiredMove.x*speed;
             m_MoveDir.z = desiredMove.z*speed;
 
-
-            if (m_CharacterController.isGrounded)
+            
+            if (m_Eject)
+            {
+                m_MoveDir.y = m_EjectSpeed;
+                m_Eject = false;
+                PlayJumpSound();
+                m_Jump = false;
+                m_Jumping = true;
+            }
+            else if (m_CharacterController.isGrounded)
             {
                 m_MoveDir.y = -m_StickToGroundForce;
 
@@ -132,12 +143,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
             }
+            // Debug.Log(m_MoveDir);
             m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
 
             m_MouseLook.UpdateCursorLock();
+        }
+
+        public void PerformEject(float ejectSpeed) {
+            m_EjectSpeed = ejectSpeed; 
+            m_Eject = true;
         }
 
 
@@ -249,6 +266,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
+            Debug.Log(hit.gameObject.name);
             Rigidbody body = hit.collider.attachedRigidbody;
             //dont move the rigidbody if the character is on top of it
             if (m_CollisionFlags == CollisionFlags.Below)

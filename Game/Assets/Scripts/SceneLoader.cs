@@ -48,7 +48,8 @@ public class SceneLoader : MonoBehaviour {
         yield return new WaitForSeconds(3);
 
         // Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
-        AsyncOperation async = Application.LoadLevelAsync(scene);
+        AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(scene);
+       // AsyncOperation async = Application.LoadLevelAsync(scene);
 
         // While the asynchronous operation to load the new scene is not yet complete, continue waiting until it's done.
         while (!async.isDone) {

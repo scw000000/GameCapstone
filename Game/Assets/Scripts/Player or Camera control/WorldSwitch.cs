@@ -84,6 +84,7 @@ public class WorldSwitch : MonoBehaviour {
             {
                 switchable = false;
             }
+            Debug.Log(overlap.gameObject.name);
         }
         if (switchable)
         {
@@ -101,7 +102,7 @@ public class WorldSwitch : MonoBehaviour {
             backgroundCamera.targetTexture = null;
             Camera tempCam = _sceneCamera;
             _sceneCamera = backgroundCamera;
-            backgroundCamera = _sceneCamera;
+            backgroundCamera = tempCam;
             if (enableAnimation) {
                 StartSwitchAnimation(_sceneCamera, backgroundCamera);
             }

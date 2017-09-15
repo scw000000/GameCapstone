@@ -10,7 +10,6 @@ public class Ball : MonoBehaviour {
     public float MaxPaddleReflectionAngle = 40f;
     public float ReflectShiftSpeedScalar = 10f;
     private bool isAttached;
-	private Vector3 locShift;
     public bool _isLaunchable = true;
 	// Use this for initialization
 	void Start () {
@@ -24,7 +23,7 @@ public class Ball : MonoBehaviour {
         {
             if (AttachRoot)
             {
-                transform.position = AttachRoot.transform.position + locShift;
+                transform.position = AttachRoot.transform.position;
 
                 if (_isLaunchable && Input.GetKeyDown(KeyCode.Space))
                 {
@@ -89,6 +88,6 @@ public class Ball : MonoBehaviour {
 	void Respawn(){
 		// player = GameObject.Find ("Player");
 		isAttached = true;
-		transform.position = AttachRoot.transform.position + locShift;
+		transform.position = AttachRoot.transform.position;
 	}
 }
