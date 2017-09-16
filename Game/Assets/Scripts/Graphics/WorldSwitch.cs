@@ -81,7 +81,9 @@ public class WorldSwitch : MonoBehaviour {
         // Only alow switch when the player is not in overlapp with object in another world
         foreach (var overlap in overlappers)
         {
-            if (overlap.gameObject.layer != LayerMask.NameToLayer("Default") && overlap.gameObject.layer != gameObject.layer)
+            // overlap.gameObject.layer != LayerMask.NameToLayer("Default") &&
+            if ((overlap.gameObject.layer == _worldALayer || overlap.gameObject.layer == _worldBLayer)
+                && overlap.gameObject.layer != gameObject.layer)
             {
                 switchable = false;
             }

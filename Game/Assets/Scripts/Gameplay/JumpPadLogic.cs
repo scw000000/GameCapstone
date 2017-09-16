@@ -22,14 +22,24 @@ public class JumpPadLogic : MonoBehaviour {
 
     // Start counting time
     void OnTriggerEnter(Collider other) {
-        
         if (other.tag.Equals("Player")) {
             _player = other.gameObject;
         }
     }
     
     void OnTriggerStay(Collider other) {
-        _currentChargeTime += Time.deltaTime;
+        if (_player == null) {
+            return;
+        }
+        if (_player.layer == gameObject.layer 
+            || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && _player.layer == LayerMask.NameToLayer("WorldA"))
+            || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && _player.layer == LayerMask.NameToLayer("WorldB")) )
+        {
+            _currentChargeTime += Time.deltaTime;
+        }
+        else {
+            _currentChargeTime = 0f;
+        }
         // Debug.Log(_currentChargeTime);
         if (_currentChargeTime >= _chargeTime) {
             var fpsController = _player.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();

@@ -8,7 +8,7 @@ public class WorldSwitchSphere : MonoBehaviour {
     public RenderTexture _theOtherWorldTexture;
     RenderTexture _theOtherWorldDepthTexture;
    // public float _sphereRadius = 0f;
-    public float _sphereWidth = 15f;
+    public float _sphereWidth = 100f;
     public Color _barColor { get; set; }
     public float _barAlpha;
     public float _gradientColorShift;
@@ -17,6 +17,7 @@ public class WorldSwitchSphere : MonoBehaviour {
     public AnimationCurve _animationCurve { get; set; }
     public AnimationCurve _fovCurve { get; set; }
     private float _maxSphereRadius;
+    public float _currSphereRadius;
     private float _switchTime = 4f;
     public float _vignetteTime;
     private float _currentTime = 0f;
@@ -33,12 +34,13 @@ public class WorldSwitchSphere : MonoBehaviour {
         _theOtherWorldDepthTexture = theOtherWorldDepthTex;
     }
     public void Init() {
+        _currSphereRadius = 0f;
         _material = new Material(Shader.Find(_shaderFilePath));
         _material.SetTexture("_TheOtherWorldTex", _theOtherWorldTexture);
         _material.SetTexture("_TheOtherWorldDepthTex", _theOtherWorldDepthTexture);
         _myCamera = gameObject.GetComponent<Camera>();
         _maxSphereRadius = _myCamera.farClipPlane;
-        _material.SetFloat("_SphereRadius", 0);
+        _material.SetFloat("_SphereRadius", _currSphereRadius);
         _material.SetFloat("_SphereWidth", _sphereWidth);
         _material.SetColor("_BarColor", _barColor);
         _material.SetFloat("_BarAlpha", _barAlpha);
@@ -84,8 +86,9 @@ public class WorldSwitchSphere : MonoBehaviour {
                 DisableSelf();
             }
         }
-        // temperal put in here for debugging
-        _material.SetFloat("_SphereRadius", (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime))));
+        _currSphereRadius = (Mathf.Lerp(0, _maxSphereRadius, _animationCurve.Evaluate(_currentTime)));
+        _material.SetFloat("_SphereRadius", _currSphereRadius);
+        // Temperal debugging
         _material.SetFloat("_SphereWidth", _sphereWidth);
         _material.SetColor("_BarColor", _barColor);
         _material.SetFloat("_BarAlpha", _barAlpha);
