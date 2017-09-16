@@ -350,13 +350,13 @@ Prefab:
         type: 2}
       propertyPath: _playerPrefab
       value: 
-      objectReference: {fileID: 1602976863489966, guid: 4a9d40ebae3e13d44bb24ca85402de94,
+      objectReference: {fileID: 1790601150999638, guid: 4a9d40ebae3e13d44bb24ca85402de94,
         type: 2}
     - target: {fileID: 114698442624259768, guid: f7d43ae0cba09ab47ac001afa1e3b676,
         type: 2}
       propertyPath: _cameraSetPrefab
       value: 
-      objectReference: {fileID: 1946943962444736, guid: b357234c375648841b78eeb9a35e1f0d,
+      objectReference: {fileID: 1628753730740894, guid: b357234c375648841b78eeb9a35e1f0d,
         type: 2}
     - target: {fileID: 114698442624259768, guid: f7d43ae0cba09ab47ac001afa1e3b676,
         type: 2}
