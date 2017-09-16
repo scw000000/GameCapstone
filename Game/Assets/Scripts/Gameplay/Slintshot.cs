@@ -11,23 +11,16 @@ public class Slintshot : MonoBehaviour {
     private Transform ball;
     private GameObject player;
     private bool canGrab;
+    private Vector3 ballOriginalPos;
+   
 	// Use this for initialization
 	void Start () {
         left = transform.Find("LeftAttachPoint").transform.GetComponent<LineRenderer>();
-        if (left == null)
-        {
-            Debug.Log("left not found");
-        }
+
         right = transform.Find("RightAttachPoint").transform.GetComponent<LineRenderer>();
-        if (right == null)
-        {
-            Debug.Log("left not found");
-        }
+
         ball = transform.Find("Ball");
-        if (ball == null)
-        {
-            Debug.Log("left not found");
-        }
+        ballOriginalPos = ball.position;
 
         player = GameObject.FindGameObjectWithTag("Player");
         canGrab = false;
@@ -46,6 +39,17 @@ public class Slintshot : MonoBehaviour {
             canGrab = true;
 
         }
+    }
+
+    private void ResetPhysics()
+    {
+        canGrab = false;
+        ball.position = ballOriginalPos;
+        ball.GetComponent<Rigidbody>().useGravity = false;
+        ball.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f,0.0f,0.0f), ForceMode.Impulse);
+
+        left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
+        right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
     }
 
     // Update is called once per frame
@@ -87,7 +91,7 @@ public class Slintshot : MonoBehaviour {
                 Vector3 Dir = (Vec3L + Vec3R).normalized;
 
                 ball.GetComponent<Rigidbody>().useGravity = true;
-                ball.GetComponent<Rigidbody>().AddForce(Dir * 30.0f, ForceMode.Impulse);
+                ball.GetComponent<Rigidbody>().AddForce(Dir * 20.0f, ForceMode.Impulse);
 
                 left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
                 right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
