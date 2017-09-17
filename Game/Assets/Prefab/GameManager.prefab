@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4705540082997100}
   - component: {fileID: 114698442624259768}
+  - component: {fileID: 114226099591390368}
+  - component: {fileID: 114090992796068694}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -40,6 +42,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114090992796068694
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730135317279470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db84d3e612d1848a4b253a51e77347d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+--- !u!114 &114226099591390368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1730135317279470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1936cfc2821111940a50e24932c62d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoadingScreenPrefab: {fileID: 0}
+  Mainmenu: {fileID: 0}
+  LoadingText: {fileID: 0}
 --- !u!114 &114698442624259768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,9 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d6d5a3569808b459fbca76081ef6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 1542346208206116, guid: 4a9d40ebae3e13d44bb24ca85402de94,
-    type: 2}
-  SpawnLocation: {fileID: 0}
-  GameOverScreenPrefab: {fileID: 1508733268442868, guid: 3af65d7f3ee9d0c4c9b5992df165061f,
-    type: 2}
-  EndGameCreditSceneName: Assets/Scenes/EndGameCredit.unity
+  _playerPrefab: {fileID: 0}
+  _cameraSetPrefab: {fileID: 0}
+  _spawnLocation: {fileID: 0}
+  _gameOverScreenPrefab: {fileID: 0}
+  _endGameCreditSceneName: 
