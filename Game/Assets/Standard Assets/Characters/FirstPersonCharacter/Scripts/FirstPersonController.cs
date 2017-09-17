@@ -44,6 +44,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
         private float m_EjectSpeed;
         private bool m_Eject;
+        private string bounceTag;
+
         // Use this for initialization
         private void Start()
         {
@@ -59,6 +61,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , m_Camera.transform);
             m_EjectSpeed = 0f;
             m_Eject = false;
+            bounceTag = "Bounce";
         }
 
 
@@ -148,7 +151,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
-
+            UsableObject();
             m_MouseLook.UpdateCursorLock();
         }
 
@@ -224,7 +227,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Camera.transform.localPosition = newCameraPosition;
         }
 
-
+        private void UsableObject()
+        {
+            RaycastHit hit;
+            Vector3 rotate = new Vector3(0, 2, 0);
+            Debug.DrawRay(transform.position, m_Camera.transform.forward*10, Color.red);
+            if(Physics.SphereCast(transform.position, .25f, m_Camera.transform.forward, out hit, 8f) && (hit.transform.gameObject.tag == bounceTag))
+                {
+                if (Input.GetKey(KeyCode.R))
+                {
+                    
+                    hit.transform.Rotate(rotate);
+                }
+            }
+            //Physics.SphereCast(transform.position, .25f, m_Camera.transform.forward, out hit, 15f);
+        }
         private void GetInput(out float speed)
         {
             // Read input
