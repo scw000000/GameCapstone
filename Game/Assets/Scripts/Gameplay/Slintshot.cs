@@ -93,7 +93,7 @@ public class Slintshot : MonoBehaviour {
                 Vector3 Dir = (Vec3L + Vec3R).normalized;
 
                 ball.GetComponent<Rigidbody>().useGravity = true;
-                ball.GetComponent<Rigidbody>().AddForce(Dir * deltaX*20.0f, ForceMode.Impulse);
+                ball.GetComponent<Rigidbody>().AddForce(Dir * deltaX*3.0f, ForceMode.Impulse);
 
                 left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
                 right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
