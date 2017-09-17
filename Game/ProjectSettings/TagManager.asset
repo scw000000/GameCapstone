@@ -11,6 +11,10 @@ TagManager:
   - Fire
   - Arm
   - Transportable
+  - Unlock
+  - Event
+  - Switch
+  - Laser
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,7 @@ public class Laser : MonoBehaviour {
     private float timer = 0;
     private LineRenderer mLineRenderer;
     private bool unlocked;
+    private bool laserOn;
 
     // Use this for initialization
     void Start()
@@ -25,33 +26,44 @@ public class Laser : MonoBehaviour {
         splitTag = "Split";
         unlockTag = "Unlock";
         mLineRenderer = gameObject.GetComponent<LineRenderer>();
+        mLineRenderer.enabled = false;
         StartCoroutine(RedrawLaser());
         mLineRenderer.startWidth = .25f;
         mLineRenderer.endWidth = .25f;
         unlocked = false;
+        laserOn = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.tag != spawnedBeamTag)
+        if (laserOn)
         {
-            if (timer >= updateFrequency)
+            if (gameObject.tag != spawnedBeamTag)
             {
-                timer = 0;
-                //Debug.Log("Redrawing laser");
-                foreach (GameObject laserSplit in GameObject.FindGameObjectsWithTag(spawnedBeamTag))
-                    Destroy(laserSplit);
+                if (timer >= updateFrequency)
+                {
+                    timer = 0;
+                    //Debug.Log("Redrawing laser");
+                    foreach (GameObject laserSplit in GameObject.FindGameObjectsWithTag(spawnedBeamTag))
+                        Destroy(laserSplit);
 
+                    StartCoroutine(RedrawLaser());
+                }
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                mLineRenderer = gameObject.GetComponent<LineRenderer>();
                 StartCoroutine(RedrawLaser());
             }
-            timer += Time.deltaTime;
         }
-        else
-        {
-            mLineRenderer = gameObject.GetComponent<LineRenderer>();
-            StartCoroutine(RedrawLaser());
-        }
+    }
+
+    void LaserOn()
+    {
+        laserOn = true;
+        mLineRenderer.enabled = laserOn;
     }
 
     IEnumerator RedrawLaser()
@@ -74,7 +86,7 @@ public class Laser : MonoBehaviour {
             //Debug.Log("Physics.Raycast(" + lastLaserPosition + ", " + laserDirection + ", out hit , " + laserDistance + ")");
             if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
             {
-                //Debug.Log("Bounce");
+                Debug.Log("Bounce");
                 laserReflected++;
                 vertexCounter += 3;
                 mLineRenderer.SetVertexCount(vertexCounter);
@@ -113,6 +125,7 @@ public class Laser : MonoBehaviour {
                 //Debug.Log("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
                 if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
                 {
+                    Debug.Log("Unlocked");
                     unlocked = true;
                     hit.transform.SendMessage("TriggerEvent");
                 }

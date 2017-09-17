@@ -14,14 +14,14 @@ public class LaserUnlock : MonoBehaviour {
         eventObject = GameObject.FindGameObjectWithTag("Event");
         triggered = false;
         initPos = eventObject.transform.position;
-        fallSpeed = .02f;
+        fallSpeed = .1f;
     }
 
     void FixedUpdate()
     {
         if(triggered == true)
         {
-            if (eventObject.transform.position.y <= -1f)
+            if (eventObject.transform.position.y <= -50f)
             {
                 eventObject.SetActive(false);
             }
