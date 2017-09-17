@@ -86,7 +86,7 @@ public class Laser : MonoBehaviour {
             //Debug.Log("Physics.Raycast(" + lastLaserPosition + ", " + laserDirection + ", out hit , " + laserDistance + ")");
             if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
             {
-                Debug.Log("Bounce");
+                //Debug.Log("Bounce");
                 laserReflected++;
                 vertexCounter += 3;
                 mLineRenderer.SetVertexCount(vertexCounter);

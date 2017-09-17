@@ -8,13 +8,11 @@ public class LaserSwitch : MonoBehaviour
     private bool triggered;
     Vector3 initPos;
     // Use this for initialization
-    void Start()
-    {
-        laserObject = GameObject.FindGameObjectWithTag("Laser");
-    }
 
     void SwitchOn()
     {
+        //Debug.Log("Switched on");
+        laserObject = GameObject.FindGameObjectWithTag("Laser");
         laserObject.SendMessage("LaserOn");
     }
 }
