@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator GameStart() {
         Debug.Log("Game Start!");
         // Disable portal effect at start
-
+        SetPlayerInput(true);
         SetupPortalSetting();
         yield return new WaitForSeconds(1f);
         Debug.Log("Game Start End!");
@@ -94,5 +94,13 @@ public class GameManager : MonoBehaviour {
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_endGameCreditSceneName);
         Destroy(_gameOverScreenInstance);
         Debug.Log("Game Ending End!");
+    }
+
+    public void SetPlayerInput(bool isEnabled)
+    {
+        var playerControl = _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
+        playerControl.enabled = isEnabled;
+        // var playerMenuControl = gameObject.GetComponent<PauseMenuController>();
+        // playerMenuControl.enabled = isEnabled;
     }
 }

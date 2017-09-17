@@ -5,7 +5,7 @@ using UnityEngine;
 public class PongPlayerControl : MonoBehaviour {
     public float MovingSpeed = 15.0f;
     public const float RotatingSpeed = 500.0f;
-    private GameObject CameraRoot;
+    // private GameObject CameraRoot;
     private float MinX;
     private float MaxX;
     // Use this for initialization
@@ -15,7 +15,7 @@ public class PongPlayerControl : MonoBehaviour {
         MinX = leftMostPos.transform.position.x + 0.5f + gameObject.transform.localScale.x * 0.5f;
         var rightMostPos = GameObject.Find("P1RightMostPos");
         MaxX = rightMostPos.transform.position.x - 0.5f - gameObject.transform.localScale.x * 0.5f;
-        CameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
+        // CameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
     }
 
     // Update is called once per frame

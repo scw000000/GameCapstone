@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpPadLogic : MonoBehaviour {
-    private bool _isPlayerInside = false;
     public float _chargeTime = 3f;
     public float _ejectMagtitude = 30f;
     private GameObject _player;
     private float _currentChargeTime = 0f;
 	// Use this for initialization
 	void Start () {
-        _isPlayerInside = false;
         _currentChargeTime = 0f;
        //StartCoroutine("JumpPadLifeCycle");
 	}
@@ -54,33 +52,6 @@ public class JumpPadLogic : MonoBehaviour {
     void OnTriggerExit(Collider other) {
         _currentChargeTime = 0f;
     }
-
-    //IEnumerator JumpPadLifeCycle() {
-    //    while (true) {
-    //        yield return Idle();
-    //        yield return Charge();
-    //        yield return Eject();
-    //    }
-    //}
-
-    //IEnumerator Idle() {
-    //    _currentChargeTime = 0f;
-    //    while (!_isPlayerInside) {
-    //        yield return null;
-    //    }
-    //    yield return null;
-    //}
-
-    //IEnumerator Charge() {
-    //    while (_currentChargeTime < _chargeTime) {
-    //        _currentChargeTime += Time.deltaTime;
-    //    }
-    //    yield return null;
-    //}
-
-    //IEnumerator Eject(){
-    //    yield return null;
-    //}
 
     void Eject(GameObject go) {
 
