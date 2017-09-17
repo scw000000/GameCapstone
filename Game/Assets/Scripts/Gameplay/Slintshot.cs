@@ -12,6 +12,7 @@ public class Slintshot : MonoBehaviour {
     private GameObject player;
     private bool canGrab;
     private Vector3 ballOriginalPos;
+    private float stringOriginalLength;
    
 	// Use this for initialization
 	void Start () {
@@ -21,7 +22,7 @@ public class Slintshot : MonoBehaviour {
 
         ball = transform.Find("Ball");
         ballOriginalPos = ball.position;
-
+        stringOriginalLength = Vector3.Magnitude(left.transform.position - right.transform.position);
         player = GameObject.FindGameObjectWithTag("Player");
         canGrab = false;
     }
@@ -88,10 +89,11 @@ public class Slintshot : MonoBehaviour {
                 Vector3 Vec3R = new Vector3(right.transform.position.x- grabPos.x, right.transform.position.y - grabPos.y, right.transform.position.z- grabPos.z);
                 //Vector3 Vec3L = new Vector3(-2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
                 //Vector3 Vec3R = new Vector3(2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
+                float deltaX = Vec3L.magnitude + Vec3R.magnitude - stringOriginalLength;
                 Vector3 Dir = (Vec3L + Vec3R).normalized;
 
                 ball.GetComponent<Rigidbody>().useGravity = true;
-                ball.GetComponent<Rigidbody>().AddForce(Dir * 20.0f, ForceMode.Impulse);
+                ball.GetComponent<Rigidbody>().AddForce(Dir * deltaX*20.0f, ForceMode.Impulse);
 
                 left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
                 right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
