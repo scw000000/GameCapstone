@@ -64,8 +64,12 @@ public class GameManager : MonoBehaviour {
     private void SetupPortalSetting() {
         Shader.SetGlobalFloat("_SphereRadius", 0f);
         var goArray = FindObjectsOfType<GameObject>();
+        int aLyaer = LayerMask.NameToLayer("WorldA");
+        int bLyaer = LayerMask.NameToLayer("WorldB");
         foreach (var go in goArray) {
-                if (go.GetComponent<MeshRenderer>() != null && go.GetComponent<RenderTextureControl>() == null) {
+                if ((go.layer == aLyaer || go.layer == bLyaer) 
+                && go.GetComponent<MeshRenderer>() != null 
+                && go.GetComponent<RenderTextureControl>() == null) {
                     go.AddComponent<RenderTextureControl>();
                 }
         }

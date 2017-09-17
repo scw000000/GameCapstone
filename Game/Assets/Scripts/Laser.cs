@@ -9,10 +9,12 @@ public class Laser : MonoBehaviour {
     public string bounceTag;
     public string splitTag;
     public string spawnedBeamTag;
+    public string unlockTag;
     public int maxBounce;
     public int maxSplit;
     private float timer = 0;
     private LineRenderer mLineRenderer;
+    private bool unlocked;
 
     // Use this for initialization
     void Start()
@@ -21,10 +23,12 @@ public class Laser : MonoBehaviour {
         bounceTag = "Bounce";
         spawnedBeamTag = "Spawn";
         splitTag = "Split";
+        unlockTag = "Unlock";
         mLineRenderer = gameObject.GetComponent<LineRenderer>();
         StartCoroutine(RedrawLaser());
         mLineRenderer.startWidth = .25f;
         mLineRenderer.endWidth = .25f;
+        unlocked = false;
     }
 
     // Update is called once per frame
@@ -107,6 +111,11 @@ public class Laser : MonoBehaviour {
                 mLineRenderer.SetVertexCount(vertexCounter);
                 Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * hit.distance);
                 //Debug.Log("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
+                if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
+                {
+                    unlocked = true;
+                    hit.transform.SendMessage("TriggerEvent");
+                }
                 if ((Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance)))
                 {
                     mLineRenderer.SetPosition(vertexCounter - 1, lastPos);
