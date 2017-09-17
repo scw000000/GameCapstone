@@ -10,6 +10,7 @@ TagManager:
   - Split
   - Fire
   - Arm
+  - Transportable
   layers:
   - Default
   - TransparentFX

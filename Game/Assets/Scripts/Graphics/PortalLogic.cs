@@ -130,7 +130,7 @@ public class PortalLogic : MonoBehaviour {
         {
             if (go.layer == _worldALayer || go.layer == _worldBLayer)
             {
-                if (go.GetComponent<Rigidbody>() != null)
+                if (go.tag.Equals("Transportable"))
                 {
                     // Both go and player inside portal, make them in same world
                     if (_player.GetComponent<WorldSwitch>()._insidePortal)
@@ -158,7 +158,7 @@ public class PortalLogic : MonoBehaviour {
             }
             else if (go.layer == _worldAPortalLayer || go.layer == _worldBPortalLayer)
             {
-                if (go.GetComponent<Rigidbody>() != null)
+                if (go.tag.Equals("Transportable"))
                 {
                     if (_player.GetComponent<WorldSwitch>()._insidePortal) {
                         go.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
@@ -202,7 +202,8 @@ public class PortalLogic : MonoBehaviour {
       //  Debug.Log(go.name + "out portal");
         if (_player.GetInstanceID() != go.GetInstanceID() && (go.layer == _worldAPortalLayer || go.layer == _worldBPortalLayer))
         {
-            if (go.GetComponent<Rigidbody>() != null){
+            if (go.tag.Equals("Transportable"))
+            {
                 // player insdie portal, then set it to outside environment
                 if (_player.GetComponent<WorldSwitch>()._insidePortal) {
                     go.layer = _player.layer == _worldALayer ? _worldBLayer : _worldALayer;
