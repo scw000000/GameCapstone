@@ -108,6 +108,72 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &29057897
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705540082997100, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114698442624259768, guid: f7d43ae0cba09ab47ac001afa1e3b676,
+        type: 2}
+      propertyPath: _playerPrefab
+      value: 
+      objectReference: {fileID: 1790601150999638, guid: 4a9d40ebae3e13d44bb24ca85402de94,
+        type: 2}
+    - target: {fileID: 114698442624259768, guid: f7d43ae0cba09ab47ac001afa1e3b676,
+        type: 2}
+      propertyPath: _cameraSetPrefab
+      value: 
+      objectReference: {fileID: 1628753730740894, guid: b357234c375648841b78eeb9a35e1f0d,
+        type: 2}
+    - target: {fileID: 114698442624259768, guid: f7d43ae0cba09ab47ac001afa1e3b676,
+        type: 2}
+      propertyPath: _spawnLocation
+      value: 
+      objectReference: {fileID: 1151876393186984, guid: f25f61b5150a29d4fbc072846a4ceab8,
+        type: 2}
+    - target: {fileID: 114698442624259768, guid: f7d43ae0cba09ab47ac001afa1e3b676,
+        type: 2}
+      propertyPath: _gameOverScreenPrefab
+      value: 
+      objectReference: {fileID: 1508733268442868, guid: 3af65d7f3ee9d0c4c9b5992df165061f,
+        type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f7d43ae0cba09ab47ac001afa1e3b676, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &631482850
 Prefab:
   m_ObjectHideFlags: 0
