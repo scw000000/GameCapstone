@@ -29,3 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: a106b35281f9fb444a990d7734428c68
+  - enabled: 1
+    path: Assets/Scenes/Sewer.unity
+    guid: ec7df00107e5bd44da526ca044956f3f
+  - enabled: 1
+    path: Assets/Scenes/SlingshotPuzzle.unity
+    guid: 9e9e5a2eba5137b4090c80e4d8d67dd1
