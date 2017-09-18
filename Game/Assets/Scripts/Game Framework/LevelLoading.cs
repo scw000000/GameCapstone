@@ -27,13 +27,8 @@ public class LevelLoading : MonoBehaviour {
 
     // Hard coded, should be fixed later
     public void StartLoadLevel(string levelName) {
-        StartCoroutine(LoadLevel("Assets/Scenes/StartingCave.unity"));
-    }
-
-    // Hard coded, should be fixed later
-    public void BackToMainMenu(string levelName)
-    {
-        SceneManager.LoadScene("Assets/Scenes/MainMenu.unity");
+        StartCoroutine(LoadLevel("Assets/Scenes/" + levelName + ".unity"));
+        // StartCoroutine(LoadLevel("Assets/Scenes/StartingCave.unity"));
     }
 
     // Hard coded, should be fixed later
@@ -51,11 +46,11 @@ public class LevelLoading : MonoBehaviour {
         }
         // Disable sceen switch until we are good to go;
         AsyncOp.allowSceneActivation = false;
-		Mainmenu.SetActive (false);
+		// Mainmenu.SetActive (false);
         InitLoadingScreen();
         Debug.Log("Start updating loading screen");
-        yield return StartCoroutine(UpdateLoadingScreen() );
-        yield return StartCoroutine(SwitchToLevel());
+        yield return UpdateLoadingScreen();
+        yield return SwitchToLevel();
     }
 
     private void InitLoadingScreen() {
@@ -84,7 +79,7 @@ public class LevelLoading : MonoBehaviour {
     }
 
     private IEnumerator SwitchToLevel() {
-        yield return new WaitForSeconds(3f);
+        Time.timeScale = 1;
         Destroy(LoadingScreenInstance);
         AsyncOp.allowSceneActivation = true;
         yield return null;
