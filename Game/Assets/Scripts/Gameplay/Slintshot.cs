@@ -11,6 +11,7 @@ public class Slintshot : MonoBehaviour {
     private Transform ball;
     private GameObject player;
     private bool canGrab;
+    private bool _isGrabbing;
     private Vector3 ballOriginalPos;
     private float stringOriginalLength;
    
@@ -25,12 +26,17 @@ public class Slintshot : MonoBehaviour {
         stringOriginalLength = Vector3.Magnitude(left.transform.position - right.transform.position);
         player = GameObject.FindGameObjectWithTag("Player");
         canGrab = false;
+        _isGrabbing = false;
     }
 
-    private void OnTriggerEnter(Collider obj)
+    void OnTriggerEnter(Collider obj)
     {
+        if (obj.gameObject.tag.Equals("Player"))
+        {
+            canGrab = true;
+
+        }
         Physics.IgnoreCollision(obj.transform.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
-        canGrab = true;
     }
 
     void OnTriggerStay(Collider obj)
@@ -39,6 +45,14 @@ public class Slintshot : MonoBehaviour {
         {
             canGrab = true;
 
+        }
+    }
+
+    void OnTriggerExit(Collider obj)
+    {
+        if (obj.gameObject.tag.Equals("Player"))
+        {
+            canGrab = false;
         }
     }
 
@@ -67,6 +81,7 @@ public class Slintshot : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.E))
             {
+                _isGrabbing = true;
                 //grabPos = Camera.main.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
                 Vector3 shift = new Vector3(-3.0f,0.0f,0.0f);
                 grabPos = player.transform.position + shift; 
@@ -74,9 +89,10 @@ public class Slintshot : MonoBehaviour {
                 left.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z + 2.0f));
                 right.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z - 2.0f));
             }
-
-            if (Input.GetKeyUp(KeyCode.E))
-            {
+        }
+        if (_isGrabbing && (!canGrab || !Input.GetKey(KeyCode.E)))
+        {
+            _isGrabbing = false;
                 Vector3 shift = new Vector3(-3.0f, 0.0f, 0.0f);
                 grabPos = player.transform.position + shift;
 
@@ -84,22 +100,21 @@ public class Slintshot : MonoBehaviour {
 
                 left.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z + 2.0f));
                 right.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z - 2.0f));
-                
-                Vector3 Vec3L = new Vector3(left.transform.position.x - grabPos.x, left.transform.position.y - grabPos.y, left.transform.position.z- grabPos.z);
-                Vector3 Vec3R = new Vector3(right.transform.position.x- grabPos.x, right.transform.position.y - grabPos.y, right.transform.position.z- grabPos.z);
+
+                Vector3 Vec3L = new Vector3(left.transform.position.x - grabPos.x, left.transform.position.y - grabPos.y, left.transform.position.z - grabPos.z);
+                Vector3 Vec3R = new Vector3(right.transform.position.x - grabPos.x, right.transform.position.y - grabPos.y, right.transform.position.z - grabPos.z);
                 //Vector3 Vec3L = new Vector3(-2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
                 //Vector3 Vec3R = new Vector3(2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
                 float deltaX = Vec3L.magnitude + Vec3R.magnitude - stringOriginalLength;
                 Vector3 Dir = (Vec3L + Vec3R).normalized;
 
                 ball.GetComponent<Rigidbody>().useGravity = true;
-                ball.GetComponent<Rigidbody>().AddForce(Dir * deltaX*3.0f, ForceMode.Impulse);
+                ball.GetComponent<Rigidbody>().AddForce(Dir * deltaX * 12.0f, ForceMode.Impulse);
 
                 left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
                 right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
-            }
 
             //canGrab = false;
         }
-	}
+    }
 }
