@@ -84,7 +84,9 @@ public class Laser : MonoBehaviour {
         while (loopActive)
         {
             //Debug.Log("Physics.Raycast(" + lastLaserPosition + ", " + laserDirection + ", out hit , " + laserDistance + ")");
-            if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
+            int reflectableLayers = -1;
+            reflectableLayers = ~( 1 << 2);
+            if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance, reflectableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
             {
                 //Debug.Log("Bounce");
                 laserReflected++;
