@@ -24,7 +24,6 @@ public class Slintshot : MonoBehaviour {
         ball = transform.Find("Ball");
         ballOriginalPos = ball.position;
         stringOriginalLength = Vector3.Magnitude(left.transform.position - right.transform.position);
-        player = GameObject.FindGameObjectWithTag("Player");
         canGrab = false;
         _isGrabbing = false;
     }
@@ -33,6 +32,7 @@ public class Slintshot : MonoBehaviour {
     {
         if (obj.gameObject.tag.Equals("Player"))
         {
+            player = obj.gameObject;
             canGrab = true;
 
         }
@@ -79,7 +79,7 @@ public class Slintshot : MonoBehaviour {
         */
         if (canGrab)
         {
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetButton("Interaction"))
             {
                 _isGrabbing = true;
                 //grabPos = Camera.main.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
@@ -90,7 +90,7 @@ public class Slintshot : MonoBehaviour {
                 right.SetPosition(0, new Vector3(ball.localPosition.x, ball.localPosition.y + 0.2f, ball.localPosition.z - 2.0f));
             }
         }
-        if (_isGrabbing && (!canGrab || !Input.GetKey(KeyCode.E)))
+        if (_isGrabbing && (!canGrab || !Input.GetButton("Interaction")))
         {
             _isGrabbing = false;
                 Vector3 shift = new Vector3(-3.0f, 0.0f, 0.0f);
