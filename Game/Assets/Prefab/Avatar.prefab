@@ -20,13 +20,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4466297121266250}
   - component: {fileID: 136632024218101624}
+  - component: {fileID: 143498545234526660}
   - component: {fileID: 114978048218578078}
+  - component: {fileID: 114173619926727272}
   - component: {fileID: 54635378420886122}
   - component: {fileID: 114517587762811972}
   - component: {fileID: 114329170395675130}
-  - component: {fileID: 82347075399778624}
-  - component: {fileID: 143498545234526660}
   - component: {fileID: 114061228819711518}
+  - component: {fileID: 82347075399778624}
   m_Layer: 8
   m_Name: Avatar
   m_TagString: Player
@@ -329,6 +330,17 @@ MonoBehaviour:
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   _portalBulletPrefab: {fileID: 1417724531640528, guid: a94ab941393d4b944af2d9bb12504664,
     type: 2}
+--- !u!114 &114173619926727272
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1790601150999638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cdf8df17435a7499617c3c7dbd827b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114329170395675130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -484,7 +496,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0
+  m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
