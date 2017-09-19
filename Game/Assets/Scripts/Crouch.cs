@@ -11,8 +11,7 @@ public class Crouch : MonoBehaviour {
 	void Start () {
 		cc = GetComponent<CharacterController> ();
 		isCrouch = false;
-		//_rigidBody = gameObject.GetComponent<Rigidbody>();
-		//_cameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
+
 	}
 	
 	// Update is called once per frame
