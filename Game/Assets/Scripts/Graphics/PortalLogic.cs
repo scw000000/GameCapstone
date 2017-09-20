@@ -145,13 +145,22 @@ public class PortalLogic : MonoBehaviour {
                 }
                 else
                 {
-                    if (_player.GetComponent<WorldSwitch>()._insidePortal && go.layer == _player.layer)
+                    //if (_player.GetComponent<WorldSwitch>()._insidePortal && go.layer == _player.layer)
+                    //{
+                    //    go.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
+                    //}// player outside and go inside, make them in different world
+                    //else if (!_player.GetComponent<WorldSwitch>()._insidePortal && go.layer != _player.layer)
+                    //{
+                    //    go.layer = _player.layer == _worldALayer ? _worldBPortalLayer : _worldAPortalLayer;
+                    //}
+
+                    if (_player.GetComponent<WorldSwitch>()._insidePortal)
                     {
-                        go.layer = _player.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
+                        go.layer = go.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
                     }// player outside and go inside, make them in different world
-                    else if (!_player.GetComponent<WorldSwitch>()._insidePortal && go.layer != _player.layer)
+                    else if (!_player.GetComponent<WorldSwitch>()._insidePortal)
                     {
-                        go.layer = _player.layer == _worldALayer ? _worldBPortalLayer : _worldAPortalLayer;
+                        go.layer = go.layer == _worldALayer ? _worldAPortalLayer : _worldBPortalLayer;
                     }
                 }
                    
@@ -171,19 +180,19 @@ public class PortalLogic : MonoBehaviour {
                     // If the rigid body is shared by two meshes, things get quite tricky
                     // because you cannot dicide it's world based on player's world anymore
                     // or you'll move the child mesh around the world
-                    if (_player.GetComponent<WorldSwitch>()._insidePortal){
-                        if ((_player.layer == _worldALayer && go.layer == _worldBPortalLayer)
-                            || (_player.layer == _worldBLayer && go.layer == _worldAPortalLayer)){
-                            go.layer = go.layer == _worldAPortalLayer ? _worldALayer : _worldBLayer;
-                        }
-                    }
-                    else {
-                        if ( (_player.layer == _worldALayer && go.layer == _worldAPortalLayer)
-                            || (_player.layer == _worldBLayer && go.layer == _worldBPortalLayer) ) {
-                            go.layer = go.layer == _worldAPortalLayer ? _worldALayer : _worldBLayer;
-                        }
+                    //if (_player.GetComponent<WorldSwitch>()._insidePortal){
+                    //    if ((_player.layer == _worldALayer && go.layer == _worldBPortalLayer)
+                    //        || (_player.layer == _worldBLayer && go.layer == _worldAPortalLayer)){
+                    //        go.layer = go.layer == _worldAPortalLayer ? _worldALayer : _worldBLayer;
+                    //    }
+                    //}
+                    //else {
+                    //    if ( (_player.layer == _worldALayer && go.layer == _worldAPortalLayer)
+                    //        || (_player.layer == _worldBLayer && go.layer == _worldBPortalLayer) ) {
+                    //        go.layer = go.layer == _worldAPortalLayer ? _worldALayer : _worldBLayer;
+                    //    }
                             
-                    }
+                    //}
                 }
                 
             }
