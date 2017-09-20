@@ -77,21 +77,30 @@ public class Laser : MonoBehaviour {
         Vector3 laserDirection = transform.forward; //direction of the next laser
         Vector3 lastLaserPosition = transform.localPosition; //origin of the next laser
 
-        mLineRenderer.SetVertexCount(1);
+        // mLineRenderer.SetVertexCount(1);
+        mLineRenderer.positionCount = 1;
         mLineRenderer.SetPosition(0, transform.position);
         RaycastHit hit;
-
+        bool isGOInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA");
         while (loopActive)
         {
             //Debug.Log("Physics.Raycast(" + lastLaserPosition + ", " + laserDirection + ", out hit , " + laserDistance + ")");
-            int reflectableLayers = -1;
-            reflectableLayers = ~( 1 << 2);
-            if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance, reflectableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
+            // First part: decide the hit point as if there's no portal in the middle
+            int hitableLayers = -1;
+            // Disable ignore raycast layer, which is used by portal
+            hitableLayers ^= ( 1 << 2);
+            // Disable it's oppisite world objects
+            hitableLayers ^= ( 1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA") ));
+            // Disable objects in portal
+            hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal")));
+
+            if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance, hitableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
             {
                 //Debug.Log("Bounce");
                 laserReflected++;
                 vertexCounter += 3;
-                mLineRenderer.SetVertexCount(vertexCounter);
+                // mLineRenderer.SetVertexCount(vertexCounter);
+                mLineRenderer.positionCount = vertexCounter;
                 mLineRenderer.SetPosition(vertexCounter - 3, Vector3.MoveTowards(hit.point, lastLaserPosition, 0.01f));
                 mLineRenderer.SetPosition(vertexCounter - 2, hit.point);
                 mLineRenderer.SetPosition(vertexCounter - 1, hit.point);
@@ -122,7 +131,8 @@ public class Laser : MonoBehaviour {
                 //Debug.Log("No Bounce");
                 laserReflected++;
                 vertexCounter++;
-                mLineRenderer.SetVertexCount(vertexCounter);
+                // mLineRenderer.SetVertexCount(vertexCounter);
+                mLineRenderer.positionCount = vertexCounter;
                 Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * hit.distance);
                 //Debug.Log("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
                 if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
