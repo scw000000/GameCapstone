@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour {
-    private bool IsPlayerAlive = true; 
+    private bool _isPlayerAlive = true;
+    public GameObject _currentPortal;
 	// Use this for initialization
 	void Start () {
     }
@@ -11,7 +12,7 @@ public class PlayerStatus : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown(KeyCode.G)){
-            IsPlayerAlive = false;
+            _isPlayerAlive = false;
         }
     }
 
@@ -20,12 +21,12 @@ public class PlayerStatus : MonoBehaviour {
     {
         if (other.gameObject.tag.Equals("Deadly"))
         {
-            IsPlayerAlive = false;
+            _isPlayerAlive = false;
         }
 
     }
 
     public bool IsAlive() {
-        return IsPlayerAlive;
+        return _isPlayerAlive;
     }
 }

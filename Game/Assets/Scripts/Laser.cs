@@ -16,7 +16,6 @@ public class Laser : MonoBehaviour {
     private LineRenderer mLineRenderer;
     private bool unlocked;
     private bool laserOn;
-
     // Use this for initialization
     void Start()
     {
@@ -80,21 +79,173 @@ public class Laser : MonoBehaviour {
         // mLineRenderer.SetVertexCount(1);
         mLineRenderer.positionCount = 1;
         mLineRenderer.SetPosition(0, transform.position);
-        RaycastHit hit;
+        RaycastHit hit = new RaycastHit();
         bool isGOInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA");
+        var playerGO = GameObject.FindGameObjectWithTag("Player");
+        GameObject portal = null;
+        if (playerGO != null)
+        {
+            portal = playerGO.GetComponent<PlayerStatus>()._currentPortal;
+        }
+        // Debug.Log(isInsidePortal ? "Inside portal" : "Outside portal");
         while (loopActive)
         {
-            //Debug.Log("Physics.Raycast(" + lastLaserPosition + ", " + laserDirection + ", out hit , " + laserDistance + ")");
-            // First part: decide the hit point as if there's no portal in the middle
+            GameObject hitObject = null;
             int hitableLayers = -1;
-            // Disable ignore raycast layer, which is used by portal
-            hitableLayers ^= ( 1 << 2);
-            // Disable it's oppisite world objects
-            hitableLayers ^= ( 1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA") ));
-            // Disable objects in portal
-            hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal")));
+            float restDistance = laserDistance;
+            bool isHit = false;
+            Vector3 startingPoint = lastLaserPosition;
+            hitableLayers = -1;
+            hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
+            int portalLayer = LayerMask.NameToLayer("Portal");
+            hitableLayers ^= (1 << 14);
+            hitableLayers ^= (1 << 2);
+            hitableLayers ^= (1 << LayerMask.NameToLayer("WorldAInPortal"));
+            hitableLayers ^= (1 << LayerMask.NameToLayer("WorldBInPortal"));
+            //Vector3 idealNextPoint = lastLaserPosition + (laserDirection * restDistance);
+            //isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers);
+            //if (isHit) {
+            //    idealNextPoint = hit.point;
+            //}
 
-            if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance, hitableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
+            bool isInsidePortalCurrently = false;
+            if (portal != null)
+            {
+                float portalRadius = portal.GetComponent<PortalLogic>()._portalCurrentRadius;
+                isInsidePortalCurrently = Vector3.SqrMagnitude(startingPoint - portal.transform.position) <= portalRadius * portalRadius;
+            }
+            if (!isInsidePortalCurrently) {
+                hitableLayers = -1;
+                hitableLayers ^= (1 << 2);
+                hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
+                // shooting from outside and won't be blocked by object in the other world
+                hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldBInPortal") : LayerMask.NameToLayer("WorldAInPortal")));
+                isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers);
+                // Reach portal boundary, that means nothing blocking for now
+                if (!isHit)
+                {
+                    // Debug.Log("out portal can't hit");
+                }
+                // The ray arrived outer rim of portal, so nothing is colliding now
+                if (isHit) {
+                    if (hit.transform.gameObject.GetComponent<PortalLogic>() != null)
+                    {
+                        // Debug.Log("out portal reach " + restDistance);
+                        isHit = false;
+                        restDistance -= hit.distance;
+                        startingPoint = hit.point + laserDirection * 0.1f;
+                    }
+                    else {
+                        hitObject = hit.transform.gameObject;
+                    }
+                 //   Debug.DrawLine(hit.point + new Vector3(0, 1, 0), hit.point + laserDirection + new Vector3(0, 1, 0), Color.red, 4f);
+                }
+                
+            }
+
+            if (portal != null) {
+                float portalRadius = portal.GetComponent<PortalLogic>()._portalCurrentRadius;
+                isInsidePortalCurrently = Vector3.SqrMagnitude(startingPoint - portal.transform.position) <= portalRadius * portalRadius;
+            }
+            //// Inside portal
+            if (!isHit && restDistance >= 0f && isInsidePortalCurrently)
+            {
+                // Find another point in portal, project from the other side
+                hitableLayers = (1 << 14);
+                //Debug.DrawLine(lastLaserPosition + (laserDirection * laserDistance) + new Vector3(0, 1, 0), lastLaserPosition + new Vector3(0, 1, 0), Color.green, 4f);
+                Vector3 longestPointInPortal;
+                if (Physics.Raycast(lastLaserPosition + (laserDirection * laserDistance), -laserDirection, out hit, laserDistance, hitableLayers))
+                {
+                    longestPointInPortal = (Vector3.Distance(startingPoint, hit.point) > restDistance ? startingPoint + laserDirection * restDistance : hit.point);
+                    // Debug.Log("hit portal? " + hit.transform.gameObject.name);
+                }
+                else {
+                    // Debug.Log("This could happen when portal is in the bottom of laser");
+                    longestPointInPortal = startingPoint + laserDirection * restDistance;
+                }
+                
+                hitableLayers = -1;
+                hitableLayers ^= (1 << 14);
+                hitableLayers ^= (1 << 2);
+                // hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
+                hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal")));
+                isHit = Physics.Raycast(startingPoint, laserDirection, out hit, Vector3.Distance(longestPointInPortal, startingPoint), hitableLayers);
+                // Debug.DrawLine(startingPoint + new Vector3(0, 1, 0), longestPointInPortal + new Vector3(0, 1, 0), Color.green, 4f);
+                // restDistance -= hit.distance;
+                // startingPoint = hit.point;
+                // Forward hit, but will still test backward anyway
+                // hitObject = hit.transform.gameObject;
+
+                // Test backward
+                // Debug.Log("testing backward");
+                float testDistance = Vector3.Distance(longestPointInPortal, startingPoint);
+                var hitResults = Physics.RaycastAll(longestPointInPortal, -laserDirection, testDistance, hitableLayers);
+                //  Debug.DrawLine(longestPointInPortal + new Vector3(0, 1, 0), longestPointInPortal + -laserDirection * Vector3.Distance(longestPointInPortal, startingPoint) + new Vector3(0, 1, 0), Color.black, 4f);
+
+                // Reach something in the portal with forward direction
+                if (hitResults.Length != 0)
+                {
+                    int bestIdx = 0;
+                    float minSqrDistance = Vector3.SqrMagnitude(startingPoint - hitResults[0].point);
+                    for (int i = 1; i < hitResults.Length; ++i)
+                    {
+                        float currSqrDistance = Vector3.SqrMagnitude(startingPoint - hitResults[i].point);
+                        if (minSqrDistance > currSqrDistance)
+                        {
+                            bestIdx = i;
+                            minSqrDistance = currSqrDistance;
+                        }
+                    }
+                    // Compare both backward hit and forward hit
+                    // if forward hit result is better, use forward
+                    if (isHit && Vector3.SqrMagnitude(hit.transform.position - lastLaserPosition) < minSqrDistance)
+                    {
+                        restDistance -= hit.distance;
+                        startingPoint = hit.point;
+                        hitObject = hit.transform.gameObject;
+                    }
+                    else
+                    {
+                        isHit = true;
+                        hit = hitResults[bestIdx];
+                        hitObject = hit.transform.gameObject;
+                        // Debug.Log("hit something in portal with back dir  " + hit.transform.gameObject);
+                        startingPoint = hitResults[bestIdx].point;
+                    }
+                }
+                else
+                {
+                    // Already Reach something in the portal with forward direction
+                    if (isHit) {
+                        // Debug.Log("hit something in portal with forward dir  " + hit.transform.gameObject);
+                        // Debug.DrawLine(hit.point + new Vector3(0, 1, 0), hit.point + laserDirection + new Vector3(0, 1, 0), Color.blue, 4f);
+                        restDistance -= hit.distance;
+                        startingPoint = hit.point;
+                        hitObject = hit.transform.gameObject;
+                    }
+                    else {
+                        isHit = false;
+                        startingPoint = longestPointInPortal;
+                        restDistance -= testDistance;
+                        // Debug.Log("in portal backward can't hit");
+                    }
+                }
+            }
+            if (!isHit && restDistance >= 0f) {
+                hitableLayers = -1;
+                hitableLayers ^= (1 << 14);
+                hitableLayers ^= (1 << 2);
+                hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
+                // shooting from outside and won't be blocked by object in the other world
+                hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldBInPortal") : LayerMask.NameToLayer("WorldAInPortal")));
+                isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers);
+                if (isHit){
+                    hitObject = hit.transform.gameObject;
+                }
+            }
+            
+            //if (Physics.Raycast(startingPoint, laserDirection, out hit, laserDistance, hitableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
+            if (isHit && ((hitObject.tag == bounceTag) || (hitObject.gameObject.tag == splitTag)))
             {
                 //Debug.Log("Bounce");
                 laserReflected++;
@@ -108,7 +259,7 @@ public class Laser : MonoBehaviour {
                 Vector3 prevDirection = laserDirection;
                 laserDirection = Vector3.Reflect(laserDirection, hit.normal);
 
-                if (hit.transform.gameObject.tag == splitTag)
+                if (hitObject.tag == splitTag)
                 {
                     //Debug.Log("Split");
                     if (laserSplit >= maxSplit)
@@ -135,18 +286,22 @@ public class Laser : MonoBehaviour {
                 mLineRenderer.positionCount = vertexCounter;
                 Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * hit.distance);
                 //Debug.Log("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
-                if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
+                // if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
+                if (isHit && ((hitObject.tag == unlockTag)) && unlocked == false)
                 {
                     Debug.Log("Unlocked");
                     unlocked = true;
                     hit.transform.SendMessage("TriggerEvent");
                 }
-                if ((Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance)))
+                // if ((Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance)))
+                if (isHit)
                 {
-                    mLineRenderer.SetPosition(vertexCounter - 1, lastPos);
+                    // mLineRenderer.SetPosition(vertexCounter - 1, lastPos);
+                    mLineRenderer.SetPosition(vertexCounter - 1, hit.point);
                 }
                 else
                 {
+                    // Nothing is hit
                     mLineRenderer.SetPosition(vertexCounter-1, lastLaserPosition + (laserDirection.normalized * laserDistance));
                 }
 

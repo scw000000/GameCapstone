@@ -18,7 +18,12 @@ public class PortalBulletLogic : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider collider){
-        Instantiate(_portalPreFab, gameObject.transform.position, gameObject.transform.rotation);
+        var portalInstance = Instantiate(_portalPreFab, gameObject.transform.position, gameObject.transform.rotation);
+        var playerGO = GameObject.FindGameObjectWithTag("Player");
+        if (playerGO != null)
+        {
+            playerGO.GetComponent<PlayerStatus>()._currentPortal = portalInstance;
+        }
         Destroy(gameObject);
     }
 }

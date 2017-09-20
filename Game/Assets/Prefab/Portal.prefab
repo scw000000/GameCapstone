@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114476267236660856}
   - component: {fileID: 135413376073912968}
   - component: {fileID: 54125979426087742}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +95,7 @@ MonoBehaviour:
     m_RotationOrder: 0
   _portalRadiusAnimTime: 0.3
   _portalLifeTime: 3
+  _portalCurrentRadius: 0
 --- !u!135 &135413376073912968
 SphereCollider:
   m_ObjectHideFlags: 1

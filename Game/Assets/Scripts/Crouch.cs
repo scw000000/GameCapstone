@@ -17,7 +17,7 @@ public class Crouch : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKey (KeyCode.C)) {
+		if (Input.GetKeyDown (KeyCode.C)) {
 			if (isCrouch == false) {
 				cc.height = 0.8f;
 				isCrouch = true;
