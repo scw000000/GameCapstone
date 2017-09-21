@@ -22,6 +22,7 @@ public class WorldSwitchSphere : MonoBehaviour {
     public float _vignetteTime;
     private float _currentTime = 0f;
     public Camera _theOtherCamera { get; set; }
+    public Camera _outlineCamera { get; set; }
     private Camera _myCamera;
     public float _minFOV;
     public float _maxFOV;
@@ -97,6 +98,7 @@ public class WorldSwitchSphere : MonoBehaviour {
 
         _myCamera.fieldOfView = Mathf.Lerp(_minFOV, _maxFOV, _fovCurve.Evaluate(_currentTime));
         _theOtherCamera.fieldOfView = _myCamera.fieldOfView;
+        _outlineCamera.fieldOfView = _myCamera.fieldOfView; 
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination) {

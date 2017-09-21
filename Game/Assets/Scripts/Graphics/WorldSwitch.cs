@@ -20,8 +20,11 @@ public class WorldSwitch : MonoBehaviour {
     private GameObject _holdingObject;
     private Camera _cameraA;
     private Camera _cameraB;
+    private Camera _outlineCamera;
     private RenderTexture _renderTexture;
-    public RenderTexture _depthTexture;
+    private RenderTexture _depthTexture;
+    private RenderTexture _outlineCaptureRenderTexture;
+    private RenderTexture _outlineDepthTexture;
     private Camera _sceneCamera;
     private int _worldALayer;
     private int _worldBLayer;
@@ -95,8 +98,10 @@ public class WorldSwitch : MonoBehaviour {
             SwitchCollisionVolume();
             _holdingObject.layer = _holdingObject.layer == _worldALayer? _worldBLayer: _worldALayer;
             var backgroundCamera = isCamASceneCam ? _cameraB : _cameraA;
-            backgroundCamera.cullingMask = -1 ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldA" : "WorldB")));
-            _sceneCamera.cullingMask = -1 ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldB" : "WorldA")));
+            // We don't want both of the camera be
+            // int baselinecullMask = -1 ^ (1 << LayerMask.NameToLayer("Outline"));
+            // backgroundCamera.cullingMask = baselinecullMask ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldA" : "WorldB")));
+            // _sceneCamera.cullingMask = baselinecullMask ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldB" : "WorldA")));
             // _sceneCamera.cullingMask = -1;
             _sceneCamera.renderingPath = RenderingPath.Forward;
             backgroundCamera.renderingPath = RenderingPath.DeferredShading;
@@ -131,12 +136,12 @@ public class WorldSwitch : MonoBehaviour {
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
         _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
         _cameraA.renderingPath = RenderingPath.DeferredShading;
-        _cameraA.cullingMask = -1 ^ (1 << LayerMask.NameToLayer("WorldB"));
+        // _cameraA.cullingMask = -1 ^ (1 << LayerMask.NameToLayer("WorldB"));
         _sceneCamera = _cameraA;
         _cameraA.targetTexture = null;
         _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
         _cameraB.renderingPath = RenderingPath.Forward;
-        _cameraB.cullingMask = -1 ^ ( 1 << LayerMask.NameToLayer("WorldA") ); 
+        // _cameraB.cullingMask = -1 ^ ( 1 << LayerMask.NameToLayer("WorldA") ); 
         _renderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
         _renderTexture.Create();
         _depthTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.Depth);
@@ -144,6 +149,16 @@ public class WorldSwitch : MonoBehaviour {
         _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
         // Why will this work????
         _cameraB.targetTexture = _renderTexture;
+
+        _outlineCamera = _cameraSetInstance.transform.Find("OutlineCapture").gameObject.GetComponent<Camera>();
+        _outlineCaptureRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
+        _outlineCaptureRenderTexture.Create();
+        _outlineDepthTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.Depth);
+        _outlineDepthTexture.Create();
+        _outlineCamera.SetTargetBuffers(_outlineCaptureRenderTexture.colorBuffer, _outlineDepthTexture.depthBuffer);
+        _outlineCamera.targetTexture = _outlineCaptureRenderTexture;
+        // _outlineCamera.
+        // _cameraSetInstance.transform.Find("OutlineCapture").GetComponent<Skybox>().enabled = false;
 
         Camera[] cameras = new Camera[] { _cameraB, _cameraA };
         foreach (var cam in cameras)
@@ -163,6 +178,11 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect._gradientTexutre = _gradientTexutre;
             worldSwitchEffect._vignetteTime = _vignetteTime;
             worldSwitchEffect.Init();
+            worldSwitchEffect._outlineCamera = _outlineCamera;
+            var outlineDetctComp = cam.gameObject.AddComponent<OutlineDetection>();
+            outlineDetctComp._camera = cam;
+            var combineComp = cam.gameObject.AddComponent<OutlineCombine>();
+            combineComp.SetUpRT(_outlineCaptureRenderTexture, _cameraA, _cameraB);
             var ppComp = cam.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
             ppComp.profile = _ppProfile;
         }
