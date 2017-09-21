@@ -6,9 +6,10 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType"="Opaque" }
+		Tags { "Queue" = "Overlay" "RenderType"="Overlay" }
 		LOD 100
-
+		ZTest Always
+		ZWrite Off
 		Pass
 		{
 			CGPROGRAM
