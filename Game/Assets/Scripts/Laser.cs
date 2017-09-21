@@ -74,14 +74,16 @@ public class Laser : MonoBehaviour {
         bool loopActive = true; //Is the reflecting loop active?
 
         Vector3 laserDirection = transform.forward; //direction of the next laser
-        Vector3 lastLaserPosition = transform.localPosition; //origin of the next laser
-
+        Vector3 lastLaserPosition = transform.localPosition + laserDirection * 0.5f; //origin of the next laser
+        Vector3 hitNormal = new Vector3();
+        Vector3 hitPoint = new Vector3();
         // mLineRenderer.SetVertexCount(1);
         mLineRenderer.positionCount = 1;
         mLineRenderer.SetPosition(0, transform.position);
         RaycastHit hit = new RaycastHit();
-        bool isGOInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA");
+        bool isGOInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA") || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal");
         var playerGO = GameObject.FindGameObjectWithTag("Player");
+        int portalLayer = 1 << LayerMask.NameToLayer("Portal");
         GameObject portal = null;
         if (playerGO != null)
         {
@@ -97,16 +99,7 @@ public class Laser : MonoBehaviour {
             Vector3 startingPoint = lastLaserPosition;
             hitableLayers = -1;
             hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
-            int portalLayer = LayerMask.NameToLayer("Portal");
-            hitableLayers ^= (1 << 14);
-            hitableLayers ^= (1 << 2);
-            hitableLayers ^= (1 << LayerMask.NameToLayer("WorldAInPortal"));
-            hitableLayers ^= (1 << LayerMask.NameToLayer("WorldBInPortal"));
-            //Vector3 idealNextPoint = lastLaserPosition + (laserDirection * restDistance);
-            //isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers);
-            //if (isHit) {
-            //    idealNextPoint = hit.point;
-            //}
+            
 
             bool isInsidePortalCurrently = false;
             if (portal != null)
@@ -114,6 +107,7 @@ public class Laser : MonoBehaviour {
                 float portalRadius = portal.GetComponent<PortalLogic>()._portalCurrentRadius;
                 isInsidePortalCurrently = Vector3.SqrMagnitude(startingPoint - portal.transform.position) <= portalRadius * portalRadius;
             }
+            // First test if it's out side portal, ray cast unitil hit portal or hit some object before portal
             if (!isInsidePortalCurrently) {
                 hitableLayers = -1;
                 hitableLayers ^= (1 << 2);
@@ -137,6 +131,8 @@ public class Laser : MonoBehaviour {
                     }
                     else {
                         hitObject = hit.transform.gameObject;
+                        hitNormal = hit.normal;
+                        hitPoint = hit.point;
                     }
                  //   Debug.DrawLine(hit.point + new Vector3(0, 1, 0), hit.point + laserDirection + new Vector3(0, 1, 0), Color.red, 4f);
                 }
@@ -151,7 +147,7 @@ public class Laser : MonoBehaviour {
             if (!isHit && restDistance >= 0f && isInsidePortalCurrently)
             {
                 // Find another point in portal, project from the other side
-                hitableLayers = (1 << 14);
+                hitableLayers = portalLayer;
                 //Debug.DrawLine(lastLaserPosition + (laserDirection * laserDistance) + new Vector3(0, 1, 0), lastLaserPosition + new Vector3(0, 1, 0), Color.green, 4f);
                 Vector3 longestPointInPortal;
                 if (Physics.Raycast(lastLaserPosition + (laserDirection * laserDistance), -laserDirection, out hit, laserDistance, hitableLayers))
@@ -163,52 +159,70 @@ public class Laser : MonoBehaviour {
                     // Debug.Log("This could happen when portal is in the bottom of laser");
                     longestPointInPortal = startingPoint + laserDirection * restDistance;
                 }
-                
+                // Next test points inside the portal
                 hitableLayers = -1;
-                hitableLayers ^= (1 << 14);
+                hitableLayers ^= portalLayer;
                 hitableLayers ^= (1 << 2);
                 // hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
                 hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal")));
                 isHit = Physics.Raycast(startingPoint, laserDirection, out hit, Vector3.Distance(longestPointInPortal, startingPoint), hitableLayers);
-                // Debug.DrawLine(startingPoint + new Vector3(0, 1, 0), longestPointInPortal + new Vector3(0, 1, 0), Color.green, 4f);
-                // restDistance -= hit.distance;
-                // startingPoint = hit.point;
-                // Forward hit, but will still test backward anyway
-                // hitObject = hit.transform.gameObject;
+                //if (isHit) {
+                //    Debug.Log("hit something in portal with forward dir  " + hit.transform.gameObject);
+                //}
 
                 // Test backward
                 // Debug.Log("testing backward");
                 float testDistance = Vector3.Distance(longestPointInPortal, startingPoint);
                 var hitResults = Physics.RaycastAll(longestPointInPortal, -laserDirection, testDistance, hitableLayers);
-                //  Debug.DrawLine(longestPointInPortal + new Vector3(0, 1, 0), longestPointInPortal + -laserDirection * Vector3.Distance(longestPointInPortal, startingPoint) + new Vector3(0, 1, 0), Color.black, 4f);
+                // Debug.DrawLine(longestPointInPortal + new Vector3(0, 1, 0), longestPointInPortal + -laserDirection * Vector3.Distance(longestPointInPortal, startingPoint) + new Vector3(0, 1, 0), Color.black, 0.1f);
 
                 // Reach something in the portal with forward direction
                 if (hitResults.Length != 0)
                 {
                     int bestIdx = 0;
-                    float minSqrDistance = Vector3.SqrMagnitude(startingPoint - hitResults[0].point);
+                    float minBackDistanceSq = Vector3.SqrMagnitude(lastLaserPosition - hitResults[0].point);
                     for (int i = 1; i < hitResults.Length; ++i)
                     {
-                        float currSqrDistance = Vector3.SqrMagnitude(startingPoint - hitResults[i].point);
-                        if (minSqrDistance > currSqrDistance)
+                        float currSqrDistance = Vector3.SqrMagnitude(lastLaserPosition - hitResults[i].point);
+                        if (minBackDistanceSq > currSqrDistance)
                         {
                             bestIdx = i;
-                            minSqrDistance = currSqrDistance;
+                            minBackDistanceSq = currSqrDistance;
                         }
                     }
+                    // if(isHit)
+                    // Debug.Log(Vector3.SqrMagnitude(hit.point - lastLaserPosition) + " " + minBackDistanceSq);
+                    
+                    
                     // Compare both backward hit and forward hit
                     // if forward hit result is better, use forward
-                    if (isHit && Vector3.SqrMagnitude(hit.transform.position - lastLaserPosition) < minSqrDistance)
+                    if (isHit)
                     {
-                        restDistance -= hit.distance;
-                        startingPoint = hit.point;
-                        hitObject = hit.transform.gameObject;
+                        // Debug.DrawLine(hit.point + new Vector3(0, 0.5f, 0), hit.point - laserDirection + new Vector3(0, 0.5f, 0), Color.red, 0.1f);
+                        // Debug.DrawLine(hitResults[bestIdx].point + new Vector3(0, 0.5f, 0), hitResults[bestIdx].point + laserDirection + new Vector3(0, 0.5f, 0), Color.blue, 0.1f);
+                        float forwardDistanceSq = Vector3.SqrMagnitude(hit.point - lastLaserPosition);
+                        if (forwardDistanceSq < minBackDistanceSq || Mathf.Abs(forwardDistanceSq - minBackDistanceSq) <= 0.01f)
+                        {
+                            // Debug.Log("both hit but forward is better  ");
+                            restDistance -= hit.distance;
+                            startingPoint = hit.point;
+                            hitObject = hit.transform.gameObject;
+                            hitNormal = hit.normal;
+                            hitPoint = hit.point;
+                        }
+                        else
+                        {
+                            // Debug.Log("both hit but back is better  ");
+                            isHit = false;
+                        }
                     }
-                    else
+                    if(!isHit)
                     {
                         isHit = true;
                         hit = hitResults[bestIdx];
                         hitObject = hit.transform.gameObject;
+                        hitNormal = hit.normal;
+                        hitPoint = hit.point;
                         // Debug.Log("hit something in portal with back dir  " + hit.transform.gameObject);
                         startingPoint = hitResults[bestIdx].point;
                     }
@@ -221,8 +235,11 @@ public class Laser : MonoBehaviour {
                         // Debug.DrawLine(hit.point + new Vector3(0, 1, 0), hit.point + laserDirection + new Vector3(0, 1, 0), Color.blue, 4f);
                         restDistance -= hit.distance;
                         startingPoint = hit.point;
+                        hitNormal = hit.normal;
+                        hitPoint = hit.point;
                         hitObject = hit.transform.gameObject;
                     }
+                    // Both forward and backward failed
                     else {
                         isHit = false;
                         startingPoint = longestPointInPortal;
@@ -233,14 +250,17 @@ public class Laser : MonoBehaviour {
             }
             if (!isHit && restDistance >= 0f) {
                 hitableLayers = -1;
-                hitableLayers ^= (1 << 14);
+                hitableLayers ^= portalLayer;
                 hitableLayers ^= (1 << 2);
                 hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
                 // shooting from outside and won't be blocked by object in the other world
                 hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldBInPortal") : LayerMask.NameToLayer("WorldAInPortal")));
                 isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers);
                 if (isHit){
+                    // Debug.Log("out hit something in portal with forwad dir  " + hit.transform.gameObject);
                     hitObject = hit.transform.gameObject;
+                    hitNormal = hit.normal;
+                    hitPoint = hit.point;
                 }
             }
             
@@ -252,12 +272,12 @@ public class Laser : MonoBehaviour {
                 vertexCounter += 3;
                 // mLineRenderer.SetVertexCount(vertexCounter);
                 mLineRenderer.positionCount = vertexCounter;
-                mLineRenderer.SetPosition(vertexCounter - 3, Vector3.MoveTowards(hit.point, lastLaserPosition, 0.01f));
-                mLineRenderer.SetPosition(vertexCounter - 2, hit.point);
-                mLineRenderer.SetPosition(vertexCounter - 1, hit.point);
-                lastLaserPosition = hit.point;
+                mLineRenderer.SetPosition(vertexCounter - 3, Vector3.MoveTowards(hitPoint, lastLaserPosition, 0.01f));
+                mLineRenderer.SetPosition(vertexCounter - 2, hitPoint);
+                mLineRenderer.SetPosition(vertexCounter - 1, hitPoint);
                 Vector3 prevDirection = laserDirection;
-                laserDirection = Vector3.Reflect(laserDirection, hit.normal);
+                laserDirection = Vector3.Reflect(laserDirection, hitNormal);
+                lastLaserPosition = hitPoint + laserDirection * 0.1f;
 
                 if (hitObject.tag == splitTag)
                 {
@@ -284,7 +304,7 @@ public class Laser : MonoBehaviour {
                 vertexCounter++;
                 // mLineRenderer.SetVertexCount(vertexCounter);
                 mLineRenderer.positionCount = vertexCounter;
-                Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * hit.distance);
+                // Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * hit.distance);
                 //Debug.Log("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
                 // if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
                 if (isHit && ((hitObject.tag == unlockTag)) && unlocked == false)
@@ -297,7 +317,7 @@ public class Laser : MonoBehaviour {
                 if (isHit)
                 {
                     // mLineRenderer.SetPosition(vertexCounter - 1, lastPos);
-                    mLineRenderer.SetPosition(vertexCounter - 1, hit.point);
+                    mLineRenderer.SetPosition(vertexCounter - 1, hitPoint);
                 }
                 else
                 {
