@@ -24,7 +24,6 @@ public class OutlineControl : MonoBehaviour {
         _cloneMeshGO.transform.localScale = Vector3.one;
         _cloneMeshGO.layer = LayerMask.NameToLayer("Outline");
 
-        Debug.Log(_cloneMeshGO.layer);
         var cloneMeshFilterComp = _cloneMeshGO.AddComponent<MeshFilter>();
         cloneMeshFilterComp.mesh = meshFilterComp.mesh;
 
@@ -63,7 +62,8 @@ public class OutlineControl : MonoBehaviour {
                 return;
             }
         }
-        _rendererComp.material.SetColor("_OutlineColor", Color.Lerp(_outlineMinColor, _outlineColor, Mathf.Sin( _pulseLightAlpha * Mathf.PI )));
+        _rendererComp.material.SetColor("_OutlineColor", 
+            Color.Lerp(_outlineMinColor, _outlineColor, Mathf.Abs(Mathf.Sin( _pulseLightAlpha * Mathf.PI ))));
 
     }
 
