@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OutlineControl : MonoBehaviour {
-    public Color _outlineColor;
+    public Color _outlineColor = new Color(1, 0, 0, 1);
     private Color _outlineMinColor;
     public bool _onlyOutline = true;
     private string _shaderName = "Unlit/OutlineCapture";
