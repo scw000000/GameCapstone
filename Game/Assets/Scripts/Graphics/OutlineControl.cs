@@ -5,7 +5,7 @@ using UnityEngine;
 public class OutlineControl : MonoBehaviour {
     public Color _outlineColor;
     private Color _outlineMinColor;
-    public bool _onlyOurline = true;
+    public bool _onlyOutline = true;
     private string _shaderName = "Unlit/OutlineCapture";
     private GameObject _cloneMeshGO;
     private MeshRenderer _rendererComp;
@@ -31,7 +31,7 @@ public class OutlineControl : MonoBehaviour {
         _rendererComp = _cloneMeshGO.AddComponent<MeshRenderer>();
         _rendererComp.material = new Material(Shader.Find(_shaderName));
         _rendererComp.enabled = false;
-        if (_onlyOurline) {
+        if (_onlyOutline) {
             _outlineColor.a = 1f;
         }
         _outlineMinColor = _outlineColor * 0.1f;
