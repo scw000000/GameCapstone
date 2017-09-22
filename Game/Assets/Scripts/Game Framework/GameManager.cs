@@ -67,8 +67,7 @@ public class GameManager : MonoBehaviour {
         int aLyaer = LayerMask.NameToLayer("WorldA");
         int bLyaer = LayerMask.NameToLayer("WorldB");
         foreach (var go in goArray) {
-                if ((go.layer == aLyaer || go.layer == bLyaer) 
-                && go.GetComponent<MeshRenderer>() != null 
+                if ( go.GetComponent<MeshRenderer>() != null 
                 && go.GetComponent<RenderTextureControl>() == null) {
                     go.AddComponent<RenderTextureControl>();
                 }
