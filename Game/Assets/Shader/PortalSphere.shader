@@ -107,7 +107,7 @@
 				float4 bandCol = lerp(_BandColor, bacCol, bacCol.a) * _BandAlpha;
 				col = lerp(bandCol, col, pow(distanceToCenterY/ _ScanLineBandWidth, 0.5 )) ;
 			}
-			return col * fixed4(i.fresnel, 1) * 2 * _PulseFactor;
+			return ( col * fixed4(i.fresnel, 1) ) * _PulseFactor;
 			
 			//	UNITY_APPLY_FOG(i.fogCoord, col);
 			//	return _Color;

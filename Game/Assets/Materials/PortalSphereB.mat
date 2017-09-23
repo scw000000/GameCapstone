@@ -23,20 +23,21 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BandAlpha: 0.5
+    - _BandAlpha: 1
     - _BarAlpha: 0.87
     - _ColorMask: 15
-    - _FresnelPow: 3
+    - _FresnelFactor: 0.5
+    - _FresnelPow: 8
     - _FresnelR: 0.05
     - _PulseFactor: 1
     - _ScanLineBandWidth: 0.3
-    - _ScanLineBandYCenter: 0.1
+    - _ScanLineBandYCenter: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     m_Colors:
-    - _BandColor: {r: 1, g: 0.5172413, b: 0, a: 0.991}
+    - _BandColor: {r: 1, g: 0.6901961, b: 0, a: 0.99215686}
     - _BarColor: {r: 0.30147058, g: 0.15042952, b: 0.013300167, a: 1}
-    - _Color: {r: 0, g: 0.37931037, b: 1, a: 0.216}
+    - _Color: {r: 0, g: 0.38039216, b: 1, a: 0.70980394}
