@@ -28,7 +28,7 @@ Material:
     - _ColorMask: 15
     - _FresnelFactor: 0.5
     - _FresnelPow: 8
-    - _FresnelR: 0.05
+    - _FresnelR: 1
     - _PulseFactor: 1
     - _ScanLineBandWidth: 0.3
     - _ScanLineBandYCenter: 0
@@ -40,4 +40,4 @@ Material:
     m_Colors:
     - _BandColor: {r: 1, g: 0.6901961, b: 0, a: 0.99215686}
     - _BarColor: {r: 0.30147058, g: 0.15042952, b: 0.013300167, a: 1}
-    - _Color: {r: 0, g: 0.38039216, b: 1, a: 0.70980394}
+    - _Color: {r: 0, g: 0.38039216, b: 1, a: 0.26666668}
