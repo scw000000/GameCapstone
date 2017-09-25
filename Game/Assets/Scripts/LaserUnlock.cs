@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LaserUnlock : MonoBehaviour {
-    GameObject eventObject;
-    private string eventTag;
+    public GameObject eventObject;
     private bool triggered;
     private float fallSpeed;
     Vector3 initPos;
     // Use this for initialization
     void Start () {
-        eventTag = "Event";
-        eventObject = GameObject.FindGameObjectWithTag("Event");
         triggered = false;
-        initPos = eventObject.transform.position;
         fallSpeed = .1f;
+        initPos = eventObject.transform.position;
     }
 
     void FixedUpdate()
     {
         if(triggered == true)
         {
-            if (eventObject.transform.position.y <= -50f)
+            if (eventObject.transform.position.y <=-50)
             {
                 eventObject.SetActive(false);
             }

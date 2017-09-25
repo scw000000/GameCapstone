@@ -7,11 +7,11 @@ public class Laser : MonoBehaviour {
     public float updateFrequency = 0.1f;
     public int laserDistance;
     public string bounceTag;
-    public string splitTag;
-    public string spawnedBeamTag;
-    public string unlockTag;
+    //public string splitTag;
+    //public string spawnedBeamTag;
     public int maxBounce;
-    public int maxSplit;
+    //public int maxSplit;
+    public GameObject unlockObject;
     private float timer = 0;
     private LineRenderer mLineRenderer;
     private bool unlocked;
@@ -21,9 +21,8 @@ public class Laser : MonoBehaviour {
     {
         timer = 0;
         bounceTag = "Bounce";
-        spawnedBeamTag = "Spawn";
-        splitTag = "Split";
-        unlockTag = "Unlock";
+        //spawnedBeamTag = "Spawn";
+        //splitTag = "Split";
         mLineRenderer = gameObject.GetComponent<LineRenderer>();
         mLineRenderer.enabled = false;
         StartCoroutine(RedrawLaser());
@@ -38,6 +37,7 @@ public class Laser : MonoBehaviour {
     {
         if (laserOn)
         {
+            /*
             if (gameObject.tag != spawnedBeamTag)
             {
                 if (timer >= updateFrequency)
@@ -56,6 +56,9 @@ public class Laser : MonoBehaviour {
                 mLineRenderer = gameObject.GetComponent<LineRenderer>();
                 StartCoroutine(RedrawLaser());
             }
+            */
+            mLineRenderer = gameObject.GetComponent<LineRenderer>();
+            StartCoroutine(RedrawLaser());
         }
     }
 
@@ -265,7 +268,7 @@ public class Laser : MonoBehaviour {
             }
             
             //if (Physics.Raycast(startingPoint, laserDirection, out hit, laserDistance, hitableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
-            if (isHit && ((hitObject.tag == bounceTag) || (hitObject.gameObject.tag == splitTag)))
+            if (isHit && (hitObject.tag == bounceTag) )
             {
                 //Debug.Log("Bounce");
                 laserReflected++;
@@ -278,7 +281,7 @@ public class Laser : MonoBehaviour {
                 Vector3 prevDirection = laserDirection;
                 laserDirection = Vector3.Reflect(laserDirection, hitNormal);
                 lastLaserPosition = hitPoint + laserDirection * 0.1f;
-
+                /*
                 if (hitObject.tag == splitTag)
                 {
                     //Debug.Log("Split");
@@ -295,6 +298,7 @@ public class Laser : MonoBehaviour {
                         ((GameObject)go).tag = spawnedBeamTag;
                     }
                 }
+                */
 
             }
             else
@@ -307,7 +311,7 @@ public class Laser : MonoBehaviour {
                 // Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * hit.distance);
                 //Debug.Log("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
                 // if (Physics.Raycast(lastLaserPosition, laserDirection, out hit, laserDistance) && ((hit.transform.gameObject.tag == unlockTag)) && unlocked ==false)
-                if (isHit && ((hitObject.tag == unlockTag)) && unlocked == false)
+                if (isHit && ((hitObject == unlockObject)) && unlocked == false)
                 {
                     Debug.Log("Unlocked");
                     unlocked = true;

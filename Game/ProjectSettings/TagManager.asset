@@ -6,15 +6,9 @@ TagManager:
   tags:
   - Deadly
   - Bounce
-  - Spawn
-  - Split
   - Fire
   - Arm
   - Transportable
-  - Unlock
-  - Event
-  - Switch
-  - Laser
   - Maze
   - TriggerBall
   layers:

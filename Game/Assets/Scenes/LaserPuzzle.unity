@@ -3255,9 +3255,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 481238939}
-  - component: {fileID: 481238942}
   - component: {fileID: 481238944}
   - component: {fileID: 481238943}
+  - component: {fileID: 481238945}
   m_Layer: 9
   m_Name: LaserStartB
   m_TagString: Untagged
@@ -3265,17 +3265,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &481238942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 481238941}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6888d696d065de2438d111cef5d08565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &481238943
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3314,6 +3303,20 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 481238941}
+  m_Mesh: {fileID: 4300000, guid: 70ec2981ed0356a43a979b204f2f73d2, type: 3}
+--- !u!64 &481238945
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 481238941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 70ec2981ed0356a43a979b204f2f73d2, type: 3}
 --- !u!1 &497455956 stripped
 GameObject:
@@ -4151,10 +4154,9 @@ GameObject:
   - component: {fileID: 657876091}
   - component: {fileID: 657876090}
   - component: {fileID: 657876093}
-  - component: {fileID: 657876092}
   m_Layer: 8
   m_Name: LaserStartA
-  m_TagString: Switch
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4198,17 +4200,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 657876089}
   m_Mesh: {fileID: 4300000, guid: 70ec2981ed0356a43a979b204f2f73d2, type: 3}
---- !u!114 &657876092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 657876089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6888d696d065de2438d111cef5d08565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &657876093
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7214,25 +7205,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1145829625}
   - component: {fileID: 1145829624}
-  - component: {fileID: 1145829623}
   m_Layer: 0
   m_Name: LaserStart
-  m_TagString: Switch
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1145829623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1145829622}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6888d696d065de2438d111cef5d08565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &1145829624
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7260,6 +7239,7 @@ Transform:
   - {fileID: 832722946}
   - {fileID: 632791775}
   - {fileID: 481238939}
+  - {fileID: 1632459375}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7807,7 +7787,7 @@ GameObject:
   - component: {fileID: 1288976944}
   m_Layer: 8
   m_Name: Laser
-  m_TagString: Laser
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7826,11 +7806,8 @@ MonoBehaviour:
   updateFrequency: 0.1
   laserDistance: 100
   bounceTag: 
-  splitTag: 
-  spawnedBeamTag: 
-  unlockTag: 
   maxBounce: 10
-  maxSplit: 10
+  unlockObject: {fileID: 1506592701}
 --- !u!120 &1288976945
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -9636,7 +9613,7 @@ GameObject:
   - component: {fileID: 1506592706}
   m_Layer: 8
   m_Name: LaserEnd
-  m_TagString: Unlock
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9720,6 +9697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9255ee93749e04abfb1f0e321b3402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventObject: {fileID: 1757587025}
 --- !u!1 &1511949932
 GameObject:
   m_ObjectHideFlags: 0
@@ -10527,6 +10505,62 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 7b890c2408f392241a25d8720e198c50, type: 3}
+--- !u!1 &1632459374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1632459375}
+  - component: {fileID: 1632459377}
+  - component: {fileID: 1632459376}
+  m_Layer: 2
+  m_Name: DetectOrb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1632459375
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632459374}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.77999973, y: 0.66, z: -0.76}
+  m_LocalScale: {x: 3, y: 5, z: 4}
+  m_Children: []
+  m_Father: {fileID: 1145829625}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1632459376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632459374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 729a0fa0528932c4a866619411be477e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _laserBeam: {fileID: 1288976943}
+  _layerNumber: 8
+--- !u!136 &1632459377
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1632459374}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1635757127
 GameObject:
   m_ObjectHideFlags: 0
@@ -11394,7 +11428,7 @@ GameObject:
   - component: {fileID: 1757587027}
   m_Layer: 8
   m_Name: Mesh1_Grey_Cliff_Bottom_Model (1)
-  m_TagString: Event
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

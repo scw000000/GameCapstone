@@ -153,7 +153,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
-            UsableObject();
             m_MouseLook.UpdateCursorLock();
         }
 
@@ -229,29 +228,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Camera.transform.localPosition = newCameraPosition;
         }
 
-        private void UsableObject()
-        {
-            RaycastHit hit;
-            Vector3 rotate = new Vector3(0, 2, 0);
-            Debug.DrawRay(transform.position, m_Camera.transform.forward * 10, Color.red);
-            if (Physics.SphereCast(transform.position, .25f, m_Camera.transform.forward, out hit, 8f) && (hit.transform.gameObject.tag == bounceTag))
-            {
-                if (Input.GetKey(KeyCode.R))
-                {
-
-                    hit.transform.Rotate(rotate);
-                }
-            }
-            else if (Physics.SphereCast(transform.position, .25f, m_Camera.transform.forward, out hit, 8f) && (hit.transform.gameObject.tag == switchTag))
-            {
-                if (Input.GetKey(KeyCode.T))
-                {
-                    Debug.Log("Send T");
-                    hit.transform.SendMessage("SwitchOn");
-
-                }
-            }
-        }
+       
         private void GetInput(out float speed)
         {
             // Read input
