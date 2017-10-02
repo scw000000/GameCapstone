@@ -268,7 +268,7 @@ public class Laser : MonoBehaviour {
             }
             
             //if (Physics.Raycast(startingPoint, laserDirection, out hit, laserDistance, hitableLayers) && ((hit.transform.gameObject.tag == bounceTag) || (hit.transform.gameObject.tag == splitTag)))
-            if (isHit && (hitObject.tag == bounceTag) )
+            if (isHit && (hitObject.transform.parent != null&& hitObject.transform.parent.tag == bounceTag) )
             {
                 //Debug.Log("Bounce");
                 laserReflected++;
