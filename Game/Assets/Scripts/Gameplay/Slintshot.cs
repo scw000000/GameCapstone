@@ -23,7 +23,7 @@ public class Slintshot : MonoBehaviour {
         _right = transform.Find("RightAttachPoint").transform.GetComponent<LineRenderer>();
         if (_forceRate <= 0.0f)
         {
-            _forceRate = 12.0f;
+            _forceRate = 13.0f;
         }
         _ball = transform.Find("Ball");
         _ballOriginalPos = _ball.position;
@@ -77,6 +77,7 @@ public class Slintshot : MonoBehaviour {
         if (Input.GetButtonUp("Interaction"))
         {
             _isButtonPressed = !_isButtonPressed;
+            _ball.GetComponent<Rigidbody>().velocity = new Vector3();
         }
 
         if (_canGrab)
