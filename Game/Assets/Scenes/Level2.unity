@@ -991,7 +991,7 @@ Prefab:
         type: 2}
       propertyPath: _gameOverScreenPrefab
       value: 
-      objectReference: {fileID: 1508733268442868, guid: 3af65d7f3ee9d0c4c9b5992df165061f,
+      objectReference: {fileID: 1212288968009218, guid: 97119a96ce42e1e4b9d3b3bc0bfc8745,
         type: 2}
     - target: {fileID: 114090992796068694, guid: f7d43ae0cba09ab47ac001afa1e3b676,
         type: 2}
