@@ -11,6 +11,9 @@ TagManager:
   - Transportable
   - Maze
   - TriggerBall
+  - Unlock
+  - Event
+  - Enemy
   layers:
   - Default
   - TransparentFX
