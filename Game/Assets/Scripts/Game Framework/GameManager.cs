@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
     public GameObject _cameraSetPrefab;
     private GameObject _cameraSetInstance;
     public GameObject _spawnLocation;
+    public GameObject _hudPrefab;
+    private GameObject _hudInstance;
 
     public GameObject _gameOverScreenPrefab;
     private GameObject _gameOverScreenInstance;
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour {
         // We don't want to attach the camera set directly because it will make the camera not smooth
         _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
         _playerInstance.SendMessage("SetUpCamera", _cameraSetInstance);
+
+        _hudInstance = Instantiate(_hudPrefab);
         return true;
     }
 
@@ -79,7 +83,7 @@ public class GameManager : MonoBehaviour {
         var statusComponent = _playerInstance.GetComponent<PlayerStatus>();
         
         //Keep Looping while the player is alive
-        while (statusComponent != null && statusComponent.IsAlive()) {
+        while (statusComponent != null && statusComponent._isAlive) {
             yield return null;
         }
         Debug.Log("Game Running End!");

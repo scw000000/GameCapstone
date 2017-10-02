@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Deadly
   - Bounce
   - Fire
   - Arm
@@ -14,6 +13,7 @@ TagManager:
   - Unlock
   - Event
   - Enemy
+  - Boss
   layers:
   - Default
   - TransparentFX
