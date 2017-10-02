@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -13,12 +14,12 @@ public class GameManager : MonoBehaviour {
     private GameObject _hudInstance;
 
     public GameObject _gameOverScreenPrefab;
-    private GameObject _gameOverScreenInstance;
+    public GameObject _gameOverScreenInstance;
 
     public string _endGameCreditSceneName;
 	// Use this for initialization
 	void Start () {
-        if( SpawnPlayer()) {
+        if( Init()) {
             StartCoroutine(GameLoop());
         }
     }
@@ -28,11 +29,13 @@ public class GameManager : MonoBehaviour {
        
 	}
 
-    private bool SpawnPlayer() {
+    private bool Init() {
         if (_playerPrefab == null || _spawnLocation == null) {
             Debug.LogError("Need to Specify player or spawn location");
             return false;
         }
+        _gameOverScreenInstance.SetActive(false);
+
         _playerInstance = Instantiate(_playerPrefab, _spawnLocation.transform.position, _spawnLocation.transform.rotation) as GameObject;
         // We don't want to attach the camera set directly because it will make the camera not smooth
         _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
@@ -45,10 +48,27 @@ public class GameManager : MonoBehaviour {
         return true;
     }
 
-    public void PauseGame() {
-    }
+    public void SetGameRuntate(bool isRunning) {
+        if (isRunning)
+        {
+            SetPlayerInput(true);
+            Time.timeScale = 1;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            //When the player controller is ready, this line of code will resume user control
+            //Player.GetComponent<PonePlayerController> ().enable = true;
+        }
+        else
+        {
+            SetPlayerInput(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            // _gameManagerComp.AttachToMainCamera(canvas.gameObject);
+            Time.timeScale = 0;
+            //When the player controller is ready, this line of code will pause user control
+            //Player.GetComponent<PonePlayerController> ().enable = false;
 
-    public void ResumeGame() {
+        }
     }
 
     private IEnumerator GameLoop() {
@@ -81,6 +101,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void Continue() {
+        gameObject.GetComponent<LevelLoading>().StartLoadLevel(SceneManager.GetActiveScene().name);
+    }
+
     private IEnumerator GameRunning() {
         Debug.Log("Game Running!");
         var statusComponent = _playerInstance.GetComponent<PlayerStatus>();
@@ -95,11 +119,16 @@ public class GameManager : MonoBehaviour {
     // Bring up game over menu
     private IEnumerator GameEnding() {
         Debug.Log("Game Ending!");
-        _gameOverScreenInstance = Instantiate(_gameOverScreenPrefab);
-        yield return new WaitForSeconds(3f);
+        SetGameRuntate(false);
+        _gameOverScreenInstance.SetActive(true);
+        while (_gameOverScreenInstance.activeInHierarchy) {
+            yield return null;
+        }
+        // _gameOverScreenInstance = Instantiate(_gameOverScreenPrefab);
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_endGameCreditSceneName);
-        Destroy(_gameOverScreenInstance);
+        // Destroy(_gameOverScreenInstance);
         Debug.Log("Game Ending End!");
+        yield return null;
     }
 
     public void SetPlayerInput(bool isEnabled)
