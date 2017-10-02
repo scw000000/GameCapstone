@@ -7053,11 +7053,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -7131,7 +7131,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: b6718d3b7ff298b468d8df1446331e7f, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6718d3b7ff298b468d8df1446331e7f, type: 3}
@@ -9797,7 +9797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db84d3e612d1848a4b253a51e77347d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1393114750}
+  canvas: {fileID: 2033948540}
 --- !u!114 &427069978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9812,7 +9812,7 @@ MonoBehaviour:
   LoadingScreenPrefab: {fileID: 1154899278724180, guid: f0c5028579f8f2642bc656a32f4a8acd,
     type: 2}
   Mainmenu: {fileID: 0}
-  LoadingText: {fileID: 1393114749}
+  LoadingText: {fileID: 0}
 --- !u!1001 &427879621
 Prefab:
   m_ObjectHideFlags: 0
@@ -10002,11 +10002,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10647,7 +10647,7 @@ GameObject:
   - component: {fileID: 464423167}
   - component: {fileID: 464423166}
   - component: {fileID: 464423165}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Slope Straight (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16010,11 +16010,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0954bd92817da104caa16539d7ab19ad, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 0954bd92817da104caa16539d7ab19ad, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0954bd92817da104caa16539d7ab19ad, type: 3}
@@ -17022,11 +17022,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -19276,7 +19276,7 @@ GameObject:
   - component: {fileID: 958533326}
   - component: {fileID: 958533325}
   - component: {fileID: 958533324}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Slope Straight (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20423,11 +20423,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: b6718d3b7ff298b468d8df1446331e7f, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: b6718d3b7ff298b468d8df1446331e7f, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6718d3b7ff298b468d8df1446331e7f, type: 3}
@@ -25607,11 +25607,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -27624,20 +27624,14 @@ Prefab:
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224094783042524104, guid: 2f129efab555840958dcc6e05e72cd6c,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f129efab555840958dcc6e05e72cd6c, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1393114749 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114562394798286552, guid: 2f129efab555840958dcc6e05e72cd6c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1393114748}
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
---- !u!224 &1393114750 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224127129759556046, guid: 2f129efab555840958dcc6e05e72cd6c,
-    type: 2}
-  m_PrefabInternal: {fileID: 1393114748}
 --- !u!4 &1393735346 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: 20da69bd152db6e469c2b55ea8d39f44, type: 3}
@@ -33407,11 +33401,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3c63ee322fabd8140a7c44836cc91604, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -38462,7 +38456,7 @@ GameObject:
   - component: {fileID: 1781032153}
   - component: {fileID: 1781032152}
   - component: {fileID: 1781032151}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Slope Straight (50)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39591,7 +39585,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -40602,11 +40596,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -41015,11 +41009,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 50d221c6c065e65429c2e7480e0f1030, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 50d221c6c065e65429c2e7480e0f1030, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50d221c6c065e65429c2e7480e0f1030, type: 3}
@@ -41603,11 +41597,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -42093,12 +42087,12 @@ Prefab:
     - target: {fileID: 224855598264145686, guid: 9abe2a18d0790c34b89ec71cb0759113,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224855598264145686, guid: 9abe2a18d0790c34b89ec71cb0759113,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114881801316917212, guid: 9abe2a18d0790c34b89ec71cb0759113,
         type: 2}
@@ -42656,11 +42650,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -42915,6 +42909,11 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: ef88d7fdd02fd98488bc233cde8ff7b3, type: 3}
   m_PrefabInternal: {fileID: 1558280390}
+--- !u!224 &2033948540 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224094783042524104, guid: 2f129efab555840958dcc6e05e72cd6c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1393114748}
 --- !u!1 &2037749642 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: c6fa45d6fe9477c48b9c31d7d9de67b1, type: 3}

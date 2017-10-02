@@ -35,6 +35,7 @@ public class DoorControl : MonoBehaviour {
 
         for (int i = 0; i < _doorComponents.Length; ++i)
         {
+            
             GameObject openRoot;
             if (i < _doorOpenRoots.Length)
             {
@@ -72,6 +73,8 @@ public class DoorControl : MonoBehaviour {
 
     private void ResetDoors()
     {
+        Debug.Log("Reset!");
+
         if (_isOpened)
         {
             _doorOpenLerp = 1f;
