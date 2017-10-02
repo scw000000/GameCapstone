@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour {
         _playerInstance.SendMessage("SetUpCamera", _cameraSetInstance);
 
         _hudInstance = Instantiate(_hudPrefab);
+
+        var healthBarLogicComp = _hudInstance.transform.Find("HealthUI").transform.Find("HealthBar").GetComponent<HealthBarLogic>();
+        healthBarLogicComp._playerStatusComp = _playerInstance.GetComponent<PlayerStatus>();
         return true;
     }
 
@@ -83,7 +86,7 @@ public class GameManager : MonoBehaviour {
         var statusComponent = _playerInstance.GetComponent<PlayerStatus>();
         
         //Keep Looping while the player is alive
-        while (statusComponent != null && statusComponent._isAlive) {
+        while (statusComponent != null && statusComponent.GetIsAlive()) {
             yield return null;
         }
         Debug.Log("Game Running End!");

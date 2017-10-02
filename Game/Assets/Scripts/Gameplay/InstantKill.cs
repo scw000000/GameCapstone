@@ -17,18 +17,17 @@ public class InstantKill : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("Player")) {
-            var aliveComp = other.GetComponent<PlayerStatus>();
-            aliveComp._isAlive = false;
+            var statusComp = other.GetComponent<PlayerStatus>();
+            statusComp.InstantKill();
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collide");
         if (collision.gameObject.tag.Equals("Player"))
         {
-            var aliveComp = collision.gameObject.GetComponent<PlayerStatus>();
-            aliveComp._isAlive = false;
+            var statusComp = collision.gameObject.GetComponent<PlayerStatus>();
+            statusComp.InstantKill();
         }
     }
 }

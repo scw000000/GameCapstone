@@ -23267,6 +23267,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114771902107685660, guid: b7b2188af8b467c45aa0401518aaa512,
+        type: 2}
+      propertyPath: damageImage
+      value: 
+      objectReference: {fileID: 1406755695}
     - target: {fileID: 224691938245830114, guid: b7b2188af8b467c45aa0401518aaa512,
         type: 2}
       propertyPath: m_AnchorMax.x
@@ -23279,6 +23284,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1897823832792738, guid: b7b2188af8b467c45aa0401518aaa512, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114955207719832296, guid: b7b2188af8b467c45aa0401518aaa512,
+        type: 2}
+      propertyPath: m_MinValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114955207719832296, guid: b7b2188af8b467c45aa0401518aaa512,
+        type: 2}
+      propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -25392,7 +25407,7 @@ LensFlare:
   m_FadeSpeed: 3
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 4294963199
+    m_Bits: 4294946814
   m_Directional: 0
 --- !u!1 &1296510374 stripped
 GameObject:
@@ -27791,6 +27806,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c00a9b1b97482147b996d5641b8ab44, type: 3}
   m_IsPrefabParent: 0
+--- !u!114 &1406755695 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114673691147588492, guid: 2f129efab555840958dcc6e05e72cd6c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1393114748}
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!4 &1413337588 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400002, guid: f5df55304d0c05a45913158665cf4064, type: 3}
@@ -33119,7 +33140,7 @@ GameObject:
   - component: {fileID: 1705889091}
   - component: {fileID: 1705889090}
   - component: {fileID: 1705889089}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Slope Straight (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33133,7 +33154,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1705889087}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 9.01, y: -18, z: 12.56}
+  m_LocalPosition: {x: 9.01, y: -16.84, z: 12.56}
   m_LocalScale: {x: 20.000048, y: 1, z: 5.000002}
   m_Children: []
   m_Father: {fileID: 770709439}
