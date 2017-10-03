@@ -1,0 +1,26 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AutoQuitGame : MonoBehaviour {
+    public float _waitTimeBeforeQuit = 3f;
+	// Use this for initialization
+	void Start () {
+        StartCoroutine("AutoQuit");
+    }
+
+    // Update is called once per frame
+    void Update () {
+		
+	}
+
+    IEnumerator AutoQuit() {
+        yield return new WaitForSeconds(_waitTimeBeforeQuit);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+        yield return null;
+    }
+}

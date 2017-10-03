@@ -125,8 +125,8 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
         // _gameOverScreenInstance = Instantiate(_gameOverScreenPrefab);
+        // _gameOverScreenInstance.SetActive(false);
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_endGameCreditSceneName);
-        // Destroy(_gameOverScreenInstance);
         Debug.Log("Game Ending End!");
         yield return null;
     }
