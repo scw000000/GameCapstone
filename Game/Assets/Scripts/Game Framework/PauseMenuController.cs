@@ -16,31 +16,17 @@ public class PauseMenuController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-            
-			this.Pause();
+			Pause();
 		}
 	}
 
     public void Pause(){
-		if (canvas.gameObject.activeInHierarchy == false) {
-            _gameManagerComp.SetPlayerInput(false);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            // _gameManagerComp.AttachToMainCamera(canvas.gameObject);
+        if (canvas.gameObject.activeInHierarchy == false) {
+            _gameManagerComp.SetGameRuntate(false);
             canvas.gameObject.SetActive (true);
-            Time.timeScale = 0;
-			//When the player controller is ready, this line of code will pause user control
-			//Player.GetComponent<PonePlayerController> ().enable = false;
 		} else {
-            _gameManagerComp.SetPlayerInput(true);
-            Time.timeScale = 1;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            _gameManagerComp.SetGameRuntate(true);
             canvas.gameObject.SetActive (false);
-            
-            
-            //When the player controller is ready, this line of code will resume user control
-            //Player.GetComponent<PonePlayerController> ().enable = true;
         }
 	}
 }
