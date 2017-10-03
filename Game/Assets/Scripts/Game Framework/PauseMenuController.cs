@@ -22,10 +22,10 @@ public class PauseMenuController : MonoBehaviour {
 
     public void Pause(){
         if (canvas.gameObject.activeInHierarchy == false) {
-            _gameManagerComp.SetGameRuntate(false);
+            _gameManagerComp.SetGameRunState(false);
             canvas.gameObject.SetActive (true);
 		} else {
-            _gameManagerComp.SetGameRuntate(true);
+            _gameManagerComp.SetGameRunState(true);
             canvas.gameObject.SetActive (false);
         }
 	}

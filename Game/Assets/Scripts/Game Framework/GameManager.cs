@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
         return true;
     }
 
-    public void SetGameRuntate(bool isRunning) {
+    public void SetGameRunState(bool isRunning) {
         if (isRunning)
         {
             SetPlayerInput(true);
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour {
     // Bring up game over menu
     private IEnumerator GameEnding() {
         Debug.Log("Game Ending!");
-        SetGameRuntate(false);
+        SetGameRunState(false);
         _gameOverScreenInstance.SetActive(true);
         while (_gameOverScreenInstance.activeInHierarchy) {
             yield return null;
