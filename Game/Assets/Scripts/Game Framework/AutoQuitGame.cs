@@ -6,6 +6,9 @@ public class AutoQuitGame : MonoBehaviour {
     public float _waitTimeBeforeQuit = 3f;
 	// Use this for initialization
 	void Start () {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         StartCoroutine("AutoQuit");
     }
 
