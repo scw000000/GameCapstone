@@ -6,6 +6,7 @@ public class OutlineControl : MonoBehaviour {
     public Color _outlineColor = new Color(1, 0, 0, 1);
     private Color _outlineMinColor;
     public bool _onlyOutline = true;
+    public bool _alwaysActive = false;
     private string _shaderName = "Unlit/OutlineCapture";
     private GameObject _cloneMeshGO;
     private MeshRenderer _rendererComp;
@@ -16,6 +17,10 @@ public class OutlineControl : MonoBehaviour {
     private float _currentTime = 0f;
     // Use this for initialization
     void Start () {
+        if (_alwaysActive)
+        {
+            _isActivated = true;
+        }
         var meshFilterComp = gameObject.GetComponent<MeshFilter>();
         _cloneMeshGO = new GameObject("MeshClone");
         _cloneMeshGO.transform.parent = gameObject.transform;

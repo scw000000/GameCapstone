@@ -5,7 +5,8 @@ using UnityEngine;
 public class WorldSwitch : MonoBehaviour {
     public AnimationCurve _speedCurve;
     public AnimationCurve _fovCurve;
-    public UnityEngine.PostProcessing.PostProcessingProfile _ppProfile;
+    public UnityEngine.PostProcessing.PostProcessingProfile _activePPProfile;
+    public UnityEngine.PostProcessing.PostProcessingProfile _backgroundPPProfile;
     public Color _barColor;
     public float _barAlpha = 0.3f;
     public float _gradientColorShift = 1f;
@@ -86,7 +87,8 @@ public class WorldSwitch : MonoBehaviour {
         {
             // overlap.gameObject.layer != LayerMask.NameToLayer("Default") &&
             if ((overlap.gameObject.layer == _worldALayer || overlap.gameObject.layer == _worldBLayer)
-                && overlap.gameObject.layer != gameObject.layer)
+                && overlap.gameObject.layer != gameObject.layer
+                && overlap.isTrigger == false )
             {
                 switchable = false;
             }
@@ -106,7 +108,21 @@ public class WorldSwitch : MonoBehaviour {
             _sceneCamera.renderingPath = RenderingPath.Forward;
             backgroundCamera.renderingPath = RenderingPath.DeferredShading;
             _sceneCamera.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
+            _sceneCamera.targetTexture = _renderTexture;
             backgroundCamera.targetTexture = null;
+
+            var ppComp = _sceneCamera.gameObject.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+            // ppComp.profile = Instantiate(_backgroundPPProfile);
+            ppComp.profile = _backgroundPPProfile;
+            // ppComp.enabled = false;
+            // ppComp.enabled = true;
+            // ppComp.profile.grain.enabled = true;
+
+            ppComp = backgroundCamera.gameObject.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+            // ppComp.profile = Instantiate(_activePPProfile);
+            ppComp.profile = _activePPProfile;
+            // ppComp.enabled = false;
+            // ppComp.enabled = true;
             Camera tempCam = _sceneCamera;
             _sceneCamera = backgroundCamera;
             backgroundCamera = tempCam;
@@ -183,9 +199,12 @@ public class WorldSwitch : MonoBehaviour {
             outlineDetctComp._camera = cam;
             var combineComp = cam.gameObject.AddComponent<OutlineCombine>();
             combineComp.SetUpRT(_outlineCaptureRenderTexture, _cameraA, _cameraB);
-            var ppComp = cam.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
-            ppComp.profile = _ppProfile;
+            
         }
+        var ppComp = _cameraA.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+        ppComp.profile = _activePPProfile;
+        ppComp = _cameraB.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+        ppComp.profile = _backgroundPPProfile;
 
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
         var holderMat = holder.GetComponent<Renderer>().material;

@@ -450,6 +450,8 @@ GameObject:
   - component: {fileID: 4194981970328702}
   - component: {fileID: 33199223086226974}
   - component: {fileID: 23910720454114470}
+  - component: {fileID: 114126901212683346}
+  - component: {fileID: 114735038263752220}
   m_Layer: 8
   m_Name: Holder
   m_TagString: Untagged
@@ -1691,13 +1693,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1311031488860528}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.451, y: -0.18, z: 0.965}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalRotation: {x: 0.03676616, y: 0.71729743, z: -0.14404275, w: 0.6807234}
+  m_LocalPosition: {x: -0.03651319, y: -0.016507622, z: 0.049527116}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 4927045182097318}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.874001, y: -628.118, z: -8.530001}
 --- !u!4 &4200697840406470
 Transform:
   m_ObjectHideFlags: 1
@@ -3006,7 +3008,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1311031488860528}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 4d7cc98ae5cab2947a8d9fa3c15e4fa8, type: 3}
 --- !u!33 &33269092398549728
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -3127,6 +3129,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followingSpeed: 10
+--- !u!114 &114126901212683346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1311031488860528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37c9b6eb17bf0b428a0b9601e240797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outlineColor: {r: 0, g: 0.416, b: 0.99264705, a: 1}
+  _onlyOutline: 1
+  _alwaysActive: 1
 --- !u!114 &114355852117177934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3138,6 +3154,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bf3765b02af674587622e70b2c5acb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114735038263752220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1311031488860528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03abefd494d3ead4891c7f472bc43d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _floatPeriod: {x: 7, y: 5, z: 1}
+  _maxShift: {x: 0.0001, y: 0.002, z: 0}
+  _minShift: {x: -0.0001, y: -0.002, z: 0}
+  _xAnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0.16936348
+      outSlope: 0.16936348
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.25394002
+      value: 1.0128764
+      inSlope: 0.047421083
+      outSlope: 0.047421083
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7486006
+      value: -1.004881
+      inSlope: -0.07518318
+      outSlope: -0.07518318
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.99728036
+      value: 0.003535206
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  _yAnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0.16936348
+      outSlope: 0.16936348
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.25223622
+      value: 1.0022559
+      inSlope: 0.047421083
+      outSlope: 0.047421083
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7494566
+      value: -1.0013413
+      inSlope: -0.07518318
+      outSlope: -0.07518318
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.99728036
+      value: 0.003535206
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  _zAnimCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114976772027854192
 MonoBehaviour:
   m_ObjectHideFlags: 1
