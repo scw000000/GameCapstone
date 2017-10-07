@@ -3691,6 +3691,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 114460647810006046}
+        m_MethodName: InitSaveSlot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1134686200479608}
         m_MethodName: SetActive
         m_Mode: 6
@@ -4596,9 +4607,8 @@ MonoBehaviour:
     type: 2}
   _spawnLocations:
   - {fileID: 0}
+  - {fileID: 0}
   _hudPrefab: {fileID: 1897823832792738, guid: b7b2188af8b467c45aa0401518aaa512, type: 2}
-  _gameOverScreenPrefab: {fileID: 1212288968009218, guid: 97119a96ce42e1e4b9d3b3bc0bfc8745,
-    type: 2}
   _gameOverScreenInstance: {fileID: 1445290302569480}
   _endGameCreditSceneName: Assets/Scenes/EndGameCredit.unity
 --- !u!114 &114889542307872078

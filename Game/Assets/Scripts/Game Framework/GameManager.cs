@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour {
     public GameObject[] _spawnLocations;
     public GameObject _hudPrefab;
     private GameObject _hudInstance;
-
-    public GameObject _gameOverScreenPrefab;
+    
     public GameObject _gameOverScreenInstance;
 
     public string _endGameCreditSceneName;
@@ -153,10 +152,11 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Game Ending!");
         SetGameRunState(false);
         _gameOverScreenInstance.SetActive(true);
+        // Prevent pause is being hit when gameover
+        gameObject.GetComponent<PauseMenuController>().enabled = false;
         while (_gameOverScreenInstance.activeInHierarchy) {
             yield return null;
         }
-        // _gameOverScreenInstance = Instantiate(_gameOverScreenPrefab);
         // _gameOverScreenInstance.SetActive(false);
         UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_endGameCreditSceneName);
         Debug.Log("Game Ending End!");

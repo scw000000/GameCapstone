@@ -8,13 +8,19 @@ public class SaveSlotGeneration : MonoBehaviour {
     public GameObject _loadingCompGO;
 	// Use this for initialization
 	void Start () {
-        
+    }
+
+    public void InitSaveSlot() {
+        if (gameObject.transform.childCount <= 0) {
+            for (int i = 0; i < GameCapstone.SaveData._maxSaveSlotNum; ++i)
+            {
+                var newSaveSlot = Instantiate(_saveSlotPrefab, gameObject.transform);
+            }
+        }
         for (int i = 0; i < GameCapstone.SaveData._maxSaveSlotNum; ++i)
         {
-            var newSaveSlot = Instantiate(_saveSlotPrefab, gameObject.transform);
-            SetupSaveSlot(newSaveSlot, i);
+            SetupSaveSlot(gameObject.transform.GetChild(i).gameObject, i);
         }
-            
     }
 
     private void SetupSaveSlot(GameObject newSaveSlot, int index) {
@@ -30,6 +36,7 @@ public class SaveSlotGeneration : MonoBehaviour {
         var imageGO = newSaveSlot.transform.Find("Image");
         var progressGO = newSaveSlot.transform.Find("Detail").transform.Find("Progress");
         var timeGO = newSaveSlot.transform.Find("Detail").transform.Find("Time");
+        var clickEvent = newSaveSlot.GetComponent<UnityEngine.UI.Button>().onClick;
 
         int saveSlotValid = PlayerPrefs.GetInt(GameCapstone.SaveData._saveSlotValidPrefName + index);
         if (saveSlotValid > 0)
@@ -49,7 +56,6 @@ public class SaveSlotGeneration : MonoBehaviour {
                 + saveData._minute + ":"
                 + saveData._second;
 
-            var clickEvent = newSaveSlot.GetComponent<UnityEngine.UI.Button>().onClick;
             clickEvent.RemoveAllListeners();
             if (_clickForLoad)
             {
@@ -59,6 +65,7 @@ public class SaveSlotGeneration : MonoBehaviour {
             }
             else
             {
+                clickEvent.AddListener(delegate { SaveGame(newSaveSlot.transform.GetSiblingIndex()); });
                 // clickEvent.AddListener(delegate { LoadGame(newSaveSlot.transform.GetSiblingIndex()); });
             }
 
@@ -67,6 +74,12 @@ public class SaveSlotGeneration : MonoBehaviour {
         {
             progressGO.GetComponent<UnityEngine.UI.Text>().text = "Empty";
             timeGO.GetComponent<UnityEngine.UI.Text>().text = "Invalid";
+
+            // Only save button works if the save data is not valid
+            if (!_clickForLoad)
+            {
+                clickEvent.AddListener(delegate { SaveGame(newSaveSlot.transform.GetSiblingIndex()); });
+            }
         }
     }
 
