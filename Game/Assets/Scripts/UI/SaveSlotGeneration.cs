@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class SaveSlotGeneration : MonoBehaviour {
     public bool _clickForLoad = true;
+    public int _promptAnswer = 0;
     public GameObject _saveSlotPrefab;
+    private GameObject[] _saveSlots;
     public GameObject _loadingCompGO;
+    public GameObject _promptGO;
 	// Use this for initialization
 	void Start () {
     }
 
     public void InitSaveSlot() {
         if (gameObject.transform.childCount <= 0) {
+            _saveSlots = new GameObject[GameCapstone.SaveData._maxSaveSlotNum];
             for (int i = 0; i < GameCapstone.SaveData._maxSaveSlotNum; ++i)
             {
-                var newSaveSlot = Instantiate(_saveSlotPrefab, gameObject.transform);
+                _saveSlots[i] = Instantiate(_saveSlotPrefab, gameObject.transform);
             }
         }
         for (int i = 0; i < GameCapstone.SaveData._maxSaveSlotNum; ++i)
@@ -61,11 +65,18 @@ public class SaveSlotGeneration : MonoBehaviour {
             {
                 // This is some stupid shit because delegate will try to setup the reference instead of 
                 // the current value of i
-                clickEvent.AddListener(delegate { LoadGame(newSaveSlot.transform.GetSiblingIndex()); });
+                clickEvent.AddListener(delegate {
+                    StartCoroutine("TryLoadGame", newSaveSlot.transform.GetSiblingIndex());
+                    // TryLoadGame(newSaveSlot.transform.GetSiblingIndex());
+                });
             }
-            else
+            // Only non-auto save slot can be saved
+            else if(newSaveSlot.transform.GetSiblingIndex() != 0)
             {
-                clickEvent.AddListener(delegate { SaveGame(newSaveSlot.transform.GetSiblingIndex()); });
+                clickEvent.AddListener(delegate {
+                    StartCoroutine("TrySaveGame", newSaveSlot.transform.GetSiblingIndex());
+                    // TrySaveGame(newSaveSlot.transform.GetSiblingIndex());
+                });
                 // clickEvent.AddListener(delegate { LoadGame(newSaveSlot.transform.GetSiblingIndex()); });
             }
 
@@ -76,30 +87,72 @@ public class SaveSlotGeneration : MonoBehaviour {
             timeGO.GetComponent<UnityEngine.UI.Text>().text = "Invalid";
 
             // Only save button works if the save data is not valid
-            if (!_clickForLoad)
+            if (!_clickForLoad && newSaveSlot.transform.GetSiblingIndex() != 0)
             {
-                clickEvent.AddListener(delegate { SaveGame(newSaveSlot.transform.GetSiblingIndex()); });
+                clickEvent.AddListener(delegate {
+                    StartCoroutine("TrySaveGame", newSaveSlot.transform.GetSiblingIndex());
+                    // TrySaveGame(newSaveSlot.transform.GetSiblingIndex());
+                });
             }
         }
     }
 
-    private void LoadGame(int slot) {
+    private IEnumerator TryLoadGame(int slot) {
         Debug.Log("Load Slot " + slot);
-        _loadingCompGO.GetComponent<LevelLoading>().LoadSavedSlot(slot);
+        _promptAnswer = 0;
+        _promptGO.SetActive(true);
+        SetUpButtonEnabled(false);
+        _promptGO.transform.Find("PromptText").GetComponent<UnityEngine.UI.Text>().text = "Load " +
+            (slot == 0 ? "Auto Save Data":"Slot " + slot + " Data") + "?";
+        while (_promptAnswer == 0) {
+            yield return null;
+        }
+        if (_promptAnswer == 1) {
+            _loadingCompGO.GetComponent<LevelLoading>().LoadSavedSlot(slot);
+        }
+        else{
+            SetUpButtonEnabled(true);
+        }
+        _promptGO.SetActive(false);
+        yield return null;
     }
 
-    private void SaveGame(int slot) {
+    private IEnumerator TrySaveGame(int slot) {
         Debug.Log("Save Slot " + slot);
-        var playerGO = GameObject.FindGameObjectWithTag("Player");
-        if (playerGO == null)
+        _promptAnswer = 0;
+        _promptGO.SetActive(true);
+        _promptGO.transform.Find("PromptText").GetComponent<UnityEngine.UI.Text>().text = "Save To " +
+            (slot == 0 ? "Auto Save Data" : "Slot " + slot + " Data") + "?";
+        while (_promptAnswer == 0)
         {
-            Debug.Log("Player doesn't exist!");
-            return;
+            yield return null;
         }
-        playerGO.GetComponent<SaveGameHelper>().SaveGame(slot, playerGO.GetComponent<PlayerStatus>()._currentProgress);
+        if (_promptAnswer == 1)
+        {
+            var playerGO = GameObject.FindGameObjectWithTag("Player");
+            if (playerGO != null)
+            {
+                playerGO.GetComponent<SaveGameHelper>().SaveGame(slot, playerGO.GetComponent<PlayerStatus>()._currentProgress);
+                // Need to update the save slot text
+                SetupSaveSlot(gameObject.transform.GetChild(slot).gameObject, slot);
+            }
+                        
+        }
+        else
+        {
+            SetUpButtonEnabled(true);
+        }
+        _promptGO.SetActive(false);
+    }
 
-        // Need to update the save slot text
-        SetupSaveSlot(gameObject.transform.GetChild(slot).gameObject, slot);
+    private void SetUpButtonEnabled(bool isEnabled) {
+        foreach (var button in _saveSlots) {
+            button.GetComponent<UnityEngine.UI.Button>().enabled = isEnabled;
+        }
+    }
+
+    public void SetPromptAnswer(int ans) {
+        _promptAnswer = ans;
     }
 
 	// Update is called once per frame
