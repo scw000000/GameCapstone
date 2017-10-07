@@ -23,6 +23,7 @@ namespace GameCapstone
     [System.Serializable]
     public class SaveData
     {
+        public static int _maxSaveSlotNum = 6;
         public static string _loadPrefName = "LoadFromSlot";
         public static string _saveSlotPrefName = "SaveSlot";
         public static string _saveSlotValidPrefName = "SaveSlotValid";

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorControl : MonoBehaviour {
-    public uint _doorComponentCount;
     public GameObject[] _doorComponents;
     public GameObject[] _doorOpenRoots;
     public GameObject[] _doorCloseRoots;
