@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour {
     public float _maxHitPoint = 100f;
+    public int _currentProgress;
     public GameObject _currentPortal;
     private float _hitPoint;
     

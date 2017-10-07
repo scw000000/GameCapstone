@@ -70,7 +70,7 @@ public class LevelLoading : MonoBehaviour {
             // Use this progress to display progress bar
             // progress will be stucked at 0.9 if AsyncOp.allowSceneActivation is false
             float currentProgress = AsyncOp.progress / 0.9f;
-            Debug.Log(currentProgress);
+            // Debug.Log(currentProgress);
             yield return null;
         }
 
@@ -94,7 +94,32 @@ public class LevelLoading : MonoBehaviour {
 		#endif
 	}
 
+    public void LoadSavedSlot(int slot) {
+
+        int saveSlotValid = PlayerPrefs.GetInt(GameCapstone.SaveData._saveSlotValidPrefName + slot);
+        if (slot >= 0 && saveSlotValid > 0)
+        {
+            var saveData = BayatGames.SaveGameFree.SaveGame.Load<GameCapstone.SaveData>(
+                GameCapstone.SaveData._saveSlotPrefName + slot,
+                new GameCapstone.SaveData()
+                );
+            Debug.Log("level is: " + saveData._currentLevel);
+            Debug.Log("Progress is: " + saveData._currentProgress);
+            SetupLoadSlot(slot);
+            StartLoadLevel(saveData._currentLevel);
+        }
+        else {
+            Debug.LogError("Invalid save slot");
+        }
+        
+    }
+
+    public void SetupLoadSlot(int slot) {
+        PlayerPrefs.SetInt(GameCapstone.SaveData._loadPrefName, slot);
+    }
+
     public void ClearSaveData() {
+
         // PlayerPrefs.SetInt("PlayerScore", 0);
         // PlayerPrefs.SetInt("AIScore", 0);
     }
