@@ -6,6 +6,7 @@ public class PlayerStatus : MonoBehaviour {
     public float _maxHitPoint = 100f;
     public int _currentProgress;
     public GameObject _currentPortal;
+    public GameObject _currentPortalBullet;
     private float _hitPoint;
     
 	// Use this for initialization

@@ -9,6 +9,7 @@ public class PortalLogic : MonoBehaviour {
     public float _portalLifeTime = 3f;
     private float _portalCurrentAnimTime;
     public float _portalCurrentRadius = 0f;
+    public bool _active { set; get; }
     private int _worldALayer;
     private int _worldBLayer;
     private int _worldAPortalLayer;
@@ -46,7 +47,10 @@ public class PortalLogic : MonoBehaviour {
     }
 
     IEnumerator Idle(){
-        yield return new WaitForSeconds(_portalLifeTime);
+        while (_active) {
+            yield return null;
+        }
+        // yield return new WaitForSeconds(_portalLifeTime);
     }
 
     IEnumerator Shrink(){
@@ -73,7 +77,9 @@ public class PortalLogic : MonoBehaviour {
             UpdateNonPlayerGOLeavePortal(overlap.gameObject);
         }
         var playerGo = GameObject.FindGameObjectWithTag("Player");
-        if (playerGo != null) {
+        if (playerGo != null 
+            && playerGo.GetComponent<PlayerStatus>()._currentPortal != null
+            && playerGo.GetComponent<PlayerStatus>()._currentPortal.GetInstanceID() == gameObject.GetInstanceID()) {
             playerGo.GetComponent<PlayerStatus>()._currentPortal = null;
         }
         Destroy(gameObject);

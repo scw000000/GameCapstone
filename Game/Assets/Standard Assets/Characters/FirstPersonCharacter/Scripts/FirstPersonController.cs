@@ -31,7 +31,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
-        public GameObject _portalBulletPrefab;
         private Vector2 m_Input;
         private Vector3 m_MoveDir = Vector3.zero;
         private CharacterController m_CharacterController;
@@ -70,11 +69,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                var forwardVec = m_Camera.transform.forward;
-                Instantiate(_portalBulletPrefab, m_Camera.transform.position + forwardVec * 2, m_Camera.transform.rotation);
-            }
 
             RotateView();
             // the jump state needs to read here to make sure it is not missed
