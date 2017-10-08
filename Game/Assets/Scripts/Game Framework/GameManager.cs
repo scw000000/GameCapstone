@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,14 +11,19 @@ public class GameManager : MonoBehaviour {
     public GameObject _cameraSetPrefab;
     private GameObject _cameraSetInstance;
     public GameObject[] _spawnLocations;
-    public GameObject _hudPrefab;
-    private GameObject _hudInstance;
+    public GameObject _hudInstance;
     
     public GameObject _gameOverScreenInstance;
 
     public string _endGameCreditSceneName;
-	// Use this for initialization
-	void Start () {
+
+    private GameObject _gameMessagePanelGO;
+    private GameObject _systemMessagePanelGO;
+
+    private Text _gameMessageText;
+    private Text _systemMessageText;
+    // Use this for initialization
+    void Start () {
         if( Init()) {
             StartCoroutine(GameLoop());
         }
@@ -25,8 +31,10 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       
-	}
+        
+        
+
+    }
 
     private bool Init() {
         if (_playerPrefab == null || _spawnLocations == null) {
@@ -71,11 +79,13 @@ public class GameManager : MonoBehaviour {
         _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
         _playerInstance.SendMessage("SetUpCamera", _cameraSetInstance);
 
-        _hudInstance = Instantiate(_hudPrefab);
-
+        // Setup HUD objects
         var healthBarLogicComp = _hudInstance.transform.Find("HealthUI").transform.Find("HealthBar").GetComponent<HealthBarLogic>();
         healthBarLogicComp._playerStatusComp = _playerInstance.GetComponent<PlayerStatus>();
 
+        _gameMessagePanelGO = _hudInstance.transform.Find("GameMessagePanel").gameObject;
+        _systemMessagePanelGO = _hudInstance.transform.Find("SystemMessagePanel").gameObject;
+        
         return true;
     }
 
@@ -167,7 +177,28 @@ public class GameManager : MonoBehaviour {
     {
         var playerControl = _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
         playerControl.enabled = isEnabled;
+        _playerInstance.GetComponent<ShootingLogic>().enabled = isEnabled;
+        _playerInstance.GetComponent<WorldSwitch>().enabled = isEnabled;
         // var playerMenuControl = gameObject.GetComponent<PauseMenuController>();
         // playerMenuControl.enabled = isEnabled;
+    }
+
+    public void DisplayGameMessage(string msg, float time) {
+        _gameMessagePanelGO.GetComponent<MessageAnimationLogic>().DisplayMessage(msg, time);
+    }
+
+    public void DisplaySystemMessage(string msg, float time)
+    {
+        _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().DisplayMessage(msg, time);
+    }
+
+    public void TerminateGameMessage()
+    {
+        _gameMessagePanelGO.GetComponent<MessageAnimationLogic>().TerminateDisplay();
+    }
+
+    public void TerminateSystemMessage()
+    {
+        _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().TerminateDisplay();
     }
 }

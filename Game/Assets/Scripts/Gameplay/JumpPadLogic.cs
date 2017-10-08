@@ -47,7 +47,6 @@ public class JumpPadLogic : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.tag.Equals("Player")) {
             _player = other.gameObject;
-            Debug.Log("Enter jump pad");
             _playerInsideTrigger = true;
         }
     }
@@ -56,7 +55,6 @@ public class JumpPadLogic : MonoBehaviour {
     }
 
     void OnTriggerExit(Collider other) {
-        Debug.Log("Exit jump pad");
         _currentChargeTime = 0f;
         _playerInsideTrigger = false;
     }

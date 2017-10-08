@@ -26,9 +26,12 @@ public class CheckPointTriggerLogic : MonoBehaviour {
         if (!other.tag.Equals("Player")) {
             return;
         }
+        if (other.gameObject.GetComponent<PlayerStatus>()._currentProgress != _progress) {
+            other.gameObject.GetComponent<SaveGameHelper>().SaveGame(0, _progress);
+            // Also need to update current progress in player status component
+            other.gameObject.GetComponent<PlayerStatus>()._currentProgress = _progress;
 
-        other.gameObject.GetComponent<SaveGameHelper>().SaveGame(0, _progress);
-        // Also need to update current progress in player status component
-        other.gameObject.GetComponent<PlayerStatus>()._currentProgress = _progress;
+            GameObject.Find("GameManager").GetComponent<GameManager>().DisplaySystemMessage("Checkpoint " + _progress + " saved", 2f);
+        }
     }
 }
