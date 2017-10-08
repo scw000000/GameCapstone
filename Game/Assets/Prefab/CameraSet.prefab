@@ -3165,9 +3165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03abefd494d3ead4891c7f472bc43d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _floatPeriod: {x: 7, y: 5, z: 1}
-  _maxShift: {x: 0.0001, y: 0.002, z: 0}
-  _minShift: {x: -0.0001, y: -0.002, z: 0}
+  _floatPeriod: {x: 7, y: 5, z: 9}
+  _maxShift: {x: 0.0001, y: 0.002, z: 0.002}
+  _minShift: {x: -0.0001, y: -0.002, z: -0.002}
   _xAnimCurve:
     serializedVersion: 2
     m_Curve:
@@ -3230,10 +3230,40 @@ MonoBehaviour:
     m_RotationOrder: 0
   _zAnimCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.0008544922
+      value: 0
+      inSlope: 0.16936348
+      outSlope: 0.16936348
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.25052205
+      value: -0.9942609
+      inSlope: 0.047421083
+      outSlope: 0.047421083
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.4985936
+      value: -0.0005416274
+      inSlope: 0.035852764
+      outSlope: 0.035852764
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.75119555
+      value: 0.9951795
+      inSlope: -0.07518318
+      outSlope: -0.07518318
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.99728036
+      value: 0.003535206
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!114 &114976772027854192
 MonoBehaviour:
   m_ObjectHideFlags: 1

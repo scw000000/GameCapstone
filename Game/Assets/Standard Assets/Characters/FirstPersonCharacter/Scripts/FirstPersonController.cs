@@ -153,6 +153,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void PerformEject(float ejectSpeed) {
             m_EjectSpeed = ejectSpeed; 
             m_Eject = true;
+            Debug.Log("Perform eject");
         }
 
 

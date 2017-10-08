@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114061228819711518}
   - component: {fileID: 82347075399778624}
   - component: {fileID: 114263644522398636}
+  - component: {fileID: 114840853598279206}
   m_Layer: 8
   m_Name: Avatar
   m_TagString: Player
@@ -329,8 +330,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
-  _portalBulletPrefab: {fileID: 1417724531640528, guid: a94ab941393d4b944af2d9bb12504664,
-    type: 2}
 --- !u!114 &114173619926727272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -474,6 +473,21 @@ MonoBehaviour:
   _maxHitPoint: 100
   _currentProgress: 0
   _currentPortal: {fileID: 0}
+  _currentPortalBullet: {fileID: 0}
+--- !u!114 &114840853598279206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1790601150999638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921ae6e59b33a1947bec17608c45c283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _portalBulletPrefab: {fileID: 1417724531640528, guid: a94ab941393d4b944af2d9bb12504664,
+    type: 2}
+  _coolDownTime: 1
 --- !u!114 &114978048218578078
 MonoBehaviour:
   m_ObjectHideFlags: 1
