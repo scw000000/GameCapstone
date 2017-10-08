@@ -39,7 +39,7 @@ public class WorldSwitch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetButtonDown("SwitchWorld")) {
             PerformSwitch(true);            
         }
         // Temporal for debugging
@@ -58,7 +58,7 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect._theOtherCamera = cameras[1 - i];
         }
 
-        if (Input.GetKeyDown(KeyCode.F)) {
+        if (Input.GetKeyDown(KeyCode.X)) {
             foreach (var cam in cameras)
             {
                 var worldSwitchEffect = cam.gameObject.GetComponent<WorldSwitchSphere>();
