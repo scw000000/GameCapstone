@@ -43,8 +43,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
         private float m_EjectSpeed;
         private bool m_Eject;
-        private string bounceTag;
-        private string switchTag;
+        private bool _bounceBox;
 
         // Use this for initialization
         private void Start()
@@ -61,16 +60,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , m_Camera.transform);
             m_EjectSpeed = 0f;
             m_Eject = false;
-            bounceTag = "Bounce";
-            switchTag = "Switch";
+            _bounceBox = false;
         }
 
 
         // Update is called once per frame
         private void Update()
         {
-
-            RotateView();
+            if (!_bounceBox)
+            {
+                RotateView();
+            }
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
@@ -92,14 +92,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
-
         private void PlayLandingSound()
         {
             m_AudioSource.clip = m_LandSound;
             m_AudioSource.Play();
             m_NextStep = m_StepCycle + .5f;
         }
-
+        private void InBounceBox()
+        {
+            _bounceBox = !_bounceBox;
+        }
 
         private void FixedUpdate()
         {
@@ -144,7 +146,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             // Debug.Log(m_MoveDir);
             m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
-
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
             m_MouseLook.UpdateCursorLock();

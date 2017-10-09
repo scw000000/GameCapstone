@@ -1,33 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine;
 
-public class LaserReflectSlabLogic : MonoBehaviour {
+public class LaserReflectSlabLogic : MonoBehaviour
+{
     private GameObject _playerGO;
     private GameObject _slabGO;
     private Color _originalColor;
     private bool _isPlayerInside = false;
-	// Use this for initialization
-	void Start () {
+    private Quaternion _slabRotate;
+    // Use this for initialization
+    void Start()
+    {
         _slabGO = gameObject.transform.parent.gameObject;
         _originalColor = _slabGO.GetComponent<MeshRenderer>().material.GetColor("_Color");
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (_isPlayerInside && Input.GetButton("Interaction"))
         {
+            updateRotation();
+            
             if (Input.GetButtonDown("Interaction"))
             {
                 _slabGO.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(_originalColor.r, _originalColor.g, _originalColor.b, 0.5f));
+                _playerGO.SendMessage("InBounceBox");
             }
-            _slabGO.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, _playerGO.transform.rotation, 0.7f * Time.deltaTime);
+            _slabGO.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, _slabRotate, 0.7f * Time.deltaTime);
         }
         else
         {
+            if (_isPlayerInside &&  Input.GetButtonUp("Interaction"))
+            {
+                _playerGO.SendMessage("InBounceBox");
+            }
             _slabGO.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(_originalColor.r, _originalColor.g, _originalColor.b, _originalColor.a));
         }
-	}
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -35,6 +47,10 @@ public class LaserReflectSlabLogic : MonoBehaviour {
         {
             _playerGO = other.gameObject;
             _isPlayerInside = true;
+            if (!Input.GetButton("Interaction"))
+            {
+                _slabRotate = _playerGO.transform.rotation;
+            }
         }
     }
 
@@ -42,7 +58,14 @@ public class LaserReflectSlabLogic : MonoBehaviour {
     {
         if (other.tag.Equals("Player"))
         {
-        _isPlayerInside = false;
+            _isPlayerInside = false;
         }
     }
+
+    void updateRotation()
+    {
+        float yRot = Input.GetAxis("Mouse X");
+        _slabRotate *= Quaternion.Euler(0f, yRot, 0f);
+    }
+
 }
