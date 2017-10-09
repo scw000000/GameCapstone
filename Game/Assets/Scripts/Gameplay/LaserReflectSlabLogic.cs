@@ -20,6 +20,7 @@ public class LaserReflectSlabLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(_isPlayerInside);
         if (_isPlayerInside && Input.GetButton("Interaction"))
         {
             updateRotation();
@@ -27,15 +28,22 @@ public class LaserReflectSlabLogic : MonoBehaviour
             if (Input.GetButtonDown("Interaction"))
             {
                 _slabGO.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(_originalColor.r, _originalColor.g, _originalColor.b, 0.5f));
-                _playerGO.SendMessage("InBounceBox");
+                _playerGO.SendMessage("InBounceBox", true);
             }
             _slabGO.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, _slabRotate, 0.7f * Time.deltaTime);
         }
         else
         {
-            if (_isPlayerInside &&  Input.GetButtonUp("Interaction"))
+            if (_isPlayerInside && Input.GetButtonUp("Interaction"))
             {
-                _playerGO.SendMessage("InBounceBox");
+                _playerGO.SendMessage("InBounceBox", false);
+            }
+            if(!_isPlayerInside && !Input.GetButton("Interaction"))
+            {
+                if (_playerGO != null)
+                {
+                    _playerGO.SendMessage("InBounceBox", false);
+                }
             }
             _slabGO.GetComponent<MeshRenderer>().material.SetColor("_Color", new Color(_originalColor.r, _originalColor.g, _originalColor.b, _originalColor.a));
         }
@@ -49,7 +57,7 @@ public class LaserReflectSlabLogic : MonoBehaviour
             _isPlayerInside = true;
             if (!Input.GetButton("Interaction"))
             {
-                _slabRotate = _playerGO.transform.rotation;
+                _slabRotate = _slabGO.transform.rotation;
             }
         }
     }
