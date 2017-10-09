@@ -98,9 +98,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource.Play();
             m_NextStep = m_StepCycle + .5f;
         }
-        private void InBounceBox()
+        private void InBounceBox(bool inBox)
         {
-            _bounceBox = !_bounceBox;
+            _bounceBox = inBox;
         }
 
         private void FixedUpdate()
