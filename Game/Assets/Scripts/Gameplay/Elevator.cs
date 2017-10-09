@@ -13,11 +13,14 @@ public class Elevator : MonoBehaviour
         _direction = 0.0f;
         _moveSpeed = 3.0f;
     }
-    public void GoingDown()
+    void GoingDown()
     {
         _direction = -1.0f;
     }
-
+    public void TriggerExecute()
+    {
+        GoingDown();
+    }
     // Update is called once per frame
     void Update()
     {

@@ -6,6 +6,7 @@ public class CubeTrigger : MonoBehaviour {
 
     public MazeRotation _maze;
     public GameObject _elevator;
+    public List<GameObject> _objectList;
 	// Use this for initialization
 	void Start () {
         _maze = GameObject.FindGameObjectWithTag("Maze").GetComponent<MazeRotation>();
@@ -16,7 +17,7 @@ public class CubeTrigger : MonoBehaviour {
         if (collision.transform.tag.Equals("TriggerBall"))
         {
             _maze.Rotate90();
-            _elevator.GetComponent<Elevator>().GoingDown();
+            _elevator.GetComponent<Elevator>().TriggerExecute();
         }
     }
 
