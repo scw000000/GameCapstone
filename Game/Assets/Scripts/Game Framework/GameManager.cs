@@ -5,11 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-
-    public GameObject _playerPrefab;
-    private GameObject _playerInstance;
-    public GameObject _cameraSetPrefab;
-    private GameObject _cameraSetInstance;
+    public GameObject _playerInstance;
+    public GameObject _cameraSetInstance;
     public GameObject[] _spawnLocations;
     public GameObject _hudInstance;
     
@@ -37,7 +34,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private bool Init() {
-        if (_playerPrefab == null || _spawnLocations == null) {
+        if (_spawnLocations == null) {
             Debug.LogError("Need to Specify player or spawn location");
             return false;
         }
@@ -73,10 +70,16 @@ public class GameManager : MonoBehaviour {
 
         _gameOverScreenInstance.SetActive(false);
 
-        _playerInstance = Instantiate(_playerPrefab, spawnLoc.transform.position, spawnLoc.transform.rotation) as GameObject;
+        // _playerInstance = Instantiate(_playerPrefab, spawnLoc.transform.position, spawnLoc.transform.rotation) as GameObject;
+        _playerInstance.transform.position = spawnLoc.transform.position;
+        _playerInstance.transform.rotation = spawnLoc.transform.rotation;
         _playerInstance.GetComponent<PlayerStatus>()._currentProgress = progress;
         // We don't want to attach the camera set directly because it will make the camera not smooth
-        _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
+        // _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
+        var camRootGO = _playerInstance.transform.Find("CameraRoot").gameObject;
+        _cameraSetInstance.transform.position = camRootGO.transform.position;
+        _cameraSetInstance.transform.rotation = camRootGO.transform.rotation;
+        _cameraSetInstance.SetActive(true);
         _playerInstance.SendMessage("SetUpCamera", _cameraSetInstance);
 
         // Setup HUD objects
