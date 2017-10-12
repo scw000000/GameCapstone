@@ -14,16 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOverMenu.unity
     guid: 67fbfac934b403041ae8e1802d1e2e36
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Laser.unity
     guid: 4e8c28b9a9c309042819292f31a289a6
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LaserPuzzle.unity
     guid: 1305556c7b116e447b9f70b43851d1cf
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: a1fce6b7cb3f69145b250b5b3bf565dd
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: a106b35281f9fb444a990d7734428c68
   - enabled: 1
@@ -32,16 +32,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LogoScreen.unity
     guid: fee4b0b7582aff14e91d257209d981db
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/StartingCave.unity
     guid: e2a0e865be91236428921e548fe2eda0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/SlingshotPuzzle.unity
     guid: 9e9e5a2eba5137b4090c80e4d8d67dd1
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Sewer.unity
     guid: ec7df00107e5bd44da526ca044956f3f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/IceWorld.unity
     guid: 32b490acf86ebb74ca8ce911c4779a5c
   - enabled: 0
