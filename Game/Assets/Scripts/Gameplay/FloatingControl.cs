@@ -10,18 +10,31 @@ public class FloatingControl : MonoBehaviour {
     public AnimationCurve _xAnimCurve;
     public AnimationCurve _yAnimCurve;
     public AnimationCurve _zAnimCurve;
-    private Vector3 _defualtLocalPos;
+    public bool _useLocalPos = true;
+    private Vector3 _defualtPos;
     // Use this for initialization
-    void Start () {
+    void Start() {
         _currTime = Vector3.zero;
-        _defualtLocalPos = gameObject.transform.localPosition;
+        if (_useLocalPos)
+        {
+            _defualtPos = gameObject.transform.localPosition;
+        }
+        else {
+            _defualtPos = gameObject.transform.position;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        _currTime.x = Mathf.Repeat(_currTime.x + Time.deltaTime / _floatPeriod.x, 1f);
-        _currTime.y = Mathf.Repeat(_currTime.y + Time.deltaTime / _floatPeriod.y, 1f);
-        _currTime.z = Mathf.Repeat(_currTime.z + Time.deltaTime / _floatPeriod.z, 1f);
+        if (_floatPeriod.x > 0) {
+            _currTime.x = Mathf.Repeat(_currTime.x + Time.deltaTime / _floatPeriod.x, 1f);
+        }
+        if (_floatPeriod.y > 0) {
+            _currTime.y = Mathf.Repeat(_currTime.y + Time.deltaTime / _floatPeriod.y, 1f);
+        }
+        if (_floatPeriod.z > 0) {
+            _currTime.z = Mathf.Repeat(_currTime.z + Time.deltaTime / _floatPeriod.z, 1f);
+        }
 
         float curAlphaX = _xAnimCurve.Evaluate(_currTime.x);
         float curAlphaY = _yAnimCurve.Evaluate(_currTime.y);
@@ -57,7 +70,15 @@ public class FloatingControl : MonoBehaviour {
         }
 
 
-        gameObject.transform.localPosition = _defualtLocalPos + gameObject.transform.right * newLocalX + gameObject.transform.up * newLocalY + gameObject.transform.forward * newLocalZ;
-         //   new Vector3(newLocalX, newLocalY, newLocalZ);
+        
+        if (_useLocalPos)
+        {
+            gameObject.transform.localPosition = _defualtPos + gameObject.transform.right * newLocalX + gameObject.transform.up * newLocalY + gameObject.transform.forward * newLocalZ;
+        }
+        else
+        {
+            gameObject.transform.position = _defualtPos + gameObject.transform.right * newLocalX + gameObject.transform.up * newLocalY + gameObject.transform.forward * newLocalZ;
+        }
+        //   new Vector3(newLocalX, newLocalY, newLocalZ);
     }
 }
