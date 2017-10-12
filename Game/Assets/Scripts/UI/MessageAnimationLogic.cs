@@ -15,6 +15,7 @@ public class MessageAnimationLogic : MonoBehaviour {
     private Vector2 _panelHideAnchorPos;
     private Vector2 _panelDisplayAnchorPos;
     private Text _messageText;
+    private Image _messageIcon;
 
     private Color _panelImageDisplayColor;
     private Color _panelImageHideColor;
@@ -22,13 +23,17 @@ public class MessageAnimationLogic : MonoBehaviour {
     private Color _textDisplayColor;
     private Color _textHideColor;
 
+    private Color _textIconDisplayColor;
+    private Color _textIconHideColor;
+
     private class MessageRequest {
         public string _message;
         public float _time;
-
-        public MessageRequest(string msg, float time) {
+        public string _iconName;
+        public MessageRequest(string msg, float time, string icon = "") {
             _message = msg;
             _time = time;
+            _iconName = icon;
         }
     }
 
@@ -41,6 +46,7 @@ public class MessageAnimationLogic : MonoBehaviour {
         _panelHideAnchorPos = _panelDisplayAnchorPos + _panelHideShift;
         gameObject.GetComponent<RectTransform>().anchoredPosition = _panelHideAnchorPos;
         _messageText = gameObject.transform.Find("Text").GetComponent<Text>();
+        _messageIcon = gameObject.transform.Find("Icon").GetComponent<Image>();
 
         _panelImageDisplayColor = gameObject.GetComponent<Image>().color;
         _panelImageHideColor = new Color(
@@ -55,6 +61,14 @@ public class MessageAnimationLogic : MonoBehaviour {
             _textDisplayColor.g,
             _textDisplayColor.b,
             0f);
+
+        _textIconDisplayColor = _messageIcon.color;
+        _textIconHideColor = new Color(
+            _textIconDisplayColor.r,
+            _textIconDisplayColor.g,
+            _textIconDisplayColor.b,
+            0f);
+
         _displayRequests = new Queue<MessageRequest>();
 
         _isRunning = false;
@@ -70,11 +84,11 @@ public class MessageAnimationLogic : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            DisplayMessage("Fuck you", 3f);
+          //  DisplayMessage("Fuck you", 3f);
         }
         if(Input.GetKeyDown(KeyCode.F7))
         {
-            DisplayMessage("Fuck you", 0f);
+            // DisplayMessage("Fuck you", 0f);
         }
         if (Input.GetKeyDown(KeyCode.F8))
         {
@@ -85,15 +99,19 @@ public class MessageAnimationLogic : MonoBehaviour {
         if (!_isRunning && _displayRequests.Count > 0) {
             var request = _displayRequests.Peek();
             _messageText.text = request._message;
+            var sprite = Resources.Load<Sprite>("Icons/" + request._iconName);
+            if (sprite != null) {
+                _messageIcon.sprite = sprite;
+            }
             StartCoroutine("DisplayGameMessageCycle", request._time);
             _displayRequests.Dequeue();
         }
     }
 
 
-    public void DisplayMessage(string message, float time)
+    public void DisplayMessage(string message, float time, string iconName = "")
     {
-        _displayRequests.Enqueue( new MessageRequest(message, time) );
+        _displayRequests.Enqueue( new MessageRequest(message, time, iconName) );
     }
 
     private IEnumerator DisplayGameMessageCycle(float displayTime)
@@ -144,6 +162,12 @@ public class MessageAnimationLogic : MonoBehaviour {
                 _textDisplayColor,
                 _textAlphaAnimCurve.Evaluate(_panelCurrLerp)
                 );
+
+            _messageIcon.color = Color.Lerp(
+                _textIconHideColor,
+                _textIconDisplayColor,
+                _panelImageAlphaAnimCurve.Evaluate(_panelCurrLerp)
+                );
             yield return null;
         }
         gameObject.GetComponent<RectTransform>().anchoredPosition = _panelDisplayAnchorPos;
@@ -171,7 +195,13 @@ public class MessageAnimationLogic : MonoBehaviour {
                 _textDisplayColor,
                 _textAlphaAnimCurve.Evaluate(_panelCurrLerp)
                 );
-            yield return null;
+
+            _messageIcon.color = Color.Lerp(
+                _textIconHideColor,
+                _textIconDisplayColor,
+                _panelImageAlphaAnimCurve.Evaluate(_panelCurrLerp)
+                );
+                yield return null;
         }
         SetupDisplay(false);
         gameObject.GetComponent<RectTransform>().anchoredPosition = _panelHideAnchorPos;
@@ -181,6 +211,7 @@ public class MessageAnimationLogic : MonoBehaviour {
     private void SetupDisplay(bool isEnabled) {
         gameObject.GetComponent<Image>().enabled = isEnabled;
         _messageText.enabled = isEnabled;
+        _messageIcon.enabled = isEnabled;
     }
 
     public void TerminateDisplay() {

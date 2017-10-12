@@ -187,6 +187,17 @@ public class GameManager : MonoBehaviour {
         _gameMessagePanelGO.GetComponent<MessageAnimationLogic>().DisplayMessage(msg, time);
     }
 
+    public void DisplayHintMessage(string msg, float time) {
+        var msgAnimLogic = _gameMessagePanelGO.GetComponent<MessageAnimationLogic>();
+        msgAnimLogic.DisplayMessage(msg, time, "QuestionMark");
+    }
+
+    public void DisplayNotifyMessage(string msg, float time)
+    {
+        var msgAnimLogic = _gameMessagePanelGO.GetComponent<MessageAnimationLogic>();
+        msgAnimLogic.DisplayMessage(msg, time, "ExclamationMark");
+    }
+
     public void DisplaySystemMessage(string msg, float time)
     {
         _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().DisplayMessage(msg, time);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AlwaysFacingPlayer : MonoBehaviour {
+    public float _followSpeed = 0.01f;
 	// Use this for initialization
 	void Start () {
 		
@@ -17,6 +18,6 @@ public class AlwaysFacingPlayer : MonoBehaviour {
         // Remove pitch
         camPos.y = gameObject.transform.position.y;
         var targetRot = Quaternion.LookRotation((camPos - gameObject.transform.position).normalized, Vector3.up);
-        gameObject.transform.rotation = targetRot;
+        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, targetRot, _followSpeed);
 	}
 }
