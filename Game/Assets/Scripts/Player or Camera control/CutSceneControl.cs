@@ -27,10 +27,26 @@ public class CutSceneControl : MonoBehaviour {
 	void Update () {
 	}
 
-    public void PlayTimeLine()
+    private void PlayTimeLine()
     {
         _referencedTimelineGO.GetComponent<PlayableDirector>().Play();
         
+    }
+
+    public void StartTimeLine() {
+        // _referencedTimelineGO.GetComponent<Collider>().enabled = false;
+        _cutsceneAudioListener.enabled = true;
+        _cutSceneCamera.enabled = true;
+        if (_DisabledCameraAGO == null)
+        {
+            _DisabledCameraAGO = GameObject.Find("CameraA");
+            _DisabledCameraBGO = GameObject.Find("CameraB");
+        }
+        _DisabledCameraAGO.SetActive(false);
+        _DisabledCameraBGO.SetActive(false);
+        PlayTimeLine();
+        //Invoke("SwitchBackCameras", (float)gameObject.GetComponent<PlayableDirector>().duration);
+        StartCoroutine("WaitUntilFinished");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,24 +54,7 @@ public class CutSceneControl : MonoBehaviour {
         if (!_enableTrigger || !other.tag.Equals("Player")) {
             return;
         }
-        _referencedTimelineGO.GetComponent<Collider>().enabled = false;
-        _cutsceneAudioListener.enabled = true;
-        _cutSceneCamera.enabled = true;
-        if (_DisabledCameraAGO == null) {
-            _DisabledCameraAGO = GameObject.Find("CameraA");
-            _DisabledCameraBGO = GameObject.Find("CameraB");
-        }
-        
-        if (_DisabledCameraAGO == null)
-        {
-            Debug.LogError("FUS");
-        }
-        _DisabledCameraAGO.SetActive(false);
-        Debug.Log("Disabled");
-        _DisabledCameraBGO.SetActive(false);
-        PlayTimeLine();
-        //Invoke("SwitchBackCameras", (float)gameObject.GetComponent<PlayableDirector>().duration);
-        StartCoroutine("WaitUntilFinished");
+        StartTimeLine();
     }
 
     private void SwitchBackCameras() {
