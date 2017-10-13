@@ -24,7 +24,11 @@ public class RenderTextureControl : MonoBehaviour {
         // Debug.Log(Camera.current.name);
         // This is background camera, so render it no matter it's inside sphere or not
         foreach (var material in _materials) {
-            if (gameObject.layer == LayerMask.NameToLayer("Default"))
+            if (gameObject.layer == LayerMask.NameToLayer("Default") || (
+                !Camera.current.name.Equals("CameraA") &&
+                !Camera.current.name.Equals("CameraB") &&
+                !Camera.current.name.Equals("CutsceneCameraA") &&
+                !Camera.current.name.Equals("CutsceneCameraB") ) )
             {
                 material.SetFloat("_OutOrInScalar", 0f);
             }

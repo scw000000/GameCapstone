@@ -12,6 +12,7 @@
 		_BarAlpha("Bar alpha", Float) = 0.5
 		_GradientColorShift("Gradient color shift", Float) = 1
 		_GradientColorUVShift("Gradient color uv shift", Float) = 1
+		_RadiusBound("Switch radius bound", Float) = 700
 	}
 	SubShader
 	{
@@ -41,10 +42,12 @@
 			sampler2D _MainTex;
 			sampler2D _CameraDepthTexture;
 			sampler2D _TheOtherWorldTex;
+			// sampler2D _LastCameraDepthTexture;
 			sampler2D _TheOtherWorldDepthTex;
 			sampler2D _GradientTexture;
 			float _SphereRadius;
 			float _SphereWidth;
+			float _RadiusBound;
 			float _GradientColorShift;
 			float _GradientColorUVShift;
 			float4x4 _InverseViewMat;
@@ -86,7 +89,41 @@
 			{
 			float4 mainWorldPos = GetWorldPos(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv), i.uv);
 			float4 otherWorldPos = GetWorldPos(SAMPLE_DEPTH_TEXTURE(_TheOtherWorldDepthTex, i.uv), i.uv);
+			float otherWorldDist = distance(otherWorldPos.xyz, _WorldSpaceCameraPos);
 			float mainWorldDist = distance(mainWorldPos.xyz, _WorldSpaceCameraPos);
+
+			if (_SphereRadius < _RadiusBound && _SphereRadius < otherWorldDist && _SphereRadius < mainWorldDist) {
+				// return fixed4(1,0,0,1);
+				// if (mainWorldDist > _RadiusBound && otherWorldDist > _RadiusBound) {
+				//	return tex2D(_MainTex, i.uv);
+				//}
+				// return fixed4(1, 0, 0, 1);
+				return tex2D(_TheOtherWorldTex, i.uv);
+			}
+			else if (_SphereRadius > _RadiusBound) {
+				// return fixed4(0, 1, 0, 1);
+				return tex2D(_MainTex, i.uv);
+			}
+			//else if (otherWorldDist < mainWorldDist || mainWorldDist < _SphereRadius) {
+			//	if (otherWorldDist > _SphereRadius - _SphereWidth) {
+			//		float alpha = 1 - (_SphereRadius - otherWorldDist) / _SphereWidth;
+			//		float4 gradientColor = lerp(tex2D(_GradientTexture, float2(pow(alpha, _GradientColorUVShift), 0)), HorBar(i.uv.y) * _BarColor, _BarAlpha);
+			//		return lerp(tex2D(_MainTex, i.uv), gradientColor, pow(alpha, _GradientColorShift));
+			//	}
+			//	return tex2D(_TheOtherWorldTex, i.uv);
+			//}
+			//else {
+			//	if (mainWorldDist > _SphereRadius - _SphereWidth) {
+			//		float alpha = 1 - (_SphereRadius - mainWorldDist) / _SphereWidth;
+			//		float npAlpha = (alpha - 0.5) * 2;
+			//		float4 gradientColor = lerp(tex2D(_GradientTexture, float2(pow(alpha, _GradientColorUVShift), 0)), HorBar(i.uv.y) * _BarColor, _BarAlpha);
+			//		return lerp(tex2D(_MainTex, i.uv), gradientColor, pow(alpha, _GradientColorShift));
+			//	}
+			//	return tex2D(_MainTex, i.uv);
+			//}
+			
+			
+
 			if (mainWorldDist < _SphereRadius) {
 				if (mainWorldDist > _SphereRadius - _SphereWidth) {
 					float alpha = 1 - (_SphereRadius - mainWorldDist) / _SphereWidth;
@@ -94,17 +131,20 @@
 					float4 gradientColor = lerp(tex2D(_GradientTexture, float2(pow(alpha, _GradientColorUVShift), 0)), HorBar(i.uv.y) * _BarColor, _BarAlpha);
 					return lerp(tex2D(_MainTex, i.uv), gradientColor, pow(alpha, _GradientColorShift));
 				}
+				// return fixed4(0, 1, 0, 1);
 				return tex2D(_MainTex, i.uv);
 			}
-			float otherWorldDist = distance(otherWorldPos.xyz, _WorldSpaceCameraPos);
+
 			if (otherWorldDist < _SphereRadius) {
 				if (otherWorldDist > _SphereRadius - _SphereWidth) {
 					float alpha = 1 - (_SphereRadius - otherWorldDist) / _SphereWidth;
 					float4 gradientColor = lerp(tex2D(_GradientTexture, float2(pow(alpha, _GradientColorUVShift), 0)), HorBar(i.uv.y) * _BarColor, _BarAlpha);
 					return lerp(tex2D(_MainTex, i.uv), gradientColor, pow(alpha, _GradientColorShift));
 				}
+			    // return fixed4(1, 0, 0, 1);
 				return tex2D(_MainTex, i.uv);
 			}
+
 			return tex2D(_TheOtherWorldTex, i.uv);
 			}
 			ENDCG

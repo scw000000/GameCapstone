@@ -18,7 +18,7 @@ public class WorldSwitchSphere : MonoBehaviour {
     public AnimationCurve _fovCurve { get; set; }
     private float _maxSphereRadius;
     public float _currSphereRadius;
-    private float _switchTime = 3f;
+    public float _switchTime = 3f;
     public float _vignetteTime;
     private float _currentTime = 0f;
     public Camera _theOtherCamera { get; set; }

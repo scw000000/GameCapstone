@@ -7,7 +7,12 @@ public class WorldSwitch : MonoBehaviour {
     public AnimationCurve _fovCurve;
     public UnityEngine.PostProcessing.PostProcessingProfile _activePPProfile;
     public UnityEngine.PostProcessing.PostProcessingProfile _backgroundPPProfile;
+    public Color _cameraAOutlineColor;
+    public Color _cameraBOutlineColor;
+    public Color _cameraATintColor;
+    public Color _cameraBTintColor;
     public Color _barColor;
+    public float _switchTime = 3f;
     public float _barAlpha = 0.3f;
     public float _gradientColorShift = 1f;
     public float _gradientColorUVShift = 1f;
@@ -19,11 +24,13 @@ public class WorldSwitch : MonoBehaviour {
     private GameObject _cameraRoot;
     private GameObject _cameraSetInstance;
     private GameObject _holdingObject;
+    private Camera _depthCamera;
     private Camera _cameraA;
     private Camera _cameraB;
     private Camera _outlineCamera;
-    private RenderTexture _renderTexture;
-    private RenderTexture _depthTexture;
+    public RenderTexture _renderTexture;
+    public RenderTexture _depthTexture;
+    public Texture2D _textDepth = null;
     private RenderTexture _outlineCaptureRenderTexture;
     private RenderTexture _outlineDepthTexture;
     private Camera _sceneCamera;
@@ -95,19 +102,35 @@ public class WorldSwitch : MonoBehaviour {
         }
         if (switchable)
         {
+            if (_textDepth == null)
+            {
+             //   var ptr = _renderTexture.GetNativeDepthBufferPtr();
+            //    _textDepth = Texture2D.CreateExternalTexture(_renderTexture.width, _renderTexture.height, TextureFormat.RGB24, false, false, _renderTexture.GetNativeDepthBufferPtr());
+
+                //_textDepth.UpdateExternalTexture(_renderTexture.GetNativeDepthBufferPtr());
+            }
+
             Debug.Log("Switch!");
             bool isCamASceneCam = _sceneCamera.GetInstanceID() == _cameraA.GetInstanceID();
             SwitchCollisionVolume();
             _holdingObject.layer = _holdingObject.layer == _worldALayer? _worldBLayer: _worldALayer;
+
+            if (_holdingObject.layer == _worldALayer) {
+                _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;  
+            }
+            else {
+                _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraBOutlineColor;
+            }
+
+            
+            // _sceneCamera.depth = 0;
             var backgroundCamera = isCamASceneCam ? _cameraB : _cameraA;
-            // We don't want both of the camera be
-            // int baselinecullMask = -1 ^ (1 << LayerMask.NameToLayer("Outline"));
-            // backgroundCamera.cullingMask = baselinecullMask ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldA" : "WorldB")));
-            // _sceneCamera.cullingMask = baselinecullMask ^ (1 << LayerMask.NameToLayer((isCamASceneCam ? "WorldB" : "WorldA")));
-            // _sceneCamera.cullingMask = -1;
-            _sceneCamera.renderingPath = RenderingPath.Forward;
+            _depthCamera.cullingMask = _sceneCamera.cullingMask;
+            // backgroundCamera.depth = 1;
+            //  _sceneCamera.renderingPath = RenderingPath.Forward;
+            _sceneCamera.renderingPath = RenderingPath.DeferredShading;
             backgroundCamera.renderingPath = RenderingPath.DeferredShading;
-            _sceneCamera.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
+            // _sceneCamera.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
             _sceneCamera.targetTexture = _renderTexture;
             backgroundCamera.targetTexture = null;
 
@@ -126,8 +149,18 @@ public class WorldSwitch : MonoBehaviour {
             Camera tempCam = _sceneCamera;
             _sceneCamera = backgroundCamera;
             backgroundCamera = tempCam;
-            if (enableAnimation) {
+            if (enableAnimation)
+            {
                 StartSwitchAnimation(_sceneCamera, backgroundCamera);
+                // SetUpGradeColor(true);
+                SetUpGradeColor(false);
+                _backgroundPPProfile.colorGrading.enabled = false;
+                _backgroundPPProfile.grain.enabled = false;
+                StartCoroutine(SetUpGradeColor(true, _vignetteTime + 0.9f));
+                //Invoke("SetUpGradeColor", _switchTime);
+            }
+            else {
+                SetUpGradeColor(true);
             }
             
         }
@@ -145,26 +178,66 @@ public class WorldSwitch : MonoBehaviour {
         newSceneSwitchComp.enabled = true;
     }
 
+    private IEnumerator SetUpGradeColor(bool isForward, float delay = 0f) {
+        yield return new WaitForSeconds(delay);
+        _backgroundPPProfile.colorGrading.enabled = isForward;
+        _backgroundPPProfile.grain.enabled = isForward;
+
+        var origSetting = _backgroundPPProfile.colorGrading.settings;
+        origSetting.colorWheels.mode = UnityEngine.PostProcessing.ColorGradingModel.ColorWheelMode.Linear;
+        if ((isForward && _holdingObject.layer == _worldALayer ) || (!isForward && _holdingObject.layer == _worldBLayer))
+        {
+            _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;
+            origSetting.colorWheels.linear.gamma = _cameraATintColor;
+        }
+        else
+        {
+            _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraBOutlineColor;
+            origSetting.colorWheels.linear.gamma = _cameraBTintColor;
+        }
+        _backgroundPPProfile.colorGrading.settings = origSetting;
+        yield return null;
+    }
+
     public void SetUpCamera(GameObject cameraSetInstance) {
         _cameraSetInstance = cameraSetInstance;
         _cameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
         _holdingObject = _cameraSetInstance.transform.Find("Holder").gameObject;
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
-        _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
-        _cameraA.renderingPath = RenderingPath.DeferredShading;
-        // _cameraA.cullingMask = -1 ^ (1 << LayerMask.NameToLayer("WorldB"));
-        _sceneCamera = _cameraA;
-        _cameraA.targetTexture = null;
-        _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
-        _cameraB.renderingPath = RenderingPath.Forward;
-        // _cameraB.cullingMask = -1 ^ ( 1 << LayerMask.NameToLayer("WorldA") ); 
-        _renderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
+        _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;
+
+        _renderTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.DefaultHDR);
         _renderTexture.Create();
         _depthTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.Depth);
         _depthTexture.Create();
-        _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
+
+        _depthCamera = _cameraSetInstance.transform.Find("DepthCamera").gameObject.GetComponent<Camera>();
+        //_depthCamera.renderingPath = RenderingPath.Forward;
+       // _depthCamera.depthTextureMode = DepthTextureMode.Depth;
+        _depthCamera.targetTexture = _depthTexture;
+
+        _cameraA = _cameraSetInstance.transform.Find("CameraA").gameObject.GetComponent<Camera>();
+
+        _cameraA.depthTextureMode = DepthTextureMode.Depth;
+        _cameraA.renderingPath = RenderingPath.DeferredShading;
+        _sceneCamera = _cameraA;
+        _cameraA.targetTexture = null;
+        _cameraA.depth = 1;
+        
+        // _cameraA.depthTextureMode = DepthTextureMode.None;
+        _cameraB = _cameraSetInstance.transform.Find("CameraB").gameObject.GetComponent<Camera>();
+        _depthCamera.cullingMask = _cameraB.cullingMask;
+        _cameraB.renderingPath = RenderingPath.DeferredShading;
+        // _cameraB.renderingPath = RenderingPath.Forward;
+        _cameraB.depth = 2;
+        _cameraB.depthTextureMode = DepthTextureMode.Depth;
+        // _cameraB.cullingMask = -1 ^ ( 1 << LayerMask.NameToLayer("WorldA") ); 
+        
+        // _cameraB.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
         // Why will this work????
         _cameraB.targetTexture = _renderTexture;
+
+        var ptr = _renderTexture.GetNativeDepthBufferPtr();
 
         _outlineCamera = _cameraSetInstance.transform.Find("OutlineCapture").gameObject.GetComponent<Camera>();
         _outlineCaptureRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
@@ -173,7 +246,7 @@ public class WorldSwitch : MonoBehaviour {
         _outlineDepthTexture.Create();
         _outlineCamera.SetTargetBuffers(_outlineCaptureRenderTexture.colorBuffer, _outlineDepthTexture.depthBuffer);
         _outlineCamera.targetTexture = _outlineCaptureRenderTexture;
-        // _outlineCamera.
+
         // _cameraSetInstance.transform.Find("OutlineCapture").GetComponent<Skybox>().enabled = false;
 
         Camera[] cameras = new Camera[] { _cameraB, _cameraA };
@@ -183,6 +256,7 @@ public class WorldSwitch : MonoBehaviour {
             worldSwitchEffect.SetTheOtherWorldTexture(_renderTexture);
             worldSwitchEffect.SetTheOtherWorldDepthTexture(_depthTexture);
             worldSwitchEffect._animationCurve = _speedCurve;
+            worldSwitchEffect._switchTime = _switchTime;
             worldSwitchEffect._fovCurve = _fovCurve;
             worldSwitchEffect._maxFOV = _maxFOV;
             worldSwitchEffect._minFOV = _minFOV;
@@ -205,6 +279,10 @@ public class WorldSwitch : MonoBehaviour {
         ppComp.profile = _activePPProfile;
         ppComp = _cameraB.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
         ppComp.profile = _backgroundPPProfile;
+        var origSetting = _backgroundPPProfile.colorGrading.settings;
+        origSetting.colorWheels.mode = UnityEngine.PostProcessing.ColorGradingModel.ColorWheelMode.Linear;
+        _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;
+        origSetting.colorWheels.linear.gamma = _cameraATintColor;
 
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
         var holderMat = holder.GetComponent<Renderer>().material;

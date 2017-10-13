@@ -26,7 +26,7 @@ public class OutlineCombine : MonoBehaviour {
         // _material.SetFloat("_Threshold", _transitionCurve.Evaluate(_reverse ? 1f - _currentTime : _currentTime));
         // Graphics.Blit(source, destination, _material);
         // Copy to blur temp 1
-        if(_combineMaterial != null){
+        if (_combineMaterial != null){
             Graphics.Blit(source, destination, _combineMaterial);
         }
         
