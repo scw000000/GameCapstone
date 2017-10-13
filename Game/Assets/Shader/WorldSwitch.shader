@@ -122,8 +122,6 @@
 			//	return tex2D(_MainTex, i.uv);
 			//}
 			
-			
-
 			if (mainWorldDist < _SphereRadius) {
 				if (mainWorldDist > _SphereRadius - _SphereWidth) {
 					float alpha = 1 - (_SphereRadius - mainWorldDist) / _SphereWidth;

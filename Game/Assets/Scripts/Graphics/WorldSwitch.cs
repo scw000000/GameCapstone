@@ -5,6 +5,7 @@ using UnityEngine;
 public class WorldSwitch : MonoBehaviour {
     public AnimationCurve _speedCurve;
     public AnimationCurve _fovCurve;
+    public AnimationCurve _backgoundGrainCurve;
     public UnityEngine.PostProcessing.PostProcessingProfile _activePPProfile;
     public UnityEngine.PostProcessing.PostProcessingProfile _backgroundPPProfile;
     public Color _cameraAOutlineColor;
@@ -28,6 +29,7 @@ public class WorldSwitch : MonoBehaviour {
     private Camera _cameraA;
     private Camera _cameraB;
     private Camera _outlineCamera;
+    private float _backgroundGrainIntensity;
     public RenderTexture _renderTexture;
     public RenderTexture _depthTexture;
     public Texture2D _textDepth = null;
@@ -155,8 +157,12 @@ public class WorldSwitch : MonoBehaviour {
                 // SetUpGradeColor(true);
                 SetUpGradeColor(false);
                 _backgroundPPProfile.colorGrading.enabled = false;
-                _backgroundPPProfile.grain.enabled = false;
-                StartCoroutine(SetUpGradeColor(true, _vignetteTime + 0.9f));
+                var grainSetting = _backgroundPPProfile.grain.settings;
+                grainSetting.intensity = 0f;
+                _backgroundPPProfile.grain.settings = grainSetting;
+                // _backgroundPPProfile.grain.enabled = false;
+                // StartCoroutine(SetUpGradeColor(true, _vignetteTime + 0.9f));
+                StartCoroutine(SetUpGradeColor(true, _switchTime));
                 //Invoke("SetUpGradeColor", _switchTime);
             }
             else {
@@ -179,23 +185,31 @@ public class WorldSwitch : MonoBehaviour {
     }
 
     private IEnumerator SetUpGradeColor(bool isForward, float delay = 0f) {
-        yield return new WaitForSeconds(delay);
-        _backgroundPPProfile.colorGrading.enabled = isForward;
-        _backgroundPPProfile.grain.enabled = isForward;
+        float currTime = 0f;
+        var ppColorGradingSetting = _backgroundPPProfile.colorGrading.settings;
+        var ppGrainSetting = _backgroundPPProfile.grain.settings;
+        // Only control grain because cannot control grading color linearly
+        while (currTime <= delay) {
+            _backgroundPPProfile.colorGrading.settings = ppColorGradingSetting;
+            
+            ppGrainSetting.intensity = Mathf.Lerp(0, _backgroundGrainIntensity, _backgoundGrainCurve.Evaluate(currTime / delay));
+            _backgroundPPProfile.grain.settings = ppGrainSetting;
 
-        var origSetting = _backgroundPPProfile.colorGrading.settings;
-        origSetting.colorWheels.mode = UnityEngine.PostProcessing.ColorGradingModel.ColorWheelMode.Linear;
+            currTime += Time.deltaTime;
+            yield return null;
+        }
         if ((isForward && _holdingObject.layer == _worldALayer ) || (!isForward && _holdingObject.layer == _worldBLayer))
         {
             _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;
-            origSetting.colorWheels.linear.gamma = _cameraATintColor;
+            ppColorGradingSetting.colorWheels.linear.gamma = _cameraATintColor;
         }
         else
         {
             _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraBOutlineColor;
-            origSetting.colorWheels.linear.gamma = _cameraBTintColor;
+            ppColorGradingSetting.colorWheels.linear.gamma = _cameraBTintColor;
         }
-        _backgroundPPProfile.colorGrading.settings = origSetting;
+        _backgroundPPProfile.colorGrading.settings = ppColorGradingSetting;
+        _backgroundPPProfile.colorGrading.enabled = isForward;
         yield return null;
     }
 
@@ -287,8 +301,10 @@ public class WorldSwitch : MonoBehaviour {
         var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
         var holderMat = holder.GetComponent<Renderer>().material;
         holderMat.SetTexture("_MainTex", _renderTexture);
-        
-        // Tell camera set to follow the root
-        _cameraSetInstance.SendMessage("SetupRoot", _cameraRoot);
+
+        _backgroundGrainIntensity = _backgroundPPProfile.grain.settings.intensity; ;
+
+    // Tell camera set to follow the root
+    _cameraSetInstance.SendMessage("SetupRoot", _cameraRoot);
     }
 }
