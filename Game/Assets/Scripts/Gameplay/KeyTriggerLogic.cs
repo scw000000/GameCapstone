@@ -25,6 +25,7 @@ public class KeyTriggerLogic : MonoBehaviour {
         if (!_triggerable) {
             return;
         }
+        gameObject.GetComponent<Collider>().enabled = false;
         _triggerable = false;
         _doorGO.GetComponent<DoorControl>()._isOpened = true;
         if (gameObject.GetComponent<AudioSource>()!= null) {
@@ -38,6 +39,9 @@ public class KeyTriggerLogic : MonoBehaviour {
         while (audioSource.isPlaying) {
             yield return null;
         }
-        gameObject.SetActive(false);
+        for (int i = 0; i < gameObject.transform.childCount; ++i) {
+            gameObject.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        // gameObject.SetActive(false);
     }
 }

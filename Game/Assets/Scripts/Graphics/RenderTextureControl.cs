@@ -30,8 +30,8 @@ public class RenderTextureControl : MonoBehaviour {
             }
             else
             {
-                if ((Camera.current.name.Equals("CameraA") && (gameObject.layer == LayerMask.NameToLayer("WorldA") || gameObject.layer == LayerMask.NameToLayer("WorldAInPortal")))
-                    || (Camera.current.name.Equals("CameraB") && (gameObject.layer == LayerMask.NameToLayer("WorldB") || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))))
+                if ((( Camera.current.name.Equals("CameraA") || Camera.current.name.Equals("CutsceneCameraA")) && (gameObject.layer == LayerMask.NameToLayer("WorldA") || gameObject.layer == LayerMask.NameToLayer("WorldAInPortal")))
+                    || ((Camera.current.name.Equals("CameraB") || Camera.current.name.Equals("CutsceneCameraB")) && (gameObject.layer == LayerMask.NameToLayer("WorldB") || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))))
                 {
                     material.SetFloat("_OutOrInScalar", 1f);
                 }

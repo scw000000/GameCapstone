@@ -42,6 +42,7 @@
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			// First decide if we need to draw the pixel or not
 			clip(_OutOrInScalar*(distance(_SphereCenter.xyz, IN.worldPos) - _SphereRadius));
+			
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
@@ -49,6 +50,10 @@
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
 			o.Alpha = c.a;
+
+		//	if (_OutOrInScalar*(distance(_SphereCenter.xyz, IN.worldPos) - _SphereRadius ) < 0) {
+		//		o.Albedo = fixed3(1, 0, 0);
+		//	}
 		}
 		ENDCG
 	}
