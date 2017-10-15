@@ -44,5 +44,11 @@ public class PlayerStatus : MonoBehaviour {
         _hitPoint = 0f;
     }
 
-    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "eyes")
+        {
+            other.transform.parent.GetComponent<Enemy>().checkSight();
+        }
+    }
 }
