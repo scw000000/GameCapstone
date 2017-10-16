@@ -20,7 +20,7 @@ public class LaserReflectSlabLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(_isPlayerInside);
         if (_isPlayerInside && Input.GetButton("Interaction"))
         {
             updateRotation();

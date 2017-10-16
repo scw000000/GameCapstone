@@ -250,9 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a120b1e1d7cac3c488f679e99c1cfff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eyes: {fileID: 4276790146624082}
-  _roar: {fileID: 0}
   Health: 1
+  eyes: {fileID: 4276790146624082}
+  roar: {fileID: 82613693543794584}
 --- !u!136 &136940718748861272
 CapsuleCollider:
   m_ObjectHideFlags: 1
