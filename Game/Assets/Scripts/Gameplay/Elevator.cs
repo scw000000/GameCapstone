@@ -7,7 +7,6 @@ public class Elevator : MonoBehaviour
 
     private float _direction;
     private float _moveSpeed;
-    public float _desHeight;
     // Use this for initialization
     void Start()
     {
