@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 33351902209488284}
   - component: {fileID: 23213225039634870}
   - component: {fileID: 64622354611204118}
-  m_Layer: 0
+  - component: {fileID: 114414975621188090}
+  m_Layer: 8
   m_Name: Lava_Spill_3_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +41,8 @@ GameObject:
   - component: {fileID: 33595785150691570}
   - component: {fileID: 23071678194379618}
   - component: {fileID: 64283302940142654}
-  m_Layer: 0
+  - component: {fileID: 114729768831888268}
+  m_Layer: 8
   m_Name: Volcano_Active_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +60,8 @@ GameObject:
   - component: {fileID: 33530936418627256}
   - component: {fileID: 23721736885946700}
   - component: {fileID: 64696022000317670}
-  m_Layer: 0
+  - component: {fileID: 114340390873491544}
+  m_Layer: 8
   m_Name: Lava_Spill_3_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1191560460311194}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 84.039246, y: -2.0969238, z: -12.088232}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4569720515317308}
@@ -85,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601316760961602}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.258057, y: -25.513, z: 89.778305}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4569720515317308}
@@ -155,7 +158,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: fb4c8eb2a27d4a5429fa4af14821e121, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
-    subMeshCount: 0
+    subMeshCount: 1
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -186,8 +189,8 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: fb4c8eb2a27d4a5429fa4af14821e121, type: 2}
   m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
+    firstSubMesh: 1
+    subMeshCount: 1
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -266,3 +269,36 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300002, guid: 7713831158ce33b4496b47907c876ad5, type: 3}
+--- !u!114 &114340390873491544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601316760961602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a42f585334ad64db8e8d27a4bfd45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114414975621188090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1191560460311194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a42f585334ad64db8e8d27a4bfd45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114729768831888268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241573216066676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a42f585334ad64db8e8d27a4bfd45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
