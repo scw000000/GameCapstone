@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 public class CutSceneControl : MonoBehaviour {
-    public bool _useSelfGO = true;
+    public bool _useSelfGO = false;
     public GameObject _referencedTimelineGO;
     public GameObject _cutSceneCameraGO;
     public bool _enableTrigger;

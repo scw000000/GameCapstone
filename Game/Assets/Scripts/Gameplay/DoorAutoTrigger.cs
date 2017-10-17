@@ -30,6 +30,10 @@ public class DoorAutoTrigger : MonoBehaviour {
         if (_laserOpenCheck == 1)
         {
             _doorObj.GetComponent<DoorControl>()._isOpened = _triggerOpen;
+            if (gameObject.GetComponent<CutSceneControl>() != null)
+            {
+                gameObject.GetComponent<CutSceneControl>().StartTimeLine();
+            }
         }
 
     }
