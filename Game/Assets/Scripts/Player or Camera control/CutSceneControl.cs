@@ -15,7 +15,8 @@ public class CutSceneControl : MonoBehaviour {
     private GameObject _DisabledCameraBGO;
     // Use this for initialization
     void Start () {
-        if (_useSelfGO) {
+        if (_useSelfGO)
+        {
             _referencedTimelineGO = gameObject;
         }
         _cutSceneCamera = _cutSceneCameraGO.GetComponent<Camera>();

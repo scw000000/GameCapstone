@@ -22,6 +22,9 @@ public class SpawnObject : MonoBehaviour {
         if (_laserSpawnCheck == 1)
         {
             _spawnObjects.SetActive(true);
+            if (gameObject.GetComponent<CutSceneControl>() != null) {
+                gameObject.GetComponent<CutSceneControl>().StartTimeLine();
+            }
         }
 
     }
