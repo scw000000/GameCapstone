@@ -13,6 +13,7 @@ public class MoveLensToAltar : MonoBehaviour {
         _lens = GameObject.Find("Holder");
         _lens.GetComponent<MeshRenderer>().enabled = false;
         _lens.GetComponent<OutlineControl>()._alwaysActive = false;
+        _lens.GetComponent<OutlineControl>().SetEnableOutline(false);
         _player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(_player.GetComponent<WorldSwitch>().SetupLensMaterial(_lensCopy) );
         
@@ -33,9 +34,10 @@ public class MoveLensToAltar : MonoBehaviour {
                 _lens.GetComponent<OutlineControl>()._alwaysActive = true;
                 _lens.GetComponent<OutlineControl>().SetEnableOutline(true);
                 _lensCopy.SetActive(false);
-
-                GameObject.Find("GameManager").GetComponent<GameManager>().DisplayHintMessage("Look thorugh the lens to investigate anomaly", 9);
+                gameObject.transform.Find("MagicRing").gameObject.SetActive(false);
+                GameObject.Find("GameManager").GetComponent<GameManager>().DisplayHintMessage("Look through the lens to investigate anomaly", 9);
                 GameObject.Find("GameManager").GetComponent<GameManager>().DisplayNotifyMessage("Press F to switch world", 4);
+                GameObject.Find("GameManager").GetComponent<GameManager>().DisplayHintMessage("Find a way out of the cave", 4);
             }
         }
 	}

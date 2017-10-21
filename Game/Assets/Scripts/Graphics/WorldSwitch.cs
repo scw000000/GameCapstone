@@ -191,8 +191,6 @@ public class WorldSwitch : MonoBehaviour {
         // Only control grain because cannot control grading color linearly
         while (currTime <= delay) {
             _backgroundPPProfile.colorGrading.settings = ppColorGradingSetting;
-            Debug.Log("Delay :" + delay);
-            Debug.Log("Intensity: " + Mathf.Lerp(0, _backgroundGrainIntensity, _backgoundGrainCurve.Evaluate(currTime / delay)));
             ppGrainSetting.intensity = Mathf.Lerp(0, _backgroundGrainIntensity, _backgoundGrainCurve.Evaluate(currTime / delay));
             _backgroundPPProfile.grain.settings = ppGrainSetting;
 
