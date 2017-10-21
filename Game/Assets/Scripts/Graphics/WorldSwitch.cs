@@ -29,7 +29,7 @@ public class WorldSwitch : MonoBehaviour {
     private Camera _cameraA;
     private Camera _cameraB;
     private Camera _outlineCamera;
-    private float _backgroundGrainIntensity;
+    public float _backgroundGrainIntensity;
     public RenderTexture _renderTexture;
     public RenderTexture _depthTexture;
     public Texture2D _textDepth = null;
@@ -191,7 +191,8 @@ public class WorldSwitch : MonoBehaviour {
         // Only control grain because cannot control grading color linearly
         while (currTime <= delay) {
             _backgroundPPProfile.colorGrading.settings = ppColorGradingSetting;
-            
+            Debug.Log("Delay :" + delay);
+            Debug.Log("Intensity: " + Mathf.Lerp(0, _backgroundGrainIntensity, _backgoundGrainCurve.Evaluate(currTime / delay)));
             ppGrainSetting.intensity = Mathf.Lerp(0, _backgroundGrainIntensity, _backgoundGrainCurve.Evaluate(currTime / delay));
             _backgroundPPProfile.grain.settings = ppGrainSetting;
 
@@ -216,7 +217,7 @@ public class WorldSwitch : MonoBehaviour {
     public void SetUpCamera(GameObject cameraSetInstance) {
         _cameraSetInstance = cameraSetInstance;
         _cameraRoot = gameObject.transform.Find("CameraRoot").gameObject;
-        _holdingObject = _cameraSetInstance.transform.Find("Holder").gameObject;
+        _holdingObject = GameObject.Find("Holder");
         _holdingObject.layer = LayerMask.NameToLayer("WorldA");
         _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;
 
@@ -290,21 +291,28 @@ public class WorldSwitch : MonoBehaviour {
             
         }
         var ppComp = _cameraA.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+        _activePPProfile = Instantiate(_activePPProfile);
         ppComp.profile = _activePPProfile;
         ppComp = _cameraB.gameObject.AddComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+        _backgroundPPProfile = Instantiate(_backgroundPPProfile);
         ppComp.profile = _backgroundPPProfile;
         var origSetting = _backgroundPPProfile.colorGrading.settings;
-        origSetting.colorWheels.mode = UnityEngine.PostProcessing.ColorGradingModel.ColorWheelMode.Linear;
         _holdingObject.GetComponent<OutlineControl>()._outlineColor = _cameraAOutlineColor;
         origSetting.colorWheels.linear.gamma = _cameraATintColor;
-
-        var holder = _cameraSetInstance.transform.Find("Holder").gameObject;
-        var holderMat = holder.GetComponent<Renderer>().material;
-        holderMat.SetTexture("_MainTex", _renderTexture);
+        _backgroundPPProfile.colorGrading.settings = origSetting;
+        StartCoroutine( SetupLensMaterial(_holdingObject) );
 
         _backgroundGrainIntensity = _backgroundPPProfile.grain.settings.intensity; ;
 
     // Tell camera set to follow the root
     _cameraSetInstance.SendMessage("SetupRoot", _cameraRoot);
+    }
+
+    public IEnumerator SetupLensMaterial(GameObject lensGO) {
+        while (_renderTexture == null) {
+            yield return null;
+        }
+        var holderMat = lensGO.GetComponent<Renderer>().material;
+        holderMat.SetTexture("_MainTex", _renderTexture);
     }
 }

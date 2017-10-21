@@ -139,7 +139,7 @@ MonoBehaviour:
           offset: {r: 0, g: 0, b: 0, a: 0}
         linear:
           lift: {r: 1, g: 1, b: 1, a: 0}
-          gamma: {r: 0.13235295, g: 0.21014178, b: 1, a: 0}
+          gamma: {r: 1, g: 0.64137936, b: 0, a: 0}
           gain: {r: 1, g: 1, b: 1, a: 0}
       curves:
         master:
@@ -289,7 +289,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       colored: 1
-      intensity: 0.4223794
+      intensity: 0.484
       size: 1.41
       luminanceContribution: 0.702
   vignette:

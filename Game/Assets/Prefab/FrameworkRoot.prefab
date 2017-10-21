@@ -9667,10 +9667,28 @@ MonoBehaviour:
     m_RotationOrder: 0
   _backgoundGrainCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0.13119495
+      outSlope: 0.13119495
+      tangentMode: 34
+    - serializedVersion: 2
+      time: 0.86988485
+      value: 0.1141245
+      inSlope: 0.5414679
+      outSlope: 0.5414679
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 6.8083963
+      outSlope: 6.8083963
+      tangentMode: 34
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   _activePPProfile: {fileID: 11400000, guid: cfd7c17c4b2b55a47a082a0a1a831f35, type: 2}
   _backgroundPPProfile: {fileID: 11400000, guid: 0a91f94b2d61eeb40911d03efd567882,
     type: 2}
@@ -9688,6 +9706,7 @@ MonoBehaviour:
   _vignetteTime: 0.5
   _insidePortal: 0
   _gradientTexutre: {fileID: 2800000, guid: afe938cf4d450bc4da810e72132d7984, type: 3}
+  _backgroundGrainIntensity: 0
   _renderTexture: {fileID: 0}
   _depthTexture: {fileID: 0}
   _textDepth: {fileID: 0}
@@ -11946,6 +11965,7 @@ MonoBehaviour:
   _playerInstance: {fileID: 1029417503566996}
   _cameraSetInstance: {fileID: 1680885745504814}
   _spawnLocations:
+  - {fileID: 0}
   - {fileID: 0}
   _hudInstance: {fileID: 1784279927919636}
   _gameOverScreenInstance: {fileID: 1445290302569480}
