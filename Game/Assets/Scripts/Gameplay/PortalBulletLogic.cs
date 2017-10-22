@@ -19,11 +19,16 @@ public class PortalBulletLogic : MonoBehaviour {
 	}
 
     void OnTriggerEnter(Collider collider){
+        // if it's trigger then don't trigger portal
+        if (collider.isTrigger) {
+            return;
+        }
         GeneratePortal();
     }
 
     public void GeneratePortal() {
         var playerGO = GameObject.FindGameObjectWithTag("Player");
+        gameObject.GetComponent<Collider>().enabled = false;
         if (playerGO != null)
         {
             var statusComp = playerGO.GetComponent<PlayerStatus>();

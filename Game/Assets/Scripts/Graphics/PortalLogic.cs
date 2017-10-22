@@ -14,6 +14,7 @@ public class PortalLogic : MonoBehaviour {
     private int _worldBLayer;
     private int _worldAPortalLayer;
     private int _worldBPortalLayer;
+    private Vector3 _targetLocalScale;
     // private Camera _cameraA;
     // private Camera _cameraB;
     private GameObject _player;
@@ -27,6 +28,9 @@ public class PortalLogic : MonoBehaviour {
         // _cameraA = GameObject.Find("CameraA").GetComponent<Camera>();
         // _cameraB = GameObject.Find("CameraB").GetComponent<Camera>();
         _player = GameObject.FindGameObjectWithTag("Player");
+
+        _targetLocalScale = transform.localScale;
+        Shader.SetGlobalVector("_SphereCenter", gameObject.transform.position);
     }
 
     IEnumerator PortalLifeCircle() {
@@ -41,7 +45,7 @@ public class PortalLogic : MonoBehaviour {
             _portalCurrentAnimTime += Time.deltaTime / _portalRadiusAnimTime;
             _portalCurrentRadius = _portalRadiusCurve.Evaluate(_portalCurrentAnimTime) * _portalMaxRadius;
             Shader.SetGlobalFloat("_SphereRadius", _portalCurrentRadius);
-            transform.localScale = new Vector3(_portalCurrentRadius, _portalCurrentRadius, _portalCurrentRadius);
+            _targetLocalScale = new Vector3(_portalCurrentRadius, _portalCurrentRadius, _portalCurrentRadius);
             yield return null;
         }
     }
@@ -60,7 +64,7 @@ public class PortalLogic : MonoBehaviour {
             _portalCurrentAnimTime += Time.deltaTime / _portalRadiusAnimTime;
             _portalCurrentRadius = _portalRadiusCurve.Evaluate(1f - _portalCurrentAnimTime) * _portalMaxRadius;
             Shader.SetGlobalFloat("_SphereRadius", _portalCurrentRadius);
-            transform.localScale = new Vector3(_portalCurrentRadius, _portalCurrentRadius, _portalCurrentRadius);
+            _targetLocalScale = new Vector3(_portalCurrentRadius, _portalCurrentRadius, _portalCurrentRadius);
             yield return null;
         }
         ClosePortal();
@@ -87,7 +91,13 @@ public class PortalLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Shader.SetGlobalVector("_SphereCenter", gameObject.transform.position);
+        
+    }
+
+    private void FixedUpdate()
+    {
+        transform.localScale = _targetLocalScale;
+
     }
 
     void SwapLayer(GameObject go) {
