@@ -6,7 +6,7 @@ public class LensFlareControl : MonoBehaviour {
     public string _existInLayerName = "WorldB";
     private int _existLayer;
     private GameObject _player;
-    private WorldSwitch _playerSwitchComp;
+   // private WorldSwitch _playerSwitchComp;
     private LensFlare _lensFlare;
     private Light _light;
     public bool _avaliable = true;
@@ -17,7 +17,7 @@ public class LensFlareControl : MonoBehaviour {
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _existLayer = LayerMask.NameToLayer(_existInLayerName);
-        _playerSwitchComp = _player.GetComponent<WorldSwitch>();
+       // _playerSwitchComp = _player.GetComponent<WorldSwitch>();
         _lensFlare = gameObject.GetComponent<LensFlare>();
         _light = gameObject.GetComponent<Light>();
     }
@@ -31,7 +31,6 @@ public class LensFlareControl : MonoBehaviour {
                 )
         {
             if (_cameraASwitchComp == null) {
-                var camSet = GameObject.FindGameObjectWithTag("MainCamera");
                 _cameraASwitchComp = GameObject.Find("CameraA").gameObject.GetComponent<WorldSwitchSphere>();
                 _cameraBSwitchComp = GameObject.Find("CameraB").gameObject.GetComponent<WorldSwitchSphere>();
             }

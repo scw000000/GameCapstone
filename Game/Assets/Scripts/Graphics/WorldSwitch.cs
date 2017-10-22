@@ -250,8 +250,6 @@ public class WorldSwitch : MonoBehaviour {
         // Why will this work????
         _cameraB.targetTexture = _renderTexture;
 
-        var ptr = _renderTexture.GetNativeDepthBufferPtr();
-
         _outlineCamera = _cameraSetInstance.transform.Find("OutlineCapture").gameObject.GetComponent<Camera>();
         _outlineCaptureRenderTexture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
         _outlineCaptureRenderTexture.Create();

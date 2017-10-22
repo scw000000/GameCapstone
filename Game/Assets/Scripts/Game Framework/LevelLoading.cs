@@ -69,7 +69,7 @@ public class LevelLoading : MonoBehaviour {
         while (AsyncOp != null && AsyncOp.progress < 0.9f) {
             // Use this progress to display progress bar
             // progress will be stucked at 0.9 if AsyncOp.allowSceneActivation is false
-            float currentProgress = AsyncOp.progress / 0.9f;
+            // float currentProgress = AsyncOp.progress / 0.9f;
             // Debug.Log(currentProgress);
             yield return null;
         }

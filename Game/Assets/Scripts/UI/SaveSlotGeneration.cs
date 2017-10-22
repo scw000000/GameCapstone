@@ -37,7 +37,7 @@ public class SaveSlotGeneration : MonoBehaviour {
         {
             slotNameGO.GetComponent<UnityEngine.UI.Text>().text = "Auto Save";
         }
-        var imageGO = newSaveSlot.transform.Find("Image");
+        // var imageGO = newSaveSlot.transform.Find("Image");
         var progressGO = newSaveSlot.transform.Find("Detail").transform.Find("Progress");
         var timeGO = newSaveSlot.transform.Find("Detail").transform.Find("Time");
         var clickEvent = newSaveSlot.GetComponent<UnityEngine.UI.Button>().onClick;
