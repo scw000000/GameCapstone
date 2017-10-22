@@ -18,9 +18,7 @@ public class LensFlareReset : MonoBehaviour {
     {
         if (other.gameObject.tag.Equals("Player"))
         {
-            _lensFlareObject.GetComponent<LensFlareControl>()._avaliable = true;
-            _lensFlareObject.GetComponent<LensFlare>().enabled = true;
-            _lensFlareObject.GetComponent<Light>().enabled = true;
+            _lensFlareObject.GetComponent<MediaControl>()._avaliable = true;
             // Disable itself as well to prevent it turn on lensflare again
             //  enabled = false;
         }

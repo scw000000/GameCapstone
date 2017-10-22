@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LensFlareControl : MonoBehaviour {
-    public string _existInLayerName = "WorldB";
+public class MediaControl : MonoBehaviour {
     private int _existLayer;
     private GameObject _player;
    // private WorldSwitch _playerSwitchComp;
     private LensFlare _lensFlare;
     private Light _light;
     public bool _avaliable = true;
+    public bool _useDisableTrigger = false;
     private WorldSwitchSphere _cameraASwitchComp;
     private WorldSwitchSphere _cameraBSwitchComp;
     // Use this for initialization
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _existLayer = LayerMask.NameToLayer(_existInLayerName);
+        _existLayer = gameObject.layer;
        // _playerSwitchComp = _player.GetComponent<WorldSwitch>();
         _lensFlare = gameObject.GetComponent<LensFlare>();
         _light = gameObject.GetComponent<Light>();
@@ -40,29 +40,56 @@ public class LensFlareControl : MonoBehaviour {
             if ((!_cameraASwitchComp.enabled && !_cameraBSwitchComp.enabled)
                 || distance < (_cameraASwitchComp.enabled ? _cameraASwitchComp._currSphereRadius : _cameraBSwitchComp._currSphereRadius))
             {
-                _lensFlare.enabled = true;
-                _light.enabled = true;
+                if (_lensFlare != null)
+                {
+                    _lensFlare.enabled = true;
+                }
+                if (_light != null) {
+                    _light.enabled = true;
+                }
+                
             }
             else
             {
-                _lensFlare.enabled = false;
-                _light.enabled = false;
+                if (_lensFlare != null)
+                {
+                    _lensFlare.enabled = false;
+                }
+                if (_light != null)
+                {
+                    _light.enabled = false;
+                }
             }
             // _lensFlare.enabled = true;
         }
         else {
-            _lensFlare.enabled = false;
-            _light.enabled = false;
+            if (_lensFlare != null)
+            {
+                _lensFlare.enabled = false;
+            }
+            if (_light != null)
+            {
+                _light.enabled = false;
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if (!_useDisableTrigger) {
+            return;
+        }
         if (other.gameObject.tag.Equals("Player"))
         {
             _avaliable = false;
-            _lensFlare.enabled = false;
-            _light.enabled = true;
+            if (_lensFlare != null)
+            {
+                _lensFlare.enabled = false;
+            }
+            if (_light != null)
+            {
+                _light.enabled = false;
+            }
             // Disable itself as well to prevent it turn on lensflare again
             //  enabled = false;
         }
