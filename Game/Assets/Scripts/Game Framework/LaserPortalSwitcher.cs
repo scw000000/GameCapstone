@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LaserPortalSwitcher : MonoBehaviour {
     public GameObject _laserObject;
+    public bool _changeChildLayer = false;
     private int _worldALayer;
     private int _worldBLayer;
     private int _worldAInPortalLayer;
@@ -25,6 +26,18 @@ public class LaserPortalSwitcher : MonoBehaviour {
         else if (gameObject.layer == _worldAInPortalLayer || gameObject.layer == _worldBInPortalLayer)
         {
             _laserObject.layer = gameObject.layer == _worldAInPortalLayer ? _worldBLayer : _worldALayer;
+        }
+
+        if (_changeChildLayer) {
+            ChangeChildrenLayer(_laserObject, _laserObject.layer);
+        }
+    }
+
+    private static void ChangeChildrenLayer(GameObject go, int layer) {
+        for(int i = 0; i < go.transform.childCount; ++i) {
+            var child = go.transform.GetChild(i).gameObject;
+            child.layer = layer;
+            ChangeChildrenLayer(child, layer);
         }
     }
 }

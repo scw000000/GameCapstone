@@ -8,6 +8,7 @@ public class LensFlareControl : MonoBehaviour {
     private GameObject _player;
     private WorldSwitch _playerSwitchComp;
     private LensFlare _lensFlare;
+    private Light _light;
     public bool _avaliable = true;
     private WorldSwitchSphere _cameraASwitchComp;
     private WorldSwitchSphere _cameraBSwitchComp;
@@ -18,6 +19,7 @@ public class LensFlareControl : MonoBehaviour {
         _existLayer = LayerMask.NameToLayer(_existInLayerName);
         _playerSwitchComp = _player.GetComponent<WorldSwitch>();
         _lensFlare = gameObject.GetComponent<LensFlare>();
+        _light = gameObject.GetComponent<Light>();
     }
 
     //// Update is called once per frame
@@ -40,15 +42,18 @@ public class LensFlareControl : MonoBehaviour {
                 || distance < (_cameraASwitchComp.enabled ? _cameraASwitchComp._currSphereRadius : _cameraBSwitchComp._currSphereRadius))
             {
                 _lensFlare.enabled = true;
+                _light.enabled = true;
             }
             else
             {
                 _lensFlare.enabled = false;
+                _light.enabled = false;
             }
             // _lensFlare.enabled = true;
         }
         else {
             _lensFlare.enabled = false;
+            _light.enabled = false;
         }
     }
 
@@ -58,6 +63,7 @@ public class LensFlareControl : MonoBehaviour {
         {
             _avaliable = false;
             _lensFlare.enabled = false;
+            _light.enabled = true;
             // Disable itself as well to prevent it turn on lensflare again
             //  enabled = false;
         }
