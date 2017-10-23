@@ -25,7 +25,7 @@ public class Elevator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -10.0f)
+        if (transform.position.y < -8.0f)
         {
             _direction = 0.0f;
         }
