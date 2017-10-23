@@ -14,7 +14,7 @@ public class TerminateNotificationLogic : MonoBehaviour {
 		
 	}
     public void TerminateGameMessage() {
-        GameObject.Find("GameManager").GetComponent<GameManager>().TerminateGameMessage();
+        GameObject.Find("GameManager").GetComponent<GameManager>().TerminateGameMessage(true);
     }
 
     private void OnTriggerEnter(Collider other)

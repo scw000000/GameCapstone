@@ -206,13 +206,28 @@ public class GameManager : MonoBehaviour {
         _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().DisplayMessage(msg, time);
     }
 
-    public void TerminateGameMessage()
+    public void TerminateGameMessage(bool isClearAll)
     {
-        _gameMessagePanelGO.GetComponent<MessageAnimationLogic>().TerminateDisplay();
+        if (isClearAll)
+        {
+            _gameMessagePanelGO.GetComponent<MessageAnimationLogic>().ClearAllDisplay();
+        }
+        else
+        {
+            _gameMessagePanelGO.GetComponent<MessageAnimationLogic>().TerminateDisplay();
+        }
     }
 
-    public void TerminateSystemMessage()
+    public void TerminateSystemMessage(bool isClearAll)
     {
-        _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().TerminateDisplay();
+
+        if (isClearAll)
+        {
+            _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().ClearAllDisplay();
+        }
+        else
+        {
+            _systemMessagePanelGO.GetComponent<MessageAnimationLogic>().TerminateDisplay();
+        }
     }
 }

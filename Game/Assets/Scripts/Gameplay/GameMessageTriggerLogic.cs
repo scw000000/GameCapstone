@@ -8,9 +8,9 @@ public class GameMessageTriggerLogic : MonoBehaviour
     public bool _isTrigger = true;
     public bool _triggerOnce = true;
     public float _triggerCoolDown = 0f;
-    public string _message;
+    public string[] _message;
     private bool _isActivatable = true;
-    public float _time;
+    public float[] _time;
     // Use this for initialization
     void Start()
     {
@@ -49,11 +49,17 @@ public class GameMessageTriggerLogic : MonoBehaviour
         }
         if (_isNotification)
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().DisplayNotifyMessage(_message, _time);
+            for (int i = 0; i < _message.Length; ++i) {
+                GameObject.Find("GameManager").GetComponent<GameManager>().DisplayNotifyMessage(_message[i], _time[i]);
+            }
+            
         }
         else
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().DisplayHintMessage(_message, _time);
+            for (int i = 0; i < _message.Length; ++i)
+            {
+                GameObject.Find("GameManager").GetComponent<GameManager>().DisplayHintMessage(_message[i], _time[i]);
+            }
         }
 
         _isActivatable = false;
@@ -70,9 +76,9 @@ public class GameMessageTriggerLogic : MonoBehaviour
         }
     }
 
-    public void TerminateGameMessage()
+    public void TerminateGameMessage(bool isClearAll)
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>().TerminateGameMessage();
+        GameObject.Find("GameManager").GetComponent<GameManager>().TerminateGameMessage(isClearAll);
     }
 
 }

@@ -217,4 +217,9 @@ public class MessageAnimationLogic : MonoBehaviour {
     public void TerminateDisplay() {
         _keepDisplaying = false;
     }
+
+    public void ClearAllDisplay() {
+        _displayRequests.Clear();
+        TerminateDisplay();
+    }
 }

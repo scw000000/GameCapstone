@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: mtl_lava_distort_transparent
-  m_Shader: {fileID: 4800000, guid: 0803b816564bc844b9300c6e1572fcff, type: 3}
+  m_Shader: {fileID: 4800000, guid: 036402a4b0d5f4342bbf1b572714f64e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0

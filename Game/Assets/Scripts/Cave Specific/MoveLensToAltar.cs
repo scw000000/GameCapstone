@@ -26,7 +26,7 @@ public class MoveLensToAltar : MonoBehaviour {
             playerToLensCopy.Normalize();
             if (Vector3.Dot(playerToLensCopy, _player.transform.forward) >= 0.7f) {
                 gameObject.GetComponent<Collider>().enabled = false;
-                gameObject.GetComponent<GameMessageTriggerLogic>().TerminateGameMessage();
+                gameObject.GetComponent<GameMessageTriggerLogic>().TerminateGameMessage(true);
                 
                 _lens.GetComponent<MeshRenderer>().enabled = true;
                 // StartCoroutine(_player.GetComponent<WorldSwitch>().SetupLensMaterial(_lens));
@@ -60,7 +60,7 @@ public class MoveLensToAltar : MonoBehaviour {
             return;
         }
 
-        gameObject.GetComponent<GameMessageTriggerLogic>().TerminateGameMessage();
+        gameObject.GetComponent<GameMessageTriggerLogic>().TerminateGameMessage(true);
 
 
         _insideTrigger = false;
