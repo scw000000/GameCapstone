@@ -9,14 +9,14 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent _nav;
     public Transform _eyes;
     public AudioSource _roar;
+    public GameObject _key;
     private Animator _anim;
 
     public int Health = 4;
     private string state = "idle";
     private bool alive = true;
     private float wait = 0f;
-    private bool highAlert = false;
-    private float alertness = 20f;
+    private float alertness = 20.0f;
     private float deathTime = 3f;
 
     // Use this for initialization
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
         _nav = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
 
-        _nav.speed = 1.2f;
+        _nav.speed = 5.0f;
         _anim.speed = 1.2f;
     }
 
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
                     if (state != "chase")
                     {
                         state = "chase";
-                        _nav.speed = 5.0f;
+                        _nav.speed = 15.0f;
                         _anim.speed = 3.0f;
                         _roar.pitch = 1.2f;
                         _roar.Play();
@@ -65,21 +65,9 @@ public class Enemy : MonoBehaviour
             {
                 Vector3 RandomPos = Random.insideUnitCircle * alertness;
                 NavMeshHit NavHit;
-                NavMesh.SamplePosition(transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
+                NavMesh.SamplePosition(_player.transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
                 _nav.SetDestination(NavHit.position);
                 state = "walk";
-                if (highAlert)
-                {
-                    NavMesh.SamplePosition(_player.transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
-                    alertness += 5f;
-                    if (alertness > 20f)
-                    {
-                        highAlert = false;
-                        alertness = 20f;
-                        _nav.speed = 1.2f;
-                        _anim.speed = 1.2f;
-                    }
-                }
             }
             if (state == "walk")
             {
@@ -111,10 +99,6 @@ public class Enemy : MonoBehaviour
                 {
                     state = "hunt";
                 }
-                if (distance < 2f)
-                {
-
-                }
             }
             if (state == "hunt")
             {
@@ -122,8 +106,6 @@ public class Enemy : MonoBehaviour
                 {
                     state = "search";
                     wait = 5f;
-                    highAlert = true;
-                    alertness = 5f;
                 }
             }
         }
@@ -136,6 +118,7 @@ public class Enemy : MonoBehaviour
             else
             {
                 Destroy(this.gameObject);
+                _key.SetActive(true);
             }
         }
 
@@ -145,6 +128,11 @@ public class Enemy : MonoBehaviour
         Health--;
         if (Health <= 0) alive = false;
 
+        Vector3 RandomPos = Random.insideUnitCircle * alertness;
+        NavMeshHit NavHit;
+        NavMesh.SamplePosition(_player.transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
+        _nav.SetDestination(NavHit.position);
+        state = "walk";
     }
 
     void OnCollisionEnter(Collision col)
