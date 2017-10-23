@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatus : MonoBehaviour {
+public class PlayerStatus : MonoBehaviour
+{
     public float _maxHitPoint = 100f;
     public int _currentProgress;
     public GameObject _currentPortal;
     public GameObject _currentPortalBullet;
     private float _hitPoint;
-    
-	// Use this for initialization
-	void Start () {
+    public float wait;
+
+    // Use this for initialization
+    void Start()
+    {
         _hitPoint = 1f;
+        wait = 0.0f;
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.H))
         {
             AddHitPoints(-10f);
@@ -25,23 +30,40 @@ public class PlayerStatus : MonoBehaviour {
         {
             InstantKill();
         }
+        if (wait > 0.0f)
+        {
+            wait -= Time.deltaTime;
+        }
     }
 
-    public float GetHitPoint() {
+    public float GetHitPoint()
+    {
         return _hitPoint;
     }
 
-    public bool GetIsAlive() {
+    public bool GetIsAlive()
+    {
         return _hitPoint > 0f;
     }
 
-    public void AddHitPoints(float amount) {
+    public void AddHitPoints(float amount)
+    {
         _hitPoint += amount / _maxHitPoint;
         _hitPoint = Mathf.Clamp(_hitPoint, 0, 1);
     }
 
-    public void InstantKill() {
+    public void InstantKill()
+    {
         _hitPoint = 0f;
+    }
+
+    public void TakeDamage()
+    {
+        if (wait < 0.1f)
+        {
+            _hitPoint -= 0.1f;
+            wait = 3.0f;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -49,6 +71,14 @@ public class PlayerStatus : MonoBehaviour {
         if (other.gameObject.name == "eyes")
         {
             other.transform.parent.GetComponent<Enemy>().checkSight();
+        }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.name == "Hellephant")
+        {
+            this.TakeDamage();
         }
     }
 }

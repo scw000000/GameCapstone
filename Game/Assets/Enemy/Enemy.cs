@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
     private GameObject _player;
     private NavMeshAgent _nav;
     public Transform _eyes;
@@ -19,7 +20,8 @@ public class Enemy : MonoBehaviour {
     private float deathTime = 3f;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         _nav = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
 
@@ -28,13 +30,18 @@ public class Enemy : MonoBehaviour {
     }
 
     //check the player
-    public void checkSight() {
-        if (alive) {
+    public void checkSight()
+    {
+        if (alive)
+        {
             RaycastHit rayHit;
-            if (Physics.Linecast(_eyes.position, _player.transform.position, out rayHit)) {
+            if (Physics.Linecast(_eyes.position, _player.transform.position, out rayHit))
+            {
                 print("hit " + rayHit.collider.gameObject.name);
-                if (rayHit.collider.gameObject.tag=="Player") {
-                    if (state != "kill") {
+                if (rayHit.collider.gameObject.tag == "Player")
+                {
+                    if (state != "chase")
+                    {
                         state = "chase";
                         _nav.speed = 5.0f;
                         _anim.speed = 3.0f;
@@ -47,7 +54,8 @@ public class Enemy : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         _player = GameObject.FindGameObjectWithTag("Player");
         _anim.SetFloat("velocity", _nav.velocity.magnitude);
         _anim.SetBool("alive", alive);
@@ -105,7 +113,7 @@ public class Enemy : MonoBehaviour {
                 }
                 if (distance < 2f)
                 {
-                    
+
                 }
             }
             if (state == "hunt")
@@ -119,21 +127,31 @@ public class Enemy : MonoBehaviour {
                 }
             }
         }
-        else {
+        else
+        {
             if (deathTime > 0f)
             {
                 deathTime -= Time.deltaTime;
             }
-            else {
+            else
+            {
                 Destroy(this.gameObject);
             }
         }
-     
-	}
+
+    }
     public void TakeDamage()
     {
         Health--;
-        if(Health<=0)alive = false;
-        
+        if (Health <= 0) alive = false;
+
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "IceWall")
+        {
+            this.TakeDamage();
+        }
     }
 }
