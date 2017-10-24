@@ -10,9 +10,10 @@ public class CutSceneControl : MonoBehaviour {
     public GameObject _cutSceneCameraGO;
     public bool _enableTrigger;
     private Camera _cutSceneCamera;
-    private AudioListener _cutsceneAudioListener;
+    public AudioListener _cutsceneAudioListener;
     private GameObject _DisabledCameraAGO;
     private GameObject _DisabledCameraBGO;
+    private bool _isActivated = true;
     // Use this for initialization
     void Start () {
         if (_useSelfGO)
@@ -36,8 +37,8 @@ public class CutSceneControl : MonoBehaviour {
 
     public void StartTimeLine() {
         // _referencedTimelineGO.GetComponent<Collider>().enabled = false;
-        _cutsceneAudioListener.enabled = true;
-        _cutSceneCamera.enabled = true;
+        _cutSceneCameraGO.GetComponent<AudioListener>().enabled = true;
+        _cutSceneCameraGO.GetComponent<Camera>().enabled = true;
         if (_DisabledCameraAGO == null)
         {
             _DisabledCameraAGO = GameObject.Find("CameraA");
@@ -55,14 +56,18 @@ public class CutSceneControl : MonoBehaviour {
         if (!_enableTrigger || !other.tag.Equals("Player")) {
             return;
         }
+        if (!_isActivated) {
+            return;
+        }
+        _isActivated = false;
         StartTimeLine();
     }
 
     private void SwitchBackCameras() {
-        _cutsceneAudioListener.enabled = false;
+        _cutSceneCameraGO.GetComponent<AudioListener>().enabled = false;
         _DisabledCameraAGO.SetActive(true);
         _DisabledCameraBGO.SetActive(true);
-        _cutSceneCamera.enabled = false;
+        _cutSceneCameraGO.GetComponent<Camera>().enabled = false;
     }
 
     private IEnumerator WaitUntilFinished()

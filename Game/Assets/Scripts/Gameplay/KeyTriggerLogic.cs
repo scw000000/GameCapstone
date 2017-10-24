@@ -25,12 +25,22 @@ public class KeyTriggerLogic : MonoBehaviour {
         if (!_triggerable) {
             return;
         }
-        gameObject.GetComponent<Collider>().enabled = false;
-        _triggerable = false;
-        _doorGO.GetComponent<DoorControl>()._isOpened = true;
-        if (gameObject.GetComponent<AudioSource>()!= null) {
-            gameObject.GetComponent<AudioSource>().Play();
-            StartCoroutine("ActivateUntilAudioPlayed");
+
+        if (gameObject.layer == LayerMask.NameToLayer("Defult")
+            || gameObject.layer == other.gameObject.layer
+            || ( gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && other.gameObject.layer == LayerMask.NameToLayer("WorldB") )
+            || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && other.gameObject.layer == LayerMask.NameToLayer("WorldA"))
+                )
+        {
+
+            gameObject.GetComponent<Collider>().enabled = false;
+            _triggerable = false;
+            _doorGO.GetComponent<DoorControl>()._isOpened = true;
+            if (gameObject.GetComponent<AudioSource>() != null)
+            {
+                gameObject.GetComponent<AudioSource>().Play();
+                StartCoroutine("ActivateUntilAudioPlayed");
+            }
         }
     }
 
