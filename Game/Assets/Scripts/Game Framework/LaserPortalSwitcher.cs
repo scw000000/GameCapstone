@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LaserPortalSwitcher : MonoBehaviour {
     public GameObject _laserObject;
+    public GameObject _playerObject;
     public bool _changeChildLayer = false;
     private int _worldALayer;
     private int _worldBLayer;
@@ -11,6 +12,7 @@ public class LaserPortalSwitcher : MonoBehaviour {
     private int _worldBInPortalLayer;
     void Start()
     {
+        _playerObject = GameObject.FindGameObjectWithTag("Player");
         _worldALayer = LayerMask.NameToLayer("WorldA");
         _worldBLayer = LayerMask.NameToLayer("WorldB");
         _worldAInPortalLayer = LayerMask.NameToLayer("WorldAInPortal");
@@ -25,7 +27,20 @@ public class LaserPortalSwitcher : MonoBehaviour {
         }
         else if (gameObject.layer == _worldAInPortalLayer || gameObject.layer == _worldBInPortalLayer)
         {
-            _laserObject.layer = gameObject.layer == _worldAInPortalLayer ? _worldBLayer : _worldALayer;
+            _laserObject.layer = gameObject.layer == _worldAInPortalLayer ? _worldBLayer : _worldALayer;   
+        }
+
+        if (_laserObject.GetComponent<AudioSource>() != null)
+        {
+            if (( (_playerObject.layer == _laserObject.layer && !_playerObject.GetComponent<WorldSwitch>()._insidePortal)
+                || (_playerObject.layer != _laserObject.layer && _playerObject.GetComponent<WorldSwitch>()._insidePortal) )
+                )
+            {
+                _laserObject.GetComponent<AudioSource>().mute = false;
+            }
+            else {
+                _laserObject.GetComponent<AudioSource>().mute = true;
+            }
         }
 
         if (_changeChildLayer) {
