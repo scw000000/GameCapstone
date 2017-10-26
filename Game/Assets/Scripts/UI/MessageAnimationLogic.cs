@@ -96,7 +96,7 @@ public class MessageAnimationLogic : MonoBehaviour {
                 new Vector2(10, 0);
         }
 
-        if (!_isRunning && _displayRequests.Count > 0) {
+        if (!_isRunning && _displayRequests != null && _displayRequests.Count > 0) {
             var request = _displayRequests.Peek();
             _messageText.text = request._message;
             var sprite = Resources.Load<Sprite>("Icons/" + request._iconName);

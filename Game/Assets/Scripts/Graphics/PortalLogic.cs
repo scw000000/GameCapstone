@@ -18,19 +18,25 @@ public class PortalLogic : MonoBehaviour {
     // private Camera _cameraA;
     // private Camera _cameraB;
     private GameObject _player;
+    private AudioSource _audioSrc;
+    public AudioClip _startSound;
+    public AudioClip _idleSound;
     // Use this for initialization
     void Start () {
         _worldALayer = LayerMask.NameToLayer("WorldA");
         _worldBLayer = LayerMask.NameToLayer("WorldB");
         _worldAPortalLayer = LayerMask.NameToLayer("WorldAInPortal");
         _worldBPortalLayer = LayerMask.NameToLayer("WorldBInPortal");
-        StartCoroutine("PortalLifeCircle");
-        // _cameraA = GameObject.Find("CameraA").GetComponent<Camera>();
-        // _cameraB = GameObject.Find("CameraB").GetComponent<Camera>();
         _player = GameObject.FindGameObjectWithTag("Player");
 
         _targetLocalScale = transform.localScale;
         Shader.SetGlobalVector("_SphereCenter", gameObject.transform.position);
+        _audioSrc = gameObject.GetComponent<AudioSource>();
+
+        StartCoroutine("PortalLifeCircle");
+        // _cameraA = GameObject.Find("CameraA").GetComponent<Camera>();
+        // _cameraB = GameObject.Find("CameraB").GetComponent<Camera>();
+        
     }
 
     IEnumerator PortalLifeCircle() {
@@ -40,6 +46,11 @@ public class PortalLogic : MonoBehaviour {
     }
     // Init and expanding animation
     IEnumerator Expand() {
+        _audioSrc.clip = _startSound;
+        _audioSrc.loop = true;
+        _audioSrc.pitch = 1f;
+        _audioSrc.volume = 0.7f;
+        _audioSrc.Play();
         _portalCurrentAnimTime = 0f;
         while (_portalCurrentAnimTime < 1f) {
             _portalCurrentAnimTime += Time.deltaTime / _portalRadiusAnimTime;
@@ -51,13 +62,24 @@ public class PortalLogic : MonoBehaviour {
     }
 
     IEnumerator Idle(){
+        _audioSrc.clip = _idleSound;
+        _audioSrc.loop = true;
+        _audioSrc.pitch = 1f;
+        _audioSrc.volume = 0.6f;
+        _audioSrc.Play();
         while (_active) {
             yield return null;
         }
+        _audioSrc.Stop();
         // yield return new WaitForSeconds(_portalLifeTime);
     }
 
     IEnumerator Shrink(){
+        _audioSrc.clip = _startSound;
+        _audioSrc.pitch = 0.5f;
+        _audioSrc.loop = false;
+        _audioSrc.volume = 0.7f;
+        _audioSrc.Play();
         _portalCurrentAnimTime = 0f;
         while (_portalCurrentAnimTime < 1f)
         {

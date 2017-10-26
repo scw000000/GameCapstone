@@ -7,8 +7,11 @@ public class ShootingLogic : MonoBehaviour {
     public GameObject _portalBulletPrefab;
     public float _coolDownTime;
     private float _currentCoolDown;
+    private AudioSource _audioSrc;
+    public AudioClip _shootSound;
     // Use this for initialization
     void Start () {
+        _audioSrc = gameObject.GetComponent<AudioSource>();
         _cameraRootGO = gameObject.transform.Find("CameraRoot").gameObject;
         _currentCoolDown = _coolDownTime;
     }
@@ -29,6 +32,8 @@ public class ShootingLogic : MonoBehaviour {
                 statusComp._currentPortalBullet = null;
             }
             statusComp._currentPortalBullet = Instantiate(_portalBulletPrefab, _cameraRootGO.transform.position + forwardVec * 2, _cameraRootGO.transform.rotation);
+            _audioSrc.clip = _shootSound;
+            _audioSrc.Play();
         }
 
         if (Input.GetButtonDown("Fire2")) {

@@ -8809,6 +8809,7 @@ MonoBehaviour:
   _portalBulletPrefab: {fileID: 1417724531640528, guid: a94ab941393d4b944af2d9bb12504664,
     type: 2}
   _coolDownTime: 1
+  _shootSound: {fileID: 8300000, guid: 801af7a73214987459ca350d0ab1992c, type: 3}
 --- !u!114 &114322921215246600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9671,20 +9672,20 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 0.13119495
-      outSlope: 0.13119495
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
     - serializedVersion: 2
-      time: 0.86988485
-      value: 0.1141245
-      inSlope: 0.5414679
-      outSlope: 0.5414679
+      time: 0.817214
+      value: 0.11219731
+      inSlope: 0.41292977
+      outSlope: 0.41292977
       tangentMode: 0
     - serializedVersion: 2
       time: 1
       value: 1
-      inSlope: 6.8083963
-      outSlope: 6.8083963
+      inSlope: 4.8570614
+      outSlope: 4.8570614
       tangentMode: 34
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -11277,6 +11278,7 @@ MonoBehaviour:
   _currentProgress: 0
   _currentPortal: {fileID: 0}
   _currentPortalBullet: {fileID: 0}
+  wait: 0
 --- !u!114 &114708583273457776
 MonoBehaviour:
   m_ObjectHideFlags: 1
