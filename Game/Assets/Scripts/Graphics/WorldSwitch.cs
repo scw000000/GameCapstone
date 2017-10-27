@@ -36,6 +36,7 @@ public class WorldSwitch : MonoBehaviour {
     private RenderTexture _outlineCaptureRenderTexture;
     private RenderTexture _outlineDepthTexture;
     private Camera _sceneCamera;
+    private AudioSource _wordSwitchAudioSrc;
     private int _worldALayer;
     private int _worldBLayer;
     // Use this for initialization
@@ -44,6 +45,7 @@ public class WorldSwitch : MonoBehaviour {
         //   _renderTexture.height = Screen.height;
         _worldALayer = LayerMask.NameToLayer("WorldA");
         _worldBLayer = LayerMask.NameToLayer("WorldB");
+        _wordSwitchAudioSrc = gameObject.GetComponents<AudioSource>()[1];
     }
 	
 	// Update is called once per frame
@@ -113,6 +115,7 @@ public class WorldSwitch : MonoBehaviour {
             }
 
             Debug.Log("Switch!");
+            _wordSwitchAudioSrc.Play();
             bool isCamASceneCam = _sceneCamera.GetInstanceID() == _cameraA.GetInstanceID();
             SwitchCollisionVolume();
             _holdingObject.layer = _holdingObject.layer == _worldALayer? _worldBLayer: _worldALayer;

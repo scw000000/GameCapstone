@@ -19,8 +19,13 @@ public class PortalLogic : MonoBehaviour {
     // private Camera _cameraB;
     private GameObject _player;
     private AudioSource _audioSrc;
+    private AudioSource _enterAudioSrc;
+    private AudioSource _leaveAudioSrc;
     public AudioClip _startSound;
     public AudioClip _idleSound;
+    public AudioClip _passThroughSound;
+    private int _prevEnterColliderID;
+    private int _prevLeaveColliderID;
     // Use this for initialization
     void Start () {
         _worldALayer = LayerMask.NameToLayer("WorldA");
@@ -31,8 +36,12 @@ public class PortalLogic : MonoBehaviour {
 
         _targetLocalScale = transform.localScale;
         Shader.SetGlobalVector("_SphereCenter", gameObject.transform.position);
-        _audioSrc = gameObject.GetComponent<AudioSource>();
-
+        var audioResources = gameObject.GetComponents<AudioSource>();
+        _audioSrc = audioResources[0];
+        _enterAudioSrc = audioResources[1];
+        _leaveAudioSrc = audioResources[2];
+        _enterAudioSrc.clip = _passThroughSound;
+        _leaveAudioSrc.clip = _passThroughSound;
         StartCoroutine("PortalLifeCircle");
         // _cameraA = GameObject.Find("CameraA").GetComponent<Camera>();
         // _cameraB = GameObject.Find("CameraB").GetComponent<Camera>();
@@ -49,7 +58,7 @@ public class PortalLogic : MonoBehaviour {
         _audioSrc.clip = _startSound;
         _audioSrc.loop = true;
         _audioSrc.pitch = 1f;
-        _audioSrc.volume = 0.7f;
+        _audioSrc.volume = 1f;
         _audioSrc.Play();
         _portalCurrentAnimTime = 0f;
         while (_portalCurrentAnimTime < 1f) {
@@ -65,7 +74,7 @@ public class PortalLogic : MonoBehaviour {
         _audioSrc.clip = _idleSound;
         _audioSrc.loop = true;
         _audioSrc.pitch = 1f;
-        _audioSrc.volume = 0.6f;
+        _audioSrc.volume = 1f;
         _audioSrc.Play();
         while (_active) {
             yield return null;
@@ -78,7 +87,7 @@ public class PortalLogic : MonoBehaviour {
         _audioSrc.clip = _startSound;
         _audioSrc.pitch = 0.5f;
         _audioSrc.loop = false;
-        _audioSrc.volume = 0.7f;
+        _audioSrc.volume = 1f;
         _audioSrc.Play();
         _portalCurrentAnimTime = 0f;
         while (_portalCurrentAnimTime < 1f)
@@ -132,6 +141,21 @@ public class PortalLogic : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
+        //    Debug.Log("enter portal");
+        Debug.Log(other.gameObject.name);
+        if (_prevEnterColliderID != other.gameObject.GetInstanceID()) {
+            _prevEnterColliderID = other.gameObject.GetInstanceID();
+            if (_prevLeaveColliderID == _prevEnterColliderID)
+            {
+                _prevLeaveColliderID = 0;
+            }
+            _enterAudioSrc.pitch = 1.58f;
+            //   _enterAudioSrc.loop = false;
+            _enterAudioSrc.volume = 1f;
+            _enterAudioSrc.Play();
+        }
+        
+
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(true);
@@ -155,7 +179,17 @@ public class PortalLogic : MonoBehaviour {
     }
 
     void OnTriggerExit(Collider other){
-        // Debug.Log("Leave");
+        Debug.Log("Leave");
+        if (_prevLeaveColliderID != other.gameObject.GetInstanceID()) {
+            _prevLeaveColliderID = other.gameObject.GetInstanceID();
+            if (_prevLeaveColliderID == _prevEnterColliderID) {
+                _prevEnterColliderID = 0;
+            }
+            _leaveAudioSrc.pitch = 0.8f;
+            _leaveAudioSrc.loop = false;
+            _leaveAudioSrc.volume = 1f;
+            _leaveAudioSrc.Play();
+        }
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(false);
