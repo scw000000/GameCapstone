@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     private float wait = 0f;
     private float alertness = 20.0f;
     private float deathTime = 3f;
+    private Vector3 chargingDirection;
 
     // Use this for initialization
     void Start()
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour
     //check the player
     public void checkSight()
     {
-        if (alive)
+        if (alive && state!="chase")
         {
             RaycastHit rayHit;
             if (Physics.Linecast(_eyes.position, _player.transform.position, out rayHit))
@@ -40,14 +41,13 @@ public class Enemy : MonoBehaviour
                 print("hit " + rayHit.collider.gameObject.name);
                 if (rayHit.collider.gameObject.tag == "Player")
                 {
-                    if (state != "chase")
-                    {
                         state = "chase";
+
                         _nav.speed = 15.0f;
                         _anim.speed = 3.0f;
                         _roar.pitch = 1.2f;
                         _roar.Play();
-                    }
+                        _nav.destination = _player.transform.position;
                 }
             }
         }
@@ -73,12 +73,16 @@ public class Enemy : MonoBehaviour
             {
                 if (_nav.remainingDistance <= _nav.stoppingDistance && !_nav.pathPending)
                 {
+                    _nav.speed = 5.0f;
+                    _anim.speed = 1.2f;
                     state = "search";
                     wait = 5f;
                 }
             }
             if (state == "search")
             {
+                _nav.speed = 5.0f;
+                _anim.speed = 1.2f;
                 if (wait > 5f)
                 {
                     wait -= Time.deltaTime;
@@ -91,11 +95,10 @@ public class Enemy : MonoBehaviour
             }
             if (state == "chase")
             {
-                _nav.destination = _player.transform.position;
 
                 //lose sight of player
                 float distance = Vector3.Distance(transform.position, _player.transform.position);
-                if (distance > 10f)
+                if (distance >5f)
                 {
                     state = "hunt";
                 }
