@@ -140,9 +140,12 @@ namespace DigitalRuby.PyroParticles
             {
                 StartCoroutine(InvincibleTimer());
             }
-            if (Ice.layer == gameObject.layer)
+            if (Ice.gameObject != null)
             {
-                Ice.GetComponent<IceBlockLogic>().Melt();
+                if (Ice.layer == gameObject.layer)
+                {
+                    Ice.GetComponent<IceBlockLogic>().Melt();
+                }
             }
             /*// reduce the duration
             Duration -= Time.deltaTime;
