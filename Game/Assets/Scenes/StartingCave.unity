@@ -1446,6 +1446,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 100024, guid: 1b64e3187321c804c9a04faaf1442f0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b64e3187321c804c9a04faaf1442f0e, type: 3}
   m_IsPrefabParent: 0
@@ -2913,33 +2917,6 @@ Prefab:
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114468523018690658, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
-        type: 2}
-      propertyPath: _cameraATintColor.r
-      value: 0.120674744
-      objectReference: {fileID: 0}
-    - target: {fileID: 114468523018690658, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
-        type: 2}
-      propertyPath: _cameraATintColor.g
-      value: 0.19159985
-      objectReference: {fileID: 0}
-    - target: {fileID: 114468523018690658, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
-        type: 2}
-      propertyPath: _cameraATintColor.b
-      value: 0.9117647
-      objectReference: {fileID: 0}
-    - target: {fileID: 4614610910083510, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 4614610910083510, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 9.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 4614610910083510, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -5.69
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd, type: 2}
@@ -30241,7 +30218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1075695776
 Transform:
   m_ObjectHideFlags: 0
@@ -62959,7 +62936,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 5b84db49d40ea449aa4f3e3bd229ab5b,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 697717af67290514a80bca6b6ebc619f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3050d7bfeab057746a66241f6bb290a6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
