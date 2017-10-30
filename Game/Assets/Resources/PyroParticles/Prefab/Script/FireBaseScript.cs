@@ -47,6 +47,8 @@ namespace DigitalRuby.PyroParticles
         [Tooltip("How long the effect pauses inbetween playing.")]
         public float Pause = 0f;
         private float StorePause;
+        [Tooltip("Ice to be melted")]
+        public GameObject Ice;
 
         private bool Activate = true;
         private bool Check = true;
@@ -57,6 +59,10 @@ namespace DigitalRuby.PyroParticles
         private float stopTimeMultiplier;
         private float stopTimeIncrement;
 
+        private GameObject Player;
+        private bool InFire;
+        private bool Invincible;
+        private float InvincibleTime;
         /*private IEnumerator CleanupEverythingCoRoutine()
         {
             // 2 extra seconds just to make sure animation and graphics have finished ending
@@ -81,6 +87,8 @@ namespace DigitalRuby.PyroParticles
         protected virtual void Awake()
         {
             Starting = true;
+            Invincible = false;
+            InvincibleTime = .8f;
             int fireLayer = UnityEngine.LayerMask.NameToLayer("FireLayer");
             //UnityEngine.Physics.IgnoreLayerCollision(fireLayer, fireLayer);
         }
@@ -120,6 +128,22 @@ namespace DigitalRuby.PyroParticles
         protected virtual void Update()
         {
             StartCoroutine(FireControl());
+            if (Check == true && InFire == true && Invincible == false)
+            {
+                if (Player != null)
+                {
+                    Player.GetComponent<PlayerStatus>().AddHitPoints(-10f);
+                    Invincible = true;
+                }
+            }
+            if (Invincible == true)
+            {
+                StartCoroutine(InvincibleTimer());
+            }
+            if (Ice.layer == gameObject.layer)
+            {
+                Ice.GetComponent<IceBlockLogic>().Melt();
+            }
             /*// reduce the duration
             Duration -= Time.deltaTime;
             if (Stopping)
@@ -214,6 +238,18 @@ namespace DigitalRuby.PyroParticles
             }
         }
 
+        //so Player doesn't get Instant Killed
+        IEnumerator InvincibleTimer()
+        {
+            InvincibleTime -= Time.deltaTime;
+            if (InvincibleTime <= 0)
+            {
+                Invincible = false;
+                InvincibleTime = .8f;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
         public virtual void Stop()
         {
             if (Stopping)
@@ -230,6 +266,25 @@ namespace DigitalRuby.PyroParticles
 
             //StartCoroutine(CleanupEverythingCoRoutine());
         }
+
+        void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("Object inside");
+            if (other.tag.Equals("Player"))
+            {
+                Player = other.gameObject;
+                InFire = true;
+            }
+            
+        }
+        void OnTriggerExit(Collider other)
+        {
+            if (other.tag.Equals("Player"))
+            {
+                InFire = false;
+            }
+        }
+
 
 
         public bool Starting

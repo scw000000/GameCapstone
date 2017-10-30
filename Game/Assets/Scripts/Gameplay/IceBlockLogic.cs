@@ -19,7 +19,7 @@ public class IceBlockLogic : MonoBehaviour {
         }
 	}
 
-    void Melt() {
+    public void Melt() {
         if (_isMelting)
         {
             return;
