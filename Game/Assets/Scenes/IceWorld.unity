@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44661498, g: 0.49645734, b: 0.57484, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8177,15 +8177,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -179.26
+      value: -7.65
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -51.15
+      value: -15.34
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 71.95
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8193,7 +8193,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.9922821
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalRotation.z
@@ -8201,7 +8201,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.12400112
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_RootOrder
@@ -8210,6 +8210,18 @@ Prefab:
     - target: {fileID: 1151876393186984, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -165.75401
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
@@ -18586,7 +18598,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 690587042}
-  m_LocalRotation: {x: -0.027698323, y: -0.7134326, z: -0.02824573, w: 0.69960624}
+  m_LocalRotation: {x: -0.02769831, y: -0.7134326, z: -0.028245717, w: 0.69960624}
   m_LocalPosition: {x: -308.81, y: -53.56, z: 18.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -20528,7 +20540,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 757407053}
-  m_LocalRotation: {x: 0.012604653, y: -0.6259936, z: 0.010120342, w: 0.77966064}
+  m_LocalRotation: {x: 0.012604654, y: -0.62599355, z: 0.010120341, w: 0.77966076}
   m_LocalPosition: {x: -167.06, y: -49.25, z: -18.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -22824,6 +22836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laserObject: {fileID: 1872298379}
+  _playerObject: {fileID: 0}
   _changeChildLayer: 0
 --- !u!135 &829795437
 SphereCollider:
@@ -31411,7 +31424,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1136926773}
-  m_LocalRotation: {x: -0.023742931, y: -0.738288, z: -0.026024397, w: 0.6735651}
+  m_LocalRotation: {x: -0.023742937, y: -0.73828804, z: -0.026024401, w: 0.67356503}
   m_LocalPosition: {x: -165.83551, y: -49.425056, z: 36.61342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -39802,6 +39815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laserObject: {fileID: 2052211748}
+  _playerObject: {fileID: 0}
   _changeChildLayer: 0
 --- !u!135 &1477752779
 SphereCollider:
@@ -46684,7 +46698,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1743227211}
-  m_LocalRotation: {x: -0.048126884, y: -0.043444727, z: -0.002095272, w: 0.9978938}
+  m_LocalRotation: {x: -0.04812686, y: -0.043444704, z: -0.0020952702, w: 0.9978938}
   m_LocalPosition: {x: -182.87, y: -57.28, z: 92.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -57487,7 +57501,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2131845269}
-  m_LocalRotation: {x: 0.0059821983, y: -0.73505473, z: 0.0064860834, w: 0.67795044}
+  m_LocalRotation: {x: 0.0059821964, y: -0.73505473, z: 0.0064860815, w: 0.6779504}
   m_LocalPosition: {x: -204.31, y: -50.91, z: 31.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
