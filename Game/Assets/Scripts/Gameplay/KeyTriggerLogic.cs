@@ -26,7 +26,7 @@ public class KeyTriggerLogic : MonoBehaviour {
             return;
         }
 
-        if (gameObject.layer == LayerMask.NameToLayer("Defult")
+        if (gameObject.layer == LayerMask.NameToLayer("Default")
             || gameObject.layer == other.gameObject.layer
             || ( gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && other.gameObject.layer == LayerMask.NameToLayer("WorldB") )
             || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && other.gameObject.layer == LayerMask.NameToLayer("WorldA"))

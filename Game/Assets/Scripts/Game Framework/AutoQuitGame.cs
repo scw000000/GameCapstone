@@ -14,8 +14,15 @@ public class AutoQuitGame : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        if (Input.anyKeyDown)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+        }
+    }
 
     IEnumerator AutoQuit() {
         yield return new WaitForSeconds(_waitTimeBeforeQuit);
