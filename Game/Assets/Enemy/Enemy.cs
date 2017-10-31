@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     private string state = "idle";
     private bool alive = true;
     private float wait = 0f;
+    private float chargeWait = 0f;
     private float alertness = 20.0f;
     private float deathTime = 3f;
     private Vector3 chargingDirection;
@@ -41,13 +42,13 @@ public class Enemy : MonoBehaviour
                 print("hit " + rayHit.collider.gameObject.name);
                 if (rayHit.collider.gameObject.tag == "Player")
                 {
-                        state = "chase";
+                    state = "chase";
 
-                        _nav.speed = 15.0f;
-                        _anim.speed = 3.0f;
-                        _roar.pitch = 1.2f;
-                        _roar.Play();
-                        _nav.destination = _player.transform.position;
+                    _nav.speed = 15.0f;
+                    _anim.speed = 3.0f;
+                    _roar.pitch = 1.2f;
+                    _roar.Play();
+                    chargeWait = 2.0f;
                 }
             }
         }
@@ -71,19 +72,18 @@ public class Enemy : MonoBehaviour
             }
             if (state == "walk")
             {
-                if (_nav.remainingDistance <= _nav.stoppingDistance && !_nav.pathPending)
+                if (_nav.remainingDistance <= 1f && !_nav.pathPending)
                 {
                     _nav.speed = 5.0f;
                     _anim.speed = 1.2f;
                     state = "search";
-                    wait = 5f;
+                    wait = 2f;
                 }
             }
             if (state == "search")
             {
-                _nav.speed = 5.0f;
                 _anim.speed = 1.2f;
-                if (wait > 5f)
+                if (wait > 2f)
                 {
                     wait -= Time.deltaTime;
                     transform.Rotate(0f, 120f * Time.deltaTime, 0f);
@@ -95,25 +95,22 @@ public class Enemy : MonoBehaviour
             }
             if (state == "chase")
             {
-
-                //lose sight of player
-                float distance = Vector3.Distance(transform.position, _player.transform.position);
-                if (distance >5f)
+                if (chargeWait > 0f)
                 {
-                    state = "hunt";
+                    _nav.destination = _player.transform.position;
+                    chargeWait -= Time.deltaTime;
                 }
-            }
-            if (state == "hunt")
-            {
-                if (_nav.remainingDistance <= _nav.stoppingDistance && !_nav.pathPending)
-                {
+                else {
+                    _nav.speed= 5.0f;
+                    _anim.speed = 1.2f;
                     state = "search";
-                    wait = 5f;
+                    wait = 2f;
                 }
             }
         }
         else
         {
+            _nav.Stop();
             if (deathTime > 0f)
             {
                 deathTime -= Time.deltaTime;
