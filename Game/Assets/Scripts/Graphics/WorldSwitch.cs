@@ -133,8 +133,10 @@ public class WorldSwitch : MonoBehaviour {
             _depthCamera.cullingMask = _sceneCamera.cullingMask;
             // backgroundCamera.depth = 1;
             //  _sceneCamera.renderingPath = RenderingPath.Forward;
-            _sceneCamera.renderingPath = RenderingPath.DeferredShading;
-            backgroundCamera.renderingPath = RenderingPath.DeferredShading;
+            _sceneCamera.gameObject.GetComponent<AudioListener>().enabled = false;
+            backgroundCamera.gameObject.GetComponent<AudioListener>().enabled = true;
+            // _sceneCamera.renderingPath = RenderingPath.DeferredShading;
+            //backgroundCamera.renderingPath = RenderingPath.DeferredShading;
             // _sceneCamera.SetTargetBuffers(_renderTexture.colorBuffer, _depthTexture.depthBuffer);
             _sceneCamera.targetTexture = _renderTexture;
             backgroundCamera.targetTexture = null;

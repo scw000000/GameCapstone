@@ -15,11 +15,13 @@ public class OutlineControl : MonoBehaviour {
     private float _pulseLightMaxShutdownTime = 1f;
     private float _pulseLightPeriod = 3f;
     private float _currentTime = 0f;
+    private GameObject _playerGO;
     // Use this for initialization
     void Start () {
+        _playerGO = GameObject.FindGameObjectWithTag("Player");
         if (_alwaysActive)
         {
-            _isActivated = true;
+            // _isActivated = true;
         }
         var meshFilterComp = gameObject.GetComponent<MeshFilter>();
         _cloneMeshGO = new GameObject("MeshClone");
