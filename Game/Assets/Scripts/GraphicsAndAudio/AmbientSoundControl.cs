@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AmbientSoundControl : MonoBehaviour {
-    private AudioSource _worldAAudio;
-    private AudioSource _worldBAudio;
+    public AudioSource _worldAAudio;
+    public AudioSource _worldBAudio;
     private Camera _cameraA;
     
     // Use this for initialization

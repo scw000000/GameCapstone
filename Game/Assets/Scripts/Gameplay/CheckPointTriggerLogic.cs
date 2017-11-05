@@ -5,8 +5,8 @@ using UnityEngine;
 public class CheckPointTriggerLogic : MonoBehaviour {
     public int _progress = 0;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 
