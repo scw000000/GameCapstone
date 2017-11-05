@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     public GameObject _cameraSetInstance;
     public GameObject[] _spawnLocations;
     public GameObject _hudInstance;
+    public GameObject _eventObject;
     
     public GameObject _gameOverScreenInstance;
 
@@ -88,6 +89,11 @@ public class GameManager : MonoBehaviour {
 
         _gameMessagePanelGO = _hudInstance.transform.Find("GameMessagePanel").gameObject;
         _systemMessagePanelGO = _hudInstance.transform.Find("SystemMessagePanel").gameObject;
+
+        if (_eventObject != null)
+        {
+            _eventObject.SetActive(true);
+        }
         
         return true;
     }
