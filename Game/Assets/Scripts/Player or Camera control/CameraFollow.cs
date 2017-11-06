@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
     public float _followingSpeed;
-    private GameObject _followingRoot;
+    public GameObject _followingRoot;
     // Use this for initialization
     void Start () {
 		
@@ -17,6 +17,15 @@ public class CameraFollow : MonoBehaviour {
 
         gameObject.transform.rotation = Quaternion.Lerp(
             gameObject.transform.rotation, _followingRoot.transform.rotation, _followingSpeed * Time.deltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        //gameObject.transform.position = Vector3.Lerp(
+        //    gameObject.transform.position, _followingRoot.transform.position, _followingSpeed * Time.deltaTime);
+
+        //gameObject.transform.rotation = Quaternion.Lerp(
+        //    gameObject.transform.rotation, _followingRoot.transform.rotation, _followingSpeed * Time.deltaTime);
     }
 
     public void SetupRoot(GameObject followingRoot) {

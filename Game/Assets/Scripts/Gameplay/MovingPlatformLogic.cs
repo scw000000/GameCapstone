@@ -5,7 +5,9 @@ using UnityEngine;
 public class MovingPlatformLogic : MonoBehaviour {
     public GameObject[] _anchorPoints;
     public float[] _moveTime;
+    public AnimationCurve[] _moveCurves;
     private float[] _accuMoveTime;
+    
     // 1: forward, -1: backward, 0: not moving
     public int _moveDirection = 1;
     public int _currAhchorIndex = 0;
@@ -63,27 +65,41 @@ public class MovingPlatformLogic : MonoBehaviour {
             }
         }
         float lerpFactor = 0f;
-        Debug.Log("curr " + _currAhchorIndex + " target " + _targetAhchorIndex);
-        Debug.Log(_currTime);
+        // Debug.Log("curr " + _currAhchorIndex + " target " + _targetAhchorIndex);
+        // Debug.Log(_currTime);
         if (_moveDirection == 1)
         {
             lerpFactor = (_currTime - _accuMoveTime[_currAhchorIndex]) / (_accuMoveTime[_targetAhchorIndex] - _accuMoveTime[_currAhchorIndex]);
-        }
-        else
-        {
-            lerpFactor = 1f - (_currTime - _accuMoveTime[_targetAhchorIndex]) / (_accuMoveTime[_currAhchorIndex] - _accuMoveTime[_targetAhchorIndex]);
-        }
-
-        gameObject.transform.position = Vector3.Lerp(
+            lerpFactor = _moveCurves[_currAhchorIndex].Evaluate(lerpFactor);
+            gameObject.transform.position = Vector3.Lerp(
                 _anchorPoints[_currAhchorIndex].transform.position,
                 _anchorPoints[_targetAhchorIndex].transform.position,
                 lerpFactor
                 );
 
-        gameObject.transform.rotation = Quaternion.Lerp(
-            _anchorPoints[_currAhchorIndex].transform.rotation,
-            _anchorPoints[_targetAhchorIndex].transform.rotation,
-            lerpFactor);
+            gameObject.transform.rotation = Quaternion.Lerp(
+                _anchorPoints[_currAhchorIndex].transform.rotation,
+                _anchorPoints[_targetAhchorIndex].transform.rotation,
+                lerpFactor);
+        }
+        else
+        {
+            lerpFactor = (_currTime - _accuMoveTime[_targetAhchorIndex]) / (_accuMoveTime[_currAhchorIndex] - _accuMoveTime[_targetAhchorIndex]);
+            lerpFactor = _moveCurves[_targetAhchorIndex].Evaluate(lerpFactor);
+
+            gameObject.transform.position = Vector3.Lerp(
+                _anchorPoints[_targetAhchorIndex].transform.position,
+                _anchorPoints[_currAhchorIndex].transform.position,
+                lerpFactor
+                );
+
+            gameObject.transform.rotation = Quaternion.Lerp(
+                _anchorPoints[_targetAhchorIndex].transform.rotation,
+                _anchorPoints[_currAhchorIndex].transform.rotation,
+                lerpFactor);
+        }
+
+        
     }
 
     void UpdateTargetAnchorPoint()
@@ -122,4 +138,35 @@ public class MovingPlatformLogic : MonoBehaviour {
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.tag.Equals("Player"))
+        {
+            return;
+        }
+        //Debug.Log("Enger!");
+        // other.transform.parent = gameObject.transform;
+        other.gameObject.GetComponent<PlatformFollow>().Platform = gameObject.transform;
+        // other.transform.parent = gameObject.transform.parent;
+        if (other.gameObject.GetComponent<CharacterController>().isGrounded)
+        {
+            // other.gameObject.GetComponent<CharacterController>().
+            //Debug.Log("Attach!");
+            //other.transform.parent = gameObject.transform.parent;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.tag.Equals("Player"))
+        {
+            return;
+        }
+
+        Debug.Log("Leave!");
+        other.gameObject.GetComponent<PlatformFollow>().Platform = null;
+        //other.transform.parent = GameObject.Find("FrameworkRoot").transform;
+    }
+    
 }
