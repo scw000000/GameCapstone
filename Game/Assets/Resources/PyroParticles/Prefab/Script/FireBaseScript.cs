@@ -142,7 +142,7 @@ namespace DigitalRuby.PyroParticles
             }
             if (Ice.gameObject != null)
             {
-                if (Ice.layer == gameObject.layer)
+                if (gameObject.layer == 10)
                 {
                     Ice.GetComponent<IceBlockLogic>().Melt();
                 }
