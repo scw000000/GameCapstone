@@ -31,7 +31,7 @@ public class MovingPlatformLogic : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (_moveDirection == 0)
         {
@@ -65,6 +65,11 @@ public class MovingPlatformLogic : MonoBehaviour {
             }
         }
         float lerpFactor = 0f;
+        // This should be a rest position, no need to update transform
+        if (_anchorPoints[_currAhchorIndex].GetInstanceID() == _anchorPoints[_targetAhchorIndex].GetInstanceID())
+        {
+            return;
+        }
         // Debug.Log("curr " + _currAhchorIndex + " target " + _targetAhchorIndex);
         // Debug.Log(_currTime);
         if (_moveDirection == 1)
