@@ -14,11 +14,11 @@ public class PlatformFollow : MonoBehaviour {
             if (platform != null)
             {
                 prePos = platform.position;
-                gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().m_IsOnPlatform = true;
+          //      gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().m_IsOnPlatform = true;
             }
             else
             {
-                gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().m_IsOnPlatform = false;
+                //gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().m_IsOnPlatform = false;
 
             }
         }
