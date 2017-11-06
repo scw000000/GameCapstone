@@ -15,6 +15,9 @@ TagManager:
   - Enemy
   - Boss
   - KeyCube
+  - SF_Door
+  - PowerCube
+  - Destoryable
   layers:
   - Default
   - TransparentFX
