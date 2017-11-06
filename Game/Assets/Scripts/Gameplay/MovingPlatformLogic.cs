@@ -169,7 +169,7 @@ public class MovingPlatformLogic : MonoBehaviour {
             return;
         }
 
-        Debug.Log("Leave!");
+       // Debug.Log("Leave!");
         other.gameObject.GetComponent<PlatformFollow>().Platform = null;
         //other.transform.parent = GameObject.Find("FrameworkRoot").transform;
     }

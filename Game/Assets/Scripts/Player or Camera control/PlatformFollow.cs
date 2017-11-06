@@ -46,9 +46,10 @@ public class PlatformFollow : MonoBehaviour {
         {
             Debug.Log(Platform.position - prePos);
             //We are calculating how much the platform moved by subtracting last frame's position, then ADDING it to our player's position.
-            gameObject.GetComponent<CharacterController>().Move(Platform.position - prePos);
+            // gameObject.GetComponent<CharacterController>().Move(Platform.position - prePos);
+            // Debug.Log(gameObject.GetComponent<CharacterController>().isGrounded);
             // gameObject.GetComponent<Rigidbody>().MovePosition(transform.position + Platform.position - prePos);
-            //gameObject.transform.position += Platform.position - prePos;
+            gameObject.transform.position += Platform.position - prePos;
             prePos = Platform.position; //Set prePos for use next frame
         }
     }

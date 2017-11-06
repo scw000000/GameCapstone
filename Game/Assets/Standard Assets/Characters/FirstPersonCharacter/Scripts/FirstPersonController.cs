@@ -221,7 +221,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 newCameraPosition = m_Camera.transform.localPosition;
                 newCameraPosition.y = m_OriginalCameraPosition.y - m_JumpBob.Offset();
             }
-            Debug.LogError("FFF");
+            //Debug.LogError("FFF");
             m_Camera.transform.localPosition = newCameraPosition;
         }
 
