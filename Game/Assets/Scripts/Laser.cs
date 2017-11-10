@@ -77,7 +77,7 @@ public class Laser : MonoBehaviour {
         bool loopActive = true; //Is the reflecting loop active?
 
         Vector3 laserDirection = transform.forward; //direction of the next laser
-        Vector3 lastLaserPosition = transform.localPosition + laserDirection * 0.5f; //origin of the next laser
+        Vector3 lastLaserPosition = transform.position + laserDirection * 0.5f; //origin of the next laser
         Vector3 hitNormal = new Vector3();
         Vector3 hitPoint = new Vector3();
         // mLineRenderer.SetVertexCount(1);
@@ -117,7 +117,7 @@ public class Laser : MonoBehaviour {
                 hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldB") : LayerMask.NameToLayer("WorldA")));
                 // shooting from outside and won't be blocked by object in the other world
                 hitableLayers ^= (1 << (isGOInWorldA ? LayerMask.NameToLayer("WorldBInPortal") : LayerMask.NameToLayer("WorldAInPortal")));
-                isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers);
+                isHit = Physics.Raycast(startingPoint, laserDirection, out hit, restDistance, hitableLayers, QueryTriggerInteraction.Collide);
                 // Reach portal boundary, that means nothing blocking for now
                 if (!isHit)
                 {
@@ -133,6 +133,7 @@ public class Laser : MonoBehaviour {
                         startingPoint = hit.point + laserDirection * 0.1f;
                     }
                     else {
+                        // Debug.Log("hit: " + hit.transform.gameObject.name);
                         hitObject = hit.transform.gameObject;
                         hitNormal = hit.normal;
                         hitPoint = hit.point;

@@ -22,6 +22,7 @@ public class SwitchLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if (Input.GetButtonDown("Interaction"))
         {
             if (_isInTrigger == false || _isOpertable == false)
@@ -82,6 +83,18 @@ public class SwitchLogic : MonoBehaviour {
         }
         if (_isActive && _activeEventObject != null)
         {
+            if (_activeEventObject.layer != LayerMask.NameToLayer("Default"))
+            {
+                if (gameObject.layer == LayerMask.NameToLayer("WorldA")
+                    || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
+                {
+                    _activeEventObject.layer = LayerMask.NameToLayer("WorldA");
+                }
+                else
+                {
+                    _activeEventObject.layer = LayerMask.NameToLayer("WorldB");
+                }
+            }
             _activeEventObject.SetActive(true);
         }
         else if ( !_isActive && _inactiveEventObject != null) 

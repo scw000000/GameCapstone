@@ -8,7 +8,8 @@ public class DoorControl : MonoBehaviour {
     public GameObject[] _doorCloseRoots;
     public AnimationCurve[] _doorSpeedCurves;
     public bool _isOpened = false;
-    public float _operationTime = 2f;
+    public float _openTime = 2f;
+    public float _closeTime = 2f;
     private float _doorOpenLerp;
     // Use this for initialization
     void Start()
@@ -24,11 +25,11 @@ public class DoorControl : MonoBehaviour {
 
         if (_isOpened)
         {
-            _doorOpenLerp += Time.deltaTime / _operationTime;
+            _doorOpenLerp += Time.deltaTime / _openTime;
         }
         else
         {
-            _doorOpenLerp -= Time.deltaTime / _operationTime;
+            _doorOpenLerp -= Time.deltaTime / _closeTime;
         }
         _doorOpenLerp = Mathf.Clamp01(_doorOpenLerp);
 
