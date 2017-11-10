@@ -16,6 +16,7 @@ public class Slintshot : MonoBehaviour {
     private float _stringOriginalLength;
     public float _forceRate;
     private bool _isButtonPressed;
+    private GameObject _cameraGO;
     // Use this for initialization
     void Start () {
         _left = transform.Find("LeftAttachPoint").transform.GetComponent<LineRenderer>();
@@ -30,6 +31,8 @@ public class Slintshot : MonoBehaviour {
         _stringOriginalLength = Vector3.Magnitude(_left.transform.position - _right.transform.position);
         _canGrab = false;
         _isGrabbing = false;
+
+        _cameraGO = GameObject.Find("CameraA");
     }
 
     void OnTriggerEnter(Collider obj)
@@ -111,7 +114,9 @@ public class Slintshot : MonoBehaviour {
                 //Vector3 Vec3L = new Vector3(-2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
                 //Vector3 Vec3R = new Vector3(2.0f - grabPos.x, 2.0f - grabPos.y, -grabPos.z);
                 float deltaX = Vec3L.magnitude + Vec3R.magnitude - _stringOriginalLength;
-                Vector3 Dir = (Vec3L + Vec3R).normalized;
+
+                var Dir = _cameraGO.transform.forward;
+                // Vector3 Dir = (Vec3L + Vec3R).normalized;
 
                 _ball.GetComponent<Rigidbody>().useGravity = true;
                 _ball.GetComponent<Rigidbody>().AddForce(Dir * deltaX * _forceRate, ForceMode.Impulse);

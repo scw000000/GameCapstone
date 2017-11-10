@@ -14,6 +14,7 @@ public class MovingPlatformLogic : MonoBehaviour {
     private int _targetAhchorIndex = 0;
     public bool _canReverse = true;
     private float _currTime = 0f;
+    public bool _attach = true;
 	// Use this for initialization
 	void Start () {
         _accuMoveTime = new float[ _moveTime.Length + 1 ];
@@ -146,13 +147,13 @@ public class MovingPlatformLogic : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.tag.Equals("Player"))
+        if (!other.tag.Equals("Player") || !_attach)
         {
             return;
         }
         //Debug.Log("Enger!");
         // other.transform.parent = gameObject.transform;
-        other.gameObject.GetComponent<PlatformFollow>().Platform = gameObject.transform;
+        other.gameObject.GetComponent<PlatformFollow>()._platform = gameObject.transform;
         // other.transform.parent = gameObject.transform.parent;
         if (other.gameObject.GetComponent<CharacterController>().isGrounded)
         {
@@ -164,13 +165,13 @@ public class MovingPlatformLogic : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.tag.Equals("Player"))
+        if (!other.tag.Equals("Player") || !_attach)
         {
             return;
         }
 
        // Debug.Log("Leave!");
-        other.gameObject.GetComponent<PlatformFollow>().Platform = null;
+        other.gameObject.GetComponent<PlatformFollow>()._platform = null;
         //other.transform.parent = GameObject.Find("FrameworkRoot").transform;
     }
     

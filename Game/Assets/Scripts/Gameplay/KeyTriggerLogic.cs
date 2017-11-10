@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class KeyTriggerLogic : MonoBehaviour {
     public GameObject _doorGO;
+    public GameObject _eventGO;
     private bool _triggerable;
     // Use this for initialization
     void Start() {
@@ -16,9 +17,6 @@ public class KeyTriggerLogic : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_doorGO == null) {
-            return;
-        }
         if (!other.tag.Equals("Player")) {
             return;
         }
@@ -35,7 +33,16 @@ public class KeyTriggerLogic : MonoBehaviour {
 
             gameObject.GetComponent<Collider>().enabled = false;
             _triggerable = false;
-            _doorGO.GetComponent<DoorControl>()._isOpened = true;
+
+            if (_doorGO != null)
+            {
+                _doorGO.GetComponent<DoorControl>()._isOpened = true;
+            }
+            
+            if (_eventGO != null)
+            {
+                _eventGO.SetActive(true);
+            }
             if (gameObject.GetComponent<AudioSource>() != null)
             {
                 gameObject.GetComponent<AudioSource>().Play();
