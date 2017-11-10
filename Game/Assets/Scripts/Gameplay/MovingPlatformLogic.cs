@@ -147,7 +147,7 @@ public class MovingPlatformLogic : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.tag.Equals("Player") || !_attach)
+        if (other.GetComponent<PlatformFollow>() == null || !_attach)
         {
             return;
         }
@@ -155,17 +155,17 @@ public class MovingPlatformLogic : MonoBehaviour {
         // other.transform.parent = gameObject.transform;
         other.gameObject.GetComponent<PlatformFollow>()._platform = gameObject.transform;
         // other.transform.parent = gameObject.transform.parent;
-        if (other.gameObject.GetComponent<CharacterController>().isGrounded)
-        {
-            // other.gameObject.GetComponent<CharacterController>().
-            //Debug.Log("Attach!");
-            //other.transform.parent = gameObject.transform.parent;
-        }
+        //if (other.gameObject.GetComponent<CharacterController>().isGrounded)
+        //{
+        //    // other.gameObject.GetComponent<CharacterController>().
+        //    //Debug.Log("Attach!");
+        //    //other.transform.parent = gameObject.transform.parent;
+        //}
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.tag.Equals("Player") || !_attach)
+        if (other.GetComponent<PlatformFollow>() == null || !_attach)
         {
             return;
         }

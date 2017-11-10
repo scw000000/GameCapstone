@@ -21,7 +21,7 @@ public class OutlineControl : MonoBehaviour {
         _playerGO = GameObject.FindGameObjectWithTag("Player");
         if (_alwaysActive)
         {
-            // _isActivated = true;
+            _isActivated = true;
         }
         var meshFilterComp = gameObject.GetComponent<MeshFilter>();
         _cloneMeshGO = new GameObject("MeshClone");

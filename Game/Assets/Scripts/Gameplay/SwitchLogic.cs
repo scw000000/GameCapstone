@@ -17,6 +17,7 @@ public class SwitchLogic : MonoBehaviour {
         
         _movePlatformComp._moveDirection = 0;
         _movePlatformComp._attach = false;
+        
     }
 	
 	// Update is called once per frame
