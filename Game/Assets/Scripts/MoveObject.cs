@@ -15,24 +15,24 @@ public class MoveObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.E)) {
-			item.GetComponent<Rigidbody> ().useGravity = false;
-			item.GetComponent<Rigidbody> ().isKinematic = true;
-			item.transform.position = guide.transform.position;
-			item.transform.rotation = guide.transform.rotation;
-			item.transform.parent = tempParent.transform;
-		}
-
-		if (Input.GetKeyUp (KeyCode.E)) {
-			item.GetComponent<Rigidbody> ().useGravity = true;
-			item.GetComponent<Rigidbody> ().isKinematic = false;
-			item.transform.parent = null;
-			item.transform.position = guide.transform.position;
-		}
+//		if (Input.GetKeyDown(KeyCode.E)) {
+//			item.GetComponent<Rigidbody> ().useGravity = false;
+//			item.GetComponent<Rigidbody> ().isKinematic = true;
+//			item.transform.position = guide.transform.position;
+//			item.transform.rotation = guide.transform.rotation;
+//			item.transform.parent = tempParent.transform;
+//		}
+//
+//		if (Input.GetKeyUp (KeyCode.E)) {
+//			item.GetComponent<Rigidbody> ().useGravity = true;
+//			item.GetComponent<Rigidbody> ().isKinematic = false;
+//			item.transform.parent = null;
+//			item.transform.position = guide.transform.position;
+//		}
 	}
 
-//	void OnTriggerEnter(Collider col){
-//		if (col.gameObject.tag == "palyer") {
+	void OnCollisionEnter(Collision col){
+//		if (col.gameObject.tag == "Player") {
 //			if (Input.GetKeyDown (KeyCode.E)) {
 //				item.GetComponent<Rigidbody> ().useGravity = false;
 //				item.GetComponent<Rigidbody> ().isKinematic = true;
@@ -48,19 +48,19 @@ public class MoveObject : MonoBehaviour {
 //				item.transform.position = guide.transform.position;
 //			}
 //		}
-//	}
-//	void OnMouseDown(){
-//					item.GetComponent<Rigidbody> ().useGravity = false;
-//					item.GetComponent<Rigidbody> ().isKinematic = true;
-//					item.transform.position = guide.transform.position;
-//					item.transform.rotation = guide.transform.rotation;
-//					item.transform.parent = tempParent.transform;
-//	}
-//
-//	void OnMouseUp(){
-//					item.GetComponent<Rigidbody> ().useGravity = true;
-//					item.GetComponent<Rigidbody> ().isKinematic = false;
-//					item.transform.parent = null;
-//					item.transform.position = guide.transform.position;
-//	}
+	}
+	void OnMouseDown(){
+		item.GetComponent<Rigidbody> ().useGravity = false;
+		item.GetComponent<Rigidbody> ().isKinematic = true;
+		item.transform.position = guide.transform.position;
+		item.transform.rotation = guide.transform.rotation;
+		item.transform.parent = tempParent.transform;
+	}
+
+	void OnMouseUp(){
+		item.GetComponent<Rigidbody> ().useGravity = true;
+		item.GetComponent<Rigidbody> ().isKinematic = false;
+		item.transform.parent = null;
+		item.transform.position = guide.transform.position;
+	}
 }
