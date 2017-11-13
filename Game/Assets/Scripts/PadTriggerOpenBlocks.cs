@@ -16,14 +16,21 @@ public class PadTriggerOpenBlocks : MonoBehaviour {
 	public GameObject Right1;
 	public GameObject Right2;
 
-
+	public AudioSource source;
+	public AudioClip clip;
+	public AudioSource source2;
+	public AudioClip clip2;
 
 
 	// Use this for initialization
 	void Start () {
 		rend = GetComponent<Renderer> ();
 		rend.material.color = start;
+		source.clip = clip;
+		source2.clip = clip2;
 
+		Door1.SetActive(false);
+		source.clip = clip;
 		Door2.SetActive(true);
 		Door1.SetActive(false);
 		Platform2.SetActive(true);
@@ -41,7 +48,8 @@ public class PadTriggerOpenBlocks : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
-			Debug.Log("!!!!!");
+			source.PlayDelayed(1);
+			source2.Play();
 			Door2.SetActive(false);
 			Door1.SetActive(true);
 			Platform2.SetActive(false);
