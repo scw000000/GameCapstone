@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
         if (isRunning)
         {
             SetPlayerInput(true);
-            Time.timeScale = 1;
+            Time.timeScale = 1f;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             //When the player controller is ready, this line of code will resume user control
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             // _gameManagerComp.AttachToMainCamera(canvas.gameObject);
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
             //When the player controller is ready, this line of code will pause user control
             //Player.GetComponent<PonePlayerController> ().enable = false;
 
@@ -185,7 +185,8 @@ public class GameManager : MonoBehaviour {
     public void SetPlayerInput(bool isEnabled)
     {
         var playerControl = _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
-        playerControl.enabled = isEnabled;
+        /// playerControl.enabled = isEnabled;
+        playerControl.m_EnableInput = isEnabled;
         _playerInstance.GetComponent<ShootingLogic>().enabled = isEnabled;
         _playerInstance.GetComponent<WorldSwitch>().enabled = isEnabled;
         // var playerMenuControl = gameObject.GetComponent<PauseMenuController>();

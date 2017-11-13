@@ -127,25 +127,42 @@ namespace DigitalRuby.PyroParticles
 
         protected virtual void Update()
         {
-            StartCoroutine(FireControl());
-            if (Check == true && InFire == true && Invincible == false)
+            if (StartTime < 0)
             {
-                if (Player != null)
+                StartCoroutine(FireControl());
+                if (Check == true && InFire == true && Invincible == false)
                 {
-                    Player.GetComponent<PlayerStatus>().AddHitPoints(-10f);
-                    Invincible = true;
+                    if (Player != null)
+                    {
+                        Player.GetComponent<PlayerStatus>().AddHitPoints(-10f);
+                        Invincible = true;
+                    }
                 }
-            }
-            if (Invincible == true)
-            {
-                StartCoroutine(InvincibleTimer());
-            }
-            if (Ice.gameObject != null)
-            {
-                if (gameObject.layer == 10)
+
+                if (Invincible == true)
                 {
-                    Ice.GetComponent<IceBlockLogic>().Melt();
+                    StartCoroutine(InvincibleTimer());
                 }
+                if (Ice.gameObject != null)
+                {
+                    if (gameObject.layer == Ice.layer
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldA") && Ice.layer == LayerMask.NameToLayer("WorldBInPortal"))
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldB") && Ice.layer == LayerMask.NameToLayer("WorldAInPortal"))
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && Ice.layer == LayerMask.NameToLayer("WorldA"))
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && Ice.layer == LayerMask.NameToLayer("WorldB")))
+
+                    {
+                        if (gameObject.layer == 10)
+                        {
+                            Ice.GetComponent<IceBlockLogic>().Melt();
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                StartTime -= Time.deltaTime;
             }
             /*// reduce the duration
             Duration -= Time.deltaTime;
