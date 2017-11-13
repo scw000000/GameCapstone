@@ -127,26 +127,30 @@ namespace DigitalRuby.PyroParticles
 
         protected virtual void Update()
         {
-            StartCoroutine(FireControl());
-            if (Check == true && InFire == true && Invincible == false)
+            if (StartTime<0)
             {
-                if (Player != null)
+                StartCoroutine(FireControl());
+                if (Check == true && InFire == true && Invincible == false)
                 {
-                    Player.GetComponent<PlayerStatus>().AddHitPoints(-10f);
-                    Invincible = true;
+                    if (Player != null)
+                    {
+                        Player.GetComponent<PlayerStatus>().AddHitPoints(-10f);
+                        Invincible = true;
+                    }
+                }
+                if (Invincible == true)
+                {
+                    StartCoroutine(InvincibleTimer());
+                }
+                if (Ice.gameObject != null)
+                {
+                    if (gameObject.layer == 10)
+                    {
+                        Ice.GetComponent<IceBlockLogic>().Melt();
+                    }
                 }
             }
-            if (Invincible == true)
-            {
-                StartCoroutine(InvincibleTimer());
-            }
-            if (Ice.gameObject != null)
-            {
-                if (gameObject.layer == 10)
-                {
-                    Ice.GetComponent<IceBlockLogic>().Melt();
-                }
-            }
+            StartTime -= Time.deltaTime;
             /*// reduce the duration
             Duration -= Time.deltaTime;
             if (Stopping)
