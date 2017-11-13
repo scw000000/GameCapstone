@@ -8,6 +8,7 @@ public class MediaControl : MonoBehaviour {
    // private WorldSwitch _playerSwitchComp;
     private LensFlare _lensFlare;
     private Light _light;
+    private AudioSource _audio;
     public bool _avaliable = true;
     public bool _useDisableTrigger = false;
     private WorldSwitchSphere _cameraASwitchComp;
@@ -20,15 +21,23 @@ public class MediaControl : MonoBehaviour {
        // _playerSwitchComp = _player.GetComponent<WorldSwitch>();
         _lensFlare = gameObject.GetComponent<LensFlare>();
         _light = gameObject.GetComponent<Light>();
+        _audio = gameObject.GetComponent<AudioSource>();
     }
 
     //// Update is called once per frame
     void Update()
-    {
-        if (_avaliable && ( ( _player.layer == _existLayer && !_player.GetComponent<WorldSwitch>()._insidePortal ) ||
-            (_player.layer != _existLayer && _player.GetComponent<WorldSwitch>()._insidePortal) )
-        //_player.layer == (_existInLayerName == "WorldA" ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal"))
-                )
+    {        //if (_avaliable && ( ( _player.layer == _existLayer && !_player.GetComponent<WorldSwitch>()._insidePortal ) ||
+        //    (_player.layer != _existLayer && _player.GetComponent<WorldSwitch>()._insidePortal) )
+        ////_player.layer == (_existInLayerName == "WorldA" ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal"))
+        //        )
+        bool insidePortal = _player.GetComponent<WorldSwitch>()._insidePortal;
+        if ((_player.layer == gameObject.layer && !insidePortal)
+           || ((_player.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal"))
+               || (_player.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
+               && insidePortal)
+           || ((_player.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal")
+               || (_player.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal")))
+               && !insidePortal))
         {
             if (_cameraASwitchComp == null) {
                 _cameraASwitchComp = GameObject.Find("CameraA").gameObject.GetComponent<WorldSwitchSphere>();
@@ -47,7 +56,11 @@ public class MediaControl : MonoBehaviour {
                 if (_light != null) {
                     _light.enabled = true;
                 }
-                
+                if (_audio != null)
+                {
+                    _audio.mute = false;
+                }
+
             }
             else
             {
@@ -58,6 +71,10 @@ public class MediaControl : MonoBehaviour {
                 if (_light != null)
                 {
                     _light.enabled = false;
+                }
+                if (_audio != null)
+                {
+                    _audio.mute = false;
                 }
             }
             // _lensFlare.enabled = true;
@@ -70,6 +87,10 @@ public class MediaControl : MonoBehaviour {
             if (_light != null)
             {
                 _light.enabled = false;
+            }
+            if (_audio != null)
+            {
+                _audio.mute = true;
             }
         }
     }
@@ -89,6 +110,10 @@ public class MediaControl : MonoBehaviour {
             if (_light != null)
             {
                 _light.enabled = false;
+            }
+            if (_audio != null)
+            {
+                _audio.mute = true;
             }
             // Disable itself as well to prevent it turn on lensflare again
             //  enabled = false;

@@ -138,11 +138,26 @@ namespace DigitalRuby.PyroParticles
                         Invincible = true;
                     }
                 }
+<<<<<<< HEAD
                 if (Invincible == true)
                 {
                     StartCoroutine(InvincibleTimer());
                 }
                 if (Ice.gameObject != null)
+=======
+            }
+            if (Invincible == true)
+            {
+                StartCoroutine(InvincibleTimer());
+            }
+            if (Ice.gameObject != null)
+            {
+                if (gameObject.layer == Ice.layer 
+                    || (gameObject.layer == LayerMask.NameToLayer( "WorldA" ) && Ice.layer == LayerMask.NameToLayer("WorldBInPortal") )
+                    || (gameObject.layer == LayerMask.NameToLayer("WorldB") && Ice.layer == LayerMask.NameToLayer("WorldAInPortal") )
+                    || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && Ice.layer == LayerMask.NameToLayer("WorldA"))
+                    || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && Ice.layer == LayerMask.NameToLayer("WorldB")))
+>>>>>>> dce360d49583d0691d7517d22739fadc80a5cad4
                 {
                     if (gameObject.layer == 10)
                     {

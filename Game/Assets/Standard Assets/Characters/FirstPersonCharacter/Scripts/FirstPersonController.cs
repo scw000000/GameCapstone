@@ -27,6 +27,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] public bool m_EnableInput;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -61,6 +62,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_EjectSpeed = 0f;
             m_Eject = false;
             _bounceBox = false;
+            m_EnableInput = true;
         }
 
 
@@ -106,6 +108,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void FixedUpdate()
         {
             float speed;
+            if (!m_EnableInput)
+            {
+                return;
+            }
+
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
             Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;

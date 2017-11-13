@@ -61,7 +61,7 @@ public class PlayerStatus : MonoBehaviour
     {
         if (wait < 0.1f)
         {
-            _hitPoint -= 0.1f;
+            _hitPoint -= 0.2f;
             wait = 3.0f;
         }
     }

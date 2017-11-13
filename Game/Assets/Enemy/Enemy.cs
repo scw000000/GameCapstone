@@ -9,11 +9,14 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent _nav;
     public Transform _eyes;
     public AudioSource _roar;
+    public AudioSource _hurt;
+    public AudioSource _death;
     public GameObject _key;
     private Animator _anim;
     private Rigidbody _rb;
 
-    public int Health = 4;
+    public int Health;
+
     private string state = "idle";
     private bool alive = true;
     private float wait = 0f;
@@ -80,7 +83,7 @@ public class Enemy : MonoBehaviour
 
                 if (_nav.remainingDistance <= 1f && !_nav.pathPending)
                 {
-                    _nav.speed = 5.0f;
+                    _nav.speed = 3.0f;
                     _anim.speed = 1.2f;
                     state = "search";
                     _anim.SetBool("charging", false);
@@ -148,20 +151,24 @@ public class Enemy : MonoBehaviour
     public void TakeDamage()
     {
         Health--;
-        if (Health <= 0) alive = false;
+        if (Health <= 0) {
+            _death.Play();
+            alive = false;
+        }
 
-        Vector3 RandomPos = Random.insideUnitCircle * alertness;
-        NavMeshHit NavHit;
-        NavMesh.SamplePosition(_player.transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
-        _nav.SetDestination(NavHit.position);
-        state = "walk";
+        _hurt.Play();
+
+        _anim.SetBool("charging", false);
+        state = "search";
+        wait = 2f;
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "IceWall")
+        if (col.gameObject.tag == "IceWall" && state == "chase")
         {
             this.TakeDamage();
         }
     }
+
 }
