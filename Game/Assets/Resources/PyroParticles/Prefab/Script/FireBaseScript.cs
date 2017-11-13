@@ -127,7 +127,7 @@ namespace DigitalRuby.PyroParticles
 
         protected virtual void Update()
         {
-            if (StartTime<0)
+            if (StartTime < 0)
             {
                 StartCoroutine(FireControl());
                 if (Check == true && InFire == true && Invincible == false)
@@ -138,34 +138,32 @@ namespace DigitalRuby.PyroParticles
                         Invincible = true;
                     }
                 }
-<<<<<<< HEAD
+
                 if (Invincible == true)
                 {
                     StartCoroutine(InvincibleTimer());
                 }
                 if (Ice.gameObject != null)
-=======
-            }
-            if (Invincible == true)
-            {
-                StartCoroutine(InvincibleTimer());
-            }
-            if (Ice.gameObject != null)
-            {
-                if (gameObject.layer == Ice.layer 
-                    || (gameObject.layer == LayerMask.NameToLayer( "WorldA" ) && Ice.layer == LayerMask.NameToLayer("WorldBInPortal") )
-                    || (gameObject.layer == LayerMask.NameToLayer("WorldB") && Ice.layer == LayerMask.NameToLayer("WorldAInPortal") )
-                    || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && Ice.layer == LayerMask.NameToLayer("WorldA"))
-                    || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && Ice.layer == LayerMask.NameToLayer("WorldB")))
->>>>>>> dce360d49583d0691d7517d22739fadc80a5cad4
                 {
-                    if (gameObject.layer == 10)
+                    if (gameObject.layer == Ice.layer
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldA") && Ice.layer == LayerMask.NameToLayer("WorldBInPortal"))
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldB") && Ice.layer == LayerMask.NameToLayer("WorldAInPortal"))
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && Ice.layer == LayerMask.NameToLayer("WorldA"))
+                        || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && Ice.layer == LayerMask.NameToLayer("WorldB")))
+
                     {
-                        Ice.GetComponent<IceBlockLogic>().Melt();
+                        if (gameObject.layer == 10)
+                        {
+                            Ice.GetComponent<IceBlockLogic>().Melt();
+                        }
                     }
                 }
+
             }
-            StartTime -= Time.deltaTime;
+            else
+            {
+                StartTime -= Time.deltaTime;
+            }
             /*// reduce the duration
             Duration -= Time.deltaTime;
             if (Stopping)
