@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MediaControl : MonoBehaviour {
-    private int _existLayer;
+ //   private int _existLayer;
     private GameObject _player;
    // private WorldSwitch _playerSwitchComp;
     private LensFlare _lensFlare;
@@ -17,7 +17,7 @@ public class MediaControl : MonoBehaviour {
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _existLayer = gameObject.layer;
+     //   _existLayer = gameObject.layer;
        // _playerSwitchComp = _player.GetComponent<WorldSwitch>();
         _lensFlare = gameObject.GetComponent<LensFlare>();
         _light = gameObject.GetComponent<Light>();

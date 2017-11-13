@@ -41,6 +41,6 @@ public class AmbientSoundControl : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
         }
 
-        yield return null;
+       // yield return null;
     }
 }

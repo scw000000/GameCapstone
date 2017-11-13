@@ -7,11 +7,11 @@ public class OutlineDetection : MonoBehaviour {
     private GameObject _currentOutlineGO;
     private float _rayCastFreq = 0.1f;
     private float _currTime = 0f;
-    private GameObject _playerGO;
+   // private GameObject _playerGO;
 	// Use this for initialization
 	void Start () {
-        _playerGO = GameObject.FindGameObjectWithTag("Player");
-
+        // _playerGO = GameObject.FindGameObjectWithTag("Player");
+        
     }
 	
 	// Update is called once per frame
