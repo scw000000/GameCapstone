@@ -7,10 +7,13 @@ public class IceBlockLogic : MonoBehaviour {
     public float _particleDelay;
     public GameObject _steamObject;
     public GameObject _idleObject;
+    private AudioSource _audioSrcComp;
     private bool _isMelting = false;
 	// Use this for initialization
 	void Start () {
-	}
+        _audioSrcComp = gameObject.GetComponent<AudioSource>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,10 +34,18 @@ public class IceBlockLogic : MonoBehaviour {
     IEnumerator MeltProcess()
     {
         _steamObject.SetActive(true);
+        _audioSrcComp.Play();
         yield return new WaitForSeconds(_meltDelay);
         gameObject.GetComponent<Collider>().enabled = false;
         gameObject.GetComponent<MeshRenderer>().enabled = false;
-        yield return new WaitForSeconds(_particleDelay);
+        float particleTime = 0f;
+        while (particleTime < _particleDelay)
+        {
+            _audioSrcComp.volume = 1f - (particleTime / _particleDelay);
+            particleTime += Time.deltaTime;
+            yield return null;
+        }
+        //yield return new WaitForSeconds(_particleDelay);
         _steamObject.SetActive(false);
         _idleObject.GetComponent<ParticleSystem>().Stop();
 

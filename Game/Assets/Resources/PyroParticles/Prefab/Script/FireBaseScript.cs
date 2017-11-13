@@ -142,7 +142,11 @@ namespace DigitalRuby.PyroParticles
             }
             if (Ice.gameObject != null)
             {
-                if (gameObject.layer == 10)
+                if (gameObject.layer == Ice.layer 
+                    || (gameObject.layer == LayerMask.NameToLayer( "WorldA" ) && Ice.layer == LayerMask.NameToLayer("WorldBInPortal") )
+                    || (gameObject.layer == LayerMask.NameToLayer("WorldB") && Ice.layer == LayerMask.NameToLayer("WorldAInPortal") )
+                    || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal") && Ice.layer == LayerMask.NameToLayer("WorldA"))
+                    || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && Ice.layer == LayerMask.NameToLayer("WorldB")))
                 {
                     Ice.GetComponent<IceBlockLogic>().Melt();
                 }
