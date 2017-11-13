@@ -18557,7 +18557,7 @@ Prefab:
     - target: {fileID: 114650401536430670, guid: 273b4ac5840088e4285963027b97887a,
         type: 2}
       propertyPath: _progress
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4532065246594528, guid: 273b4ac5840088e4285963027b97887a, type: 2}
       propertyPath: m_LocalScale.x
@@ -19792,7 +19792,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   _isOpened: 0
-  _operationTime: 2
+  _openTime: 2
+  _closeTime: 2
 --- !u!4 &697522442
 Transform:
   m_ObjectHideFlags: 0
@@ -22899,6 +22900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laserObject: {fileID: 1288976943}
+  _playerObject: {fileID: 0}
   _changeChildLayer: 0
 --- !u!135 &832722948
 SphereCollider:
@@ -25911,7 +25913,7 @@ Prefab:
     - target: {fileID: 114650401536430670, guid: 273b4ac5840088e4285963027b97887a,
         type: 2}
       propertyPath: _progress
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4532065246594528, guid: 273b4ac5840088e4285963027b97887a, type: 2}
       propertyPath: m_LocalScale.x
