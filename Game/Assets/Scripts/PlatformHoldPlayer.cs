@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlatformHoldPlayer : MonoBehaviour {
 
+	//public GameObject player;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,17 +14,37 @@ public class PlatformHoldPlayer : MonoBehaviour {
 	void Update () {
 		
 	}
-
-	void OnTriggerEnter(Collider other){
-		if (other.tag == "Player") {
-			Debug.Log ("YES!!!");
-			other.transform.parent = this.transform;
+		
+	void OnTriggerStay(Collider col){
+		if (col.gameObject.tag == "MovingPlatform") {
+			transform.position = col.transform.position;
 		}
 	}
 
-//	void OnTriggerExit(Collider other){
-//		if (other.tag == "Player") {
-//			other.transform.parent = null;
+//	void OnTriggerExit(Collider col){
+//		if (col.gameObject.tag == "MovingPlatform") {
+//			transform.parent = null;
 //		}
 //	}
+
+//	void OnCollisionEnter(Collision col){
+//		if (col.gameObject.tag == "Player") {
+//			Debug.Log ("YES");
+//
+//			//transform.position = col.transform.position;
+//			player.transform.position = new Vector3(0,2,0);
+//		}
+//	}
+
+//	void OnTriggerEnter(Collider other){
+//
+//			Debug.Log ("YES!!!");
+//			other.transform.parent = transform;
+//
+//	}
+
+//	void OnTriggerExit(Collider other){
+//		other.transform.parent = null;
+//	}
+
 }

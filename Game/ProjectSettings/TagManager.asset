@@ -18,6 +18,7 @@ TagManager:
   - SF_Door
   - PowerCube
   - Destoryable
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
