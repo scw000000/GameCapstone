@@ -11,21 +11,24 @@ public class Enemy : MonoBehaviour
     public AudioSource _roar;
     public GameObject _key;
     private Animator _anim;
+    private Rigidbody _rb;
 
     public int Health = 4;
     private string state = "idle";
     private bool alive = true;
     private float wait = 0f;
     private float chargeWait = 0f;
+    private float chargeTime = 0f;
     private float alertness = 20.0f;
     private float deathTime = 3f;
-    private Vector3 chargingDirection;
+    private Vector3 chargingPosition;
 
     // Use this for initialization
     void Start()
     {
         _nav = GetComponent<NavMeshAgent>();
         _anim = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody>();
 
         _nav.speed = 5.0f;
         _anim.speed = 1.2f;
@@ -43,12 +46,13 @@ public class Enemy : MonoBehaviour
                 if (rayHit.collider.gameObject.tag == "Player")
                 {
                     state = "chase";
+                    chargingPosition = rayHit.collider.gameObject.transform.position - transform.position;
+                    chargingPosition.Normalize();
 
-                    _nav.speed = 15.0f;
                     _anim.speed = 3.0f;
                     _roar.pitch = 1.2f;
                     _roar.Play();
-                    chargeWait = 2.0f;
+                    chargeWait = 1.0f;
                 }
             }
         }
@@ -58,7 +62,6 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-        _anim.SetFloat("velocity", _nav.velocity.magnitude);
         _anim.SetBool("alive", alive);
         if (alive)
         {
@@ -68,49 +71,67 @@ public class Enemy : MonoBehaviour
                 NavMeshHit NavHit;
                 NavMesh.SamplePosition(_player.transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
                 _nav.SetDestination(NavHit.position);
+                _nav.Resume();
                 state = "walk";
             }
             if (state == "walk")
             {
+                _anim.SetBool("charging", true);
+
                 if (_nav.remainingDistance <= 1f && !_nav.pathPending)
                 {
                     _nav.speed = 5.0f;
                     _anim.speed = 1.2f;
                     state = "search";
+                    _anim.SetBool("charging", false);
                     wait = 2f;
                 }
             }
             if (state == "search")
             {
                 _anim.speed = 1.2f;
-                if (wait > 2f)
+
+                _rb.velocity = new Vector3(0,0,0);
+                if (wait > 0f)
                 {
                     wait -= Time.deltaTime;
-                    transform.Rotate(0f, 120f * Time.deltaTime, 0f);
+                    transform.Rotate(0f, 30f * Time.deltaTime, 0f);
                 }
                 else
                 {
+                    _rb.angularVelocity = new Vector3(0,0,0);
                     state = "idle";
                 }
             }
             if (state == "chase")
             {
+                _anim.SetBool("charging",true);
                 if (chargeWait > 0f)
                 {
-                    _nav.destination = _player.transform.position;
+                    _nav.Stop();
+                    transform.LookAt(transform.position+chargingPosition);
                     chargeWait -= Time.deltaTime;
+                    chargeTime = 0.5f;
                 }
                 else {
-                    _nav.speed= 5.0f;
-                    _anim.speed = 1.2f;
-                    state = "search";
-                    wait = 2f;
+                    if (chargeTime > 0f)
+                    {
+                        chargeTime -= Time.deltaTime;
+                        _rb.AddForce(chargingPosition * 5f, ForceMode.VelocityChange);
+                    }
+                    else
+                    {
+                        _anim.SetBool("charging", false);
+                        state = "search";
+                        wait = 2f;
+                    }
                 }
             }
         }
         else
         {
             _nav.Stop();
+            _rb.velocity = new Vector3(0, 0, 0);
             if (deathTime > 0f)
             {
                 deathTime -= Time.deltaTime;
@@ -123,6 +144,7 @@ public class Enemy : MonoBehaviour
         }
 
     }
+
     public void TakeDamage()
     {
         Health--;

@@ -44,6 +44,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/IceWorld.unity
     guid: 32b490acf86ebb74ca8ce911c4779a5c
+  - enabled: 1
+    path: Assets/Scenes/Arena 1.unity
+    guid: 65bb5a8d8b469ae45a35544d78dc1ab2
   - enabled: 0
     path: 
     guid: 43bd62ab224c5b8469eb1a183c8fc210
