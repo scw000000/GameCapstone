@@ -20837,11 +20837,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 524622247}
-  - {fileID: 421221125}
   - {fileID: 1256798671}
   - {fileID: 1259527296}
   - {fileID: 392319174}
   - {fileID: 1282669126}
+  - {fileID: 421221125}
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22791,6 +22791,7 @@ GameObject:
   - component: {fileID: 665519814}
   - component: {fileID: 665519813}
   - component: {fileID: 665519815}
+  - component: {fileID: 665519816}
   m_Layer: 9
   m_Name: Fireball
   m_TagString: Transportable
@@ -22902,6 +22903,18 @@ MonoBehaviour:
   item: {fileID: 665519808}
   tempParent: {fileID: 2119346437}
   guide: {fileID: 2119346438}
+--- !u!135 &665519816
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 665519808}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &668142449
 GameObject:
   m_ObjectHideFlags: 0
@@ -35460,6 +35473,7 @@ GameObject:
   - component: {fileID: 1043704514}
   - component: {fileID: 1043704521}
   - component: {fileID: 1043704520}
+  - component: {fileID: 1043704522}
   m_Layer: 0
   m_Name: KeyCube
   m_TagString: KeyCube
@@ -35595,6 +35609,18 @@ PlayableDirector:
     value: {fileID: 1043704513}
   m_ExposedReferences:
     m_References: []
+--- !u!65 &1043704522
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1043704513}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3, y: 1.3, z: 1.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1044121357
 Prefab:
   m_ObjectHideFlags: 0
