@@ -50,3 +50,18 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 43bd62ab224c5b8469eb1a183c8fc210
+  - enabled: 1
+    path: Assets/Scenes/Hallway.unity
+    guid: 506cea690fe5c764a8151b06d922b76e
+  - enabled: 1
+    path: Assets/Scenes/Vincent.unity
+    guid: 8b990afa17037bc418dbb1e86d50da03
+  - enabled: 1
+    path: Assets/Scenes/Chenhui.unity
+    guid: d93435740c001c54eabae13525d550ac
+  - enabled: 1
+    path: Assets/Scenes/Arena2.unity
+    guid: 4f5c9c41532ebbd4a89f9d11b32fcb32
+  - enabled: 1
+    path: Assets/Scenes/New Scene.unity
+    guid: 13e680c884fe4ef418867a491983747d
