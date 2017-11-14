@@ -7,7 +7,8 @@ public class MoveObject : MonoBehaviour {
 	public GameObject item;
 	public GameObject tempParent;
 	public Transform guide;
-
+    private bool _isPlayerInTrigger = false;
+    private bool _isBeingHold = false;
 	// Use this for initialization
 	void Start () {
 		item.GetComponent<Rigidbody> ().useGravity = true;
@@ -15,48 +16,71 @@ public class MoveObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		if (Input.GetKeyDown(KeyCode.E)) {
-//			item.GetComponent<Rigidbody> ().useGravity = false;
-//			item.GetComponent<Rigidbody> ().isKinematic = true;
-//			item.transform.position = guide.transform.position;
-//			item.transform.rotation = guide.transform.rotation;
-//			item.transform.parent = tempParent.transform;
-//		}
-//
-//		if (Input.GetKeyUp (KeyCode.E)) {
-//			item.GetComponent<Rigidbody> ().useGravity = true;
-//			item.GetComponent<Rigidbody> ().isKinematic = false;
-//			item.transform.parent = null;
-//			item.transform.position = guide.transform.position;
-//		}
-	}
+        if (Input.GetKeyDown(KeyCode.E) )
+        {
+            if (_isPlayerInTrigger && !_isBeingHold)
+            {
+                _isBeingHold = true;
+                item.GetComponent<Rigidbody>().useGravity = false;
+                item.GetComponent<Rigidbody>().isKinematic = true;
+                item.transform.position = guide.transform.position;
+                item.transform.rotation = guide.transform.rotation;
+                item.transform.parent = tempParent.transform;
+            }
+            else if (_isBeingHold)
+            {
+                _isBeingHold = false;
+                item.GetComponent<Rigidbody>().useGravity = true;
+                item.GetComponent<Rigidbody>().isKinematic = false;
+                item.transform.parent = null;
+                item.transform.position = guide.transform.position;
+            }
+        }
+    }
 
-	void OnTriggerStay(Collider col){
-		if (col.gameObject.tag == "Player"){
-			Debug.Log ("coll");
-			if (Input.GetKeyDown (KeyCode.E)) {
-				Debug.Log ("key");
-				item.GetComponent<Rigidbody> ().useGravity = false;
-				item.GetComponent<Rigidbody> ().isKinematic = true;
-				item.transform.position = guide.transform.position;
-				item.transform.rotation = guide.transform.rotation;
-				item.transform.parent = tempParent.transform;
-			}
-		}
-	}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.tag.Equals("Player"))
+        {
+            return;
+        }
+
+        _isPlayerInTrigger = true;
+    }
+
+ //   void OnTriggerStay(Collider col){
+	//	if (col.gameObject.tag == "Player"){
+	//		Debug.Log ("coll");
+	//		if (Input.GetKeyDown (KeyCode.E)) {
+	//			Debug.Log ("key");
+	//			item.GetComponent<Rigidbody> ().useGravity = false;
+	//			item.GetComponent<Rigidbody> ().isKinematic = true;
+	//			item.transform.position = guide.transform.position;
+	//			item.transform.rotation = guide.transform.rotation;
+	//			item.transform.parent = tempParent.transform;
+	//		}
+	//	}
+	//}
 
 	void OnTriggerExit(Collider col){
-		if (col.gameObject.tag == "Player") {
-			Debug.Log ("coll");
-			if (Input.GetKeyUp (KeyCode.E)) {
-				Debug.Log ("Key Up");
-				item.GetComponent<Rigidbody> ().useGravity = true;
-				item.GetComponent<Rigidbody> ().isKinematic = false;
-				item.transform.parent = null;
-				item.transform.position = guide.transform.position;
-			}
-		}
-	}
+        //if (col.gameObject.tag == "Player") {
+        //	Debug.Log ("coll");
+        //	if (Input.GetKeyUp (KeyCode.E)) {
+        //		Debug.Log ("Key Up");
+        //		item.GetComponent<Rigidbody> ().useGravity = true;
+        //		item.GetComponent<Rigidbody> ().isKinematic = false;
+        //		item.transform.parent = null;
+        //		item.transform.position = guide.transform.position;
+        //	}
+        //}
+
+        if (!col.tag.Equals("Player"))
+        {
+            return;
+        }
+
+        _isPlayerInTrigger = false;
+    }
 
 //	void OnTriggerExit(Collider col){
 //		if (col.gameObject.tag == "Player" && Input.GetKeyUp (KeyCode.R)) {
