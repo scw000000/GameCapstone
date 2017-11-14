@@ -25,15 +25,22 @@ SubShader
 	sampler2D _LavaTex;
 	fixed _DistortX;
 	fixed _DistortY;
+	float4 _SphereCenter;
+	float _SphereRadius;
+	float _OutOrInScalar;
 
 	struct Input 
 	{
 		float2 uv2_LavaTex;
 		float2 uv_MainTex;
+		float3 worldPos;
 	};
 
 	void surf (Input IN, inout SurfaceOutput o) 
 	{
+		// First decide if we need to draw the pixel or not
+		clip(_OutOrInScalar*(distance(_SphereCenter.xyz, IN.worldPos) - _SphereRadius));
+
 		fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
 		fixed distort = tex2D(_Distort, IN.uv_MainTex).a;
 		

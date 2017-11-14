@@ -30,14 +30,17 @@ public class MediaControl : MonoBehaviour {
         //    (_player.layer != _existLayer && _player.GetComponent<WorldSwitch>()._insidePortal) )
         ////_player.layer == (_existInLayerName == "WorldA" ? LayerMask.NameToLayer("WorldAInPortal") : LayerMask.NameToLayer("WorldBInPortal"))
         //        )
+         //|| (_player.layer == gameObject.layer && !insidePortal)
+         //  || ((_player.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal"))
+         //      || (_player.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
+         //      && insidePortal)
+         //  || ((_player.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal")
+         //      || (_player.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal")))
+         //      && !insidePortal))
         bool insidePortal = _player.GetComponent<WorldSwitch>()._insidePortal;
-        if ((_player.layer == gameObject.layer && !insidePortal)
-           || ((_player.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal"))
-               || (_player.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
-               && insidePortal)
-           || ((_player.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal")
-               || (_player.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal")))
-               && !insidePortal))
+        bool playerInWorldA = (_player.layer == LayerMask.NameToLayer("WorldA") && !insidePortal) || (_player.layer == LayerMask.NameToLayer("WorldB") && insidePortal);
+        bool objInWorldA = (gameObject.layer == LayerMask.NameToLayer("WorldA") ) || (gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"));
+        if (playerInWorldA == objInWorldA)
         {
             if (_cameraASwitchComp == null) {
                 _cameraASwitchComp = GameObject.Find("CameraA").gameObject.GetComponent<WorldSwitchSphere>();
