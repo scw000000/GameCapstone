@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RenderTextureControl : MonoBehaviour {
     private Material[] _materials;
+    private GameObject _playerGO;
 	// Use this for initialization
 	void Start () {
         if (gameObject.GetComponent<MeshRenderer>() != null) {
@@ -12,7 +13,9 @@ public class RenderTextureControl : MonoBehaviour {
         else if (gameObject.GetComponent<SkinnedMeshRenderer>() != null) {
             _materials = gameObject.GetComponent<SkinnedMeshRenderer>().materials;
         }
-        
+        _playerGO = GameObject.FindGameObjectWithTag("Player");
+
+
     }
 	
 	// Update is called once per frame
@@ -28,7 +31,9 @@ public class RenderTextureControl : MonoBehaviour {
                 !Camera.current.name.Equals("CameraA") &&
                 !Camera.current.name.Equals("CameraB") &&
                 !Camera.current.name.Equals("CutsceneCameraA") &&
-                !Camera.current.name.Equals("CutsceneCameraB") ) )
+                !Camera.current.name.Equals("CutsceneCameraB") )
+                || (gameObject.tag.Equals("Transportable") && ( (gameObject.layer == _playerGO.layer) || 
+                    ( gameObject.layer == LayerMask.NameToLayer( "WorldAInPortal" ) || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal")) ) ) )
             {
                 material.SetFloat("_OutOrInScalar", 0f);
             }

@@ -981,6 +981,15 @@ Prefab:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 82201504215219920, guid: 16125bf50d52d422391c1d60920cc2bd,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699332018929518, guid: 16125bf50d52d422391c1d60920cc2bd, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16125bf50d52d422391c1d60920cc2bd, type: 2}
   m_IsPrefabParent: 0
@@ -11696,7 +11705,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1882634169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.47, y: 1.5, z: 11.306993}
+  m_LocalPosition: {x: -5.52, y: 1.5, z: 11.306993}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11931,6 +11940,10 @@ Prefab:
     - target: {fileID: 82224122148916832, guid: bb0a0661283574b74941625a52c1c704,
         type: 2}
       propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378095094794356, guid: bb0a0661283574b74941625a52c1c704, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
