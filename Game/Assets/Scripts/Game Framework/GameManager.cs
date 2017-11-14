@@ -103,16 +103,18 @@ public class GameManager : MonoBehaviour {
         {
             SetPlayerInput(true);
             Time.timeScale = 1f;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().SetUpCursorLock(true);
+            // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
             //When the player controller is ready, this line of code will resume user control
             //Player.GetComponent<PonePlayerController> ().enable = true;
         }
         else
         {
             SetPlayerInput(false);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            // Cursor.visible = true;
+            _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().SetUpCursorLock(false);
+            // Cursor.lockState = CursorLockMode.None;
             // _gameManagerComp.AttachToMainCamera(canvas.gameObject);
             Time.timeScale = 0f;
             //When the player controller is ready, this line of code will pause user control

@@ -158,6 +158,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.UpdateCursorLock();
         }
 
+        public void SetUpCursorLock(bool isLocked)
+        {
+            m_MouseLook.SetCursorLock(isLocked);
+        }
+
         public void PerformEject(float ejectSpeed) {
             m_EjectSpeed = ejectSpeed; 
             m_Eject = true;
