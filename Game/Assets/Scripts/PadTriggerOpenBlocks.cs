@@ -48,8 +48,10 @@ public class PadTriggerOpenBlocks : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
-			source.PlayDelayed(1);
-			source2.Play();
+			source.Play();
+			if (Left2.activeSelf) {
+				source2.PlayDelayed(1);
+			}
 			Door2.SetActive(false);
 			Door1.SetActive(true);
 			Platform2.SetActive(false);
