@@ -11310,7 +11310,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 66eff941cc3c78f418cb64a3c8eaacb6, type: 2}
+  - {fileID: 2100000, guid: 8d1552493f4161f44a793edb694031ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17306,7 +17306,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 66eff941cc3c78f418cb64a3c8eaacb6, type: 2}
+  - {fileID: 2100000, guid: 35fc0bb8c874eba48b22f60d878ffbe4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -38537,7 +38537,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 66eff941cc3c78f418cb64a3c8eaacb6, type: 2}
+  - {fileID: 2100000, guid: 8d1552493f4161f44a793edb694031ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -48121,6 +48121,7 @@ MonoBehaviour:
   _cutSceneCameraGO: {fileID: 0}
   _enableTrigger: 0
   _cutsceneAudioListener: {fileID: 0}
+  _endCutScenetEventGO: {fileID: 0}
 --- !u!114 &1301550138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60018,7 +60019,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 66eff941cc3c78f418cb64a3c8eaacb6, type: 2}
+  - {fileID: 2100000, guid: 8d1552493f4161f44a793edb694031ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -66499,7 +66500,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 66eff941cc3c78f418cb64a3c8eaacb6, type: 2}
+  - {fileID: 2100000, guid: 6412fc3d848100c499da33874dbf7c38, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -66544,8 +66545,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1952442792}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -10, y: 0, z: -97}
-  m_LocalScale: {x: 200.00012, y: 40, z: 2}
+  m_LocalPosition: {x: -10, y: 0, z: -0.96}
+  m_LocalScale: {x: 10, y: 40, z: 2}
   m_Children: []
   m_Father: {fileID: 1461956040}
   m_RootOrder: 1
@@ -67775,8 +67776,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1989547695}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 94.036194, y: -3, z: -126.12649}
-  m_LocalScale: {x: 350, y: 1, z: 350}
+  m_LocalPosition: {x: 94.036194, y: -3, z: -157.5}
+  m_LocalScale: {x: 250, y: 1, z: 320}
   m_Children: []
   m_Father: {fileID: 88240978}
   m_RootOrder: 0
