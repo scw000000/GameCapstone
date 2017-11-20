@@ -6,6 +6,7 @@ public class MovingPlatformLogic : MonoBehaviour {
     public GameObject[] _anchorPoints;
     public float[] _moveTime;
     public AnimationCurve[] _moveCurves;
+    public bool _activatedOnLanding = false;
     private float[] _accuMoveTime;
     
     // 1: forward, -1: backward, 0: not moving
@@ -151,6 +152,12 @@ public class MovingPlatformLogic : MonoBehaviour {
         {
             return;
         }
+
+        if (_activatedOnLanding)
+        {
+            _moveDirection = 1;
+        }
+
         //Debug.Log("Enger!");
         // other.transform.parent = gameObject.transform;
         other.gameObject.GetComponent<PlatformFollow>()._platform = gameObject.transform;
