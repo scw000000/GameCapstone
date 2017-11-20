@@ -14,6 +14,7 @@ public class CutSceneControl : MonoBehaviour {
     private GameObject _DisabledCameraAGO;
     private GameObject _DisabledCameraBGO;
     private bool _isActivated = true;
+    public GameObject _endCutScenetEventGO;
     // Use this for initialization
     void Start () {
         if (_useSelfGO)
@@ -78,6 +79,10 @@ public class CutSceneControl : MonoBehaviour {
             yield return null;
         }
         SwitchBackCameras();
+        if (_endCutScenetEventGO != null)
+        {
+            _endCutScenetEventGO.SetActive(true);
+        }
     }
 
     //private IEnumerator ReturnToCameraPosition() {

@@ -26,7 +26,7 @@ public class PlatformFollow : MonoBehaviour {
         get { return platform; }
     }
 
-    private Transform platform;
+    public Transform platform;
     private Vector3 _prevPos = Vector3.zero;
 
     void LateUpdate()

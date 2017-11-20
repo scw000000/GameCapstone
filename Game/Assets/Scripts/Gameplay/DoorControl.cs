@@ -73,8 +73,6 @@ public class DoorControl : MonoBehaviour {
 
     private void ResetDoors()
     {
-        Debug.Log("Reset!");
-
         if (_isOpened)
         {
             _doorOpenLerp = 1f;

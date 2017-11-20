@@ -22,6 +22,7 @@ public class MediaControl : MonoBehaviour {
         _lensFlare = gameObject.GetComponent<LensFlare>();
         _light = gameObject.GetComponent<Light>();
         _audio = gameObject.GetComponent<AudioSource>();
+        StartCoroutine("KeepTryingToSetupCameraComp");
     }
 
     //// Update is called once per frame
@@ -43,8 +44,8 @@ public class MediaControl : MonoBehaviour {
         if (playerInWorldA == objInWorldA)
         {
             if (_cameraASwitchComp == null) {
-                _cameraASwitchComp = GameObject.Find("CameraA").gameObject.GetComponent<WorldSwitchSphere>();
-                _cameraBSwitchComp = GameObject.Find("CameraB").gameObject.GetComponent<WorldSwitchSphere>();
+                SetupMedia(true);
+                return;
             }
             // only when the light is inside the switch sphere do we need to open lens flare effect
             
@@ -52,50 +53,50 @@ public class MediaControl : MonoBehaviour {
             if ((!_cameraASwitchComp.enabled && !_cameraBSwitchComp.enabled)
                 || distance < (_cameraASwitchComp.enabled ? _cameraASwitchComp._currSphereRadius : _cameraBSwitchComp._currSphereRadius))
             {
-                if (_lensFlare != null)
-                {
-                    _lensFlare.enabled = true;
-                }
-                if (_light != null) {
-                    _light.enabled = true;
-                }
-                if (_audio != null)
-                {
-                    _audio.mute = false;
-                }
-
+                SetupMedia(true);
             }
             else
             {
-                if (_lensFlare != null)
-                {
-                    _lensFlare.enabled = false;
-                }
-                if (_light != null)
-                {
-                    _light.enabled = false;
-                }
-                if (_audio != null)
-                {
-                    _audio.mute = false;
-                }
+                SetupMedia(false);
             }
             // _lensFlare.enabled = true;
         }
         else {
-            if (_lensFlare != null)
+            SetupMedia(false);
+        }
+    }
+
+    void SetupMedia(bool isOn)
+    {
+        if (_lensFlare != null)
+        {
+            _lensFlare.enabled = isOn;
+        }
+        if (_light != null)
+        {
+            _light.enabled = isOn;
+        }
+        if (_audio != null)
+        {
+            _audio.mute = !isOn;
+        }
+    }
+
+    IEnumerator KeepTryingToSetupCameraComp()
+    {
+        while (_cameraASwitchComp == null)
+        {
+            if (GameObject.Find("CameraA") != null)
             {
-                _lensFlare.enabled = false;
+                _cameraASwitchComp = GameObject.Find("CameraA").gameObject.GetComponent<WorldSwitchSphere>();
+                _cameraBSwitchComp = GameObject.Find("CameraB").gameObject.GetComponent<WorldSwitchSphere>();
             }
-            if (_light != null)
+            else
             {
-                _light.enabled = false;
-            }
-            if (_audio != null)
-            {
-                _audio.mute = true;
+                yield return new WaitForSeconds(1f);
             }
         }
+        yield return null;
     }
 
     void OnTriggerEnter(Collider other)
