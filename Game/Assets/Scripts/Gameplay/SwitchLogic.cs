@@ -8,8 +8,8 @@ public class SwitchLogic : MonoBehaviour {
     private bool _isInTrigger = false;
     private bool _isOpertable = true;
     private MovingPlatformLogic _movePlatformComp;
-    public GameObject _activeEventObject;
-    public GameObject _inactiveEventObject;
+    public GameObject[] _activeEventObjects;
+    public GameObject[] _inactiveEventObjects;
     // Use this for initialization
     void Start () {
         _movePlatformComp = gameObject.GetComponent<MovingPlatformLogic>();
@@ -81,25 +81,34 @@ public class SwitchLogic : MonoBehaviour {
         {
             Debug.Log("InActive event");
         }
-        if (_isActive && _activeEventObject != null)
+        if (_isActive && _activeEventObjects.Length != 0)
         {
-            if (_activeEventObject.layer != LayerMask.NameToLayer("Default"))
+            foreach (var eventObj in _activeEventObjects)
             {
-                if (gameObject.layer == LayerMask.NameToLayer("WorldA")
-                    || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
+                if (eventObj.layer != LayerMask.NameToLayer("Default"))
                 {
-                    _activeEventObject.layer = LayerMask.NameToLayer("WorldA");
+                    if (gameObject.layer == LayerMask.NameToLayer("WorldA")
+                        || gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
+                    {
+                        eventObj.layer = LayerMask.NameToLayer("WorldA");
+                    }
+                    else
+                    {
+                        eventObj.layer = LayerMask.NameToLayer("WorldB");
+                    }
                 }
-                else
-                {
-                    _activeEventObject.layer = LayerMask.NameToLayer("WorldB");
-                }
+
+                eventObj.SetActive(true);
             }
-            _activeEventObject.SetActive(true);
+            
+            
         }
-        else if ( !_isActive && _inactiveEventObject != null) 
+        else if ( !_isActive && _inactiveEventObjects.Length != 0) 
         {
-            _inactiveEventObject.SetActive(true);
+            foreach (var eventObj in _inactiveEventObjects)
+            {
+                eventObj.SetActive(true);
+            }
         }
     }
 

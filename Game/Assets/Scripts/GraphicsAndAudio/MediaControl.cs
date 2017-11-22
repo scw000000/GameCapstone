@@ -90,11 +90,13 @@ public class MediaControl : MonoBehaviour {
             {
                 _cameraASwitchComp = GameObject.Find("CameraA").gameObject.GetComponent<WorldSwitchSphere>();
                 _cameraBSwitchComp = GameObject.Find("CameraB").gameObject.GetComponent<WorldSwitchSphere>();
+                break;
             }
             else
             {
                 yield return new WaitForSeconds(1f);
             }
+            Debug.Log("Setting up camera");
         }
         yield return null;
     }
