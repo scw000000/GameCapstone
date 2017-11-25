@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour {
         
         //Keep Looping while the player is alive
         while (statusComponent != null && statusComponent.GetIsAlive()) {
-            yield return null;
+            yield return new WaitForSeconds(1f);
         }
         Debug.Log("Game Running End!");
     }
