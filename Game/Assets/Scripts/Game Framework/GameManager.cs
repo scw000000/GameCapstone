@@ -13,13 +13,12 @@ public class GameManager : MonoBehaviour {
     
     public GameObject _gameOverScreenInstance;
 
+    public string _nextLevelName;
     public string _endGameCreditSceneName;
 
     private GameObject _gameMessagePanelGO;
     private GameObject _systemMessagePanelGO;
 
-    private Text _gameMessageText;
-    private Text _systemMessageText;
     // Use this for initialization
     void Start () {
         if( Init()) {
@@ -155,6 +154,15 @@ public class GameManager : MonoBehaviour {
 
     public void Continue() {
         gameObject.GetComponent<LevelLoading>().StartLoadLevel(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoToNextLevel()
+    {
+        if (_nextLevelName.Length != 0)
+        {
+            gameObject.GetComponent<LevelLoading>().SetupLoadSlot(-1);
+            gameObject.GetComponent<LevelLoading>().StartLoadLevel(_nextLevelName);
+        }
     }
 
     private IEnumerator GameRunning() {

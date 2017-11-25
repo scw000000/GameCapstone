@@ -38,6 +38,8 @@ public class CutSceneControl : MonoBehaviour {
 
     public void StartTimeLine() {
         // _referencedTimelineGO.GetComponent<Collider>().enabled = false;
+        var managerComp = GameObject.Find("GameManager").GetComponent<GameManager>();
+        managerComp.SetPlayerInput(false);
         _cutSceneCameraGO.GetComponent<AudioListener>().enabled = true;
         _cutSceneCameraGO.GetComponent<Camera>().enabled = true;
         if (_DisabledCameraAGO == null)
@@ -49,7 +51,9 @@ public class CutSceneControl : MonoBehaviour {
         _DisabledCameraBGO.SetActive(false);
         PlayTimeLine();
         //Invoke("SwitchBackCameras", (float)gameObject.GetComponent<PlayableDirector>().duration);
+        
         StartCoroutine("WaitUntilFinished");
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -83,6 +87,8 @@ public class CutSceneControl : MonoBehaviour {
         {
             _endCutScenetEventGO.SetActive(true);
         }
+        var managerComp = GameObject.Find("GameManager").GetComponent<GameManager>();
+        managerComp.SetPlayerInput(true);
     }
 
     //private IEnumerator ReturnToCameraPosition() {

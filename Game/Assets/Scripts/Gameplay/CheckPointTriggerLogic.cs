@@ -31,7 +31,7 @@ public class CheckPointTriggerLogic : MonoBehaviour {
             // Also need to update current progress in player status component
             other.gameObject.GetComponent<PlayerStatus>()._currentProgress = _progress;
             Debug.Log("System msg");
-            GameObject.Find("GameManager").GetComponent<GameManager>().DisplaySystemMessage("Checkpoint " + _progress + " saved", 2f);
+            GameObject.Find("GameManager").GetComponent<GameManager>().DisplaySystemMessage("Checkpoint " + (_progress + 1) + " saved", 2f);
         }
     }
 }
