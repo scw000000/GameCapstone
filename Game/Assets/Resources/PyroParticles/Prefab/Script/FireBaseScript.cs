@@ -63,6 +63,7 @@ namespace DigitalRuby.PyroParticles
         private bool InFire;
         private bool Invincible;
         private float InvincibleTime;
+        private FlamethrowerTrigger FlamethrowerTriggerComp;
         /*private IEnumerator CleanupEverythingCoRoutine()
         {
             // 2 extra seconds just to make sure animation and graphics have finished ending
@@ -95,6 +96,8 @@ namespace DigitalRuby.PyroParticles
 
         protected virtual void Start()
         {
+            Player = GameObject.FindGameObjectWithTag("Player");
+            FlamethrowerTriggerComp = transform.parent.GetChild(0).GetChild(0).gameObject.GetComponent<FlamethrowerTrigger>();
             StoreDuration = Duration;
             StorePause = Pause;
             /*if (AudioSource != null)
@@ -130,7 +133,10 @@ namespace DigitalRuby.PyroParticles
             if (StartTime < 0)
             {
                 StartCoroutine(FireControl());
-                if (Check == true && InFire == true && Invincible == false)
+                bool goInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA");
+                bool playerInWorldA = (Player.layer == LayerMask.NameToLayer("WorldA") && !Player.GetComponent<WorldSwitch>()._insidePortal)
+                    || (Player.layer == LayerMask.NameToLayer("WorldB") && Player.GetComponent<WorldSwitch>()._insidePortal);
+                if (Check == true && FlamethrowerTriggerComp._playerInFire == true && Invincible == false && goInWorldA == playerInWorldA)
                 {
                     if (Player != null)
                     {
@@ -152,9 +158,10 @@ namespace DigitalRuby.PyroParticles
                         || (gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") && Ice.layer == LayerMask.NameToLayer("WorldB")))
 
                     {
+                        Ice.GetComponent<IceBlockLogic>().Melt();
                         if (gameObject.layer == 10)
                         {
-                            Ice.GetComponent<IceBlockLogic>().Melt();
+                            
                         }
                     }
                 }
@@ -287,26 +294,7 @@ namespace DigitalRuby.PyroParticles
             //StartCoroutine(CleanupEverythingCoRoutine());
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("Object inside");
-            if (other.tag.Equals("Player"))
-            {
-                Player = other.gameObject;
-                InFire = true;
-            }
-            
-        }
-        void OnTriggerExit(Collider other)
-        {
-            if (other.tag.Equals("Player"))
-            {
-                InFire = false;
-            }
-        }
-
-
-
+        
         public bool Starting
         {
             get;

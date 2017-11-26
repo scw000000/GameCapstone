@@ -143,6 +143,11 @@ public class PortalLogic : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         //    Debug.Log("enter portal");
         // Debug.Log(other.gameObject.name);
+        if (other.GetComponent<FlamethrowerTrigger>() != null)
+        {
+            return;
+        }
+
         if (_prevEnterColliderID != other.gameObject.GetInstanceID()) {
             _prevEnterColliderID = other.gameObject.GetInstanceID();
             if (_prevLeaveColliderID == _prevEnterColliderID)
@@ -154,6 +159,7 @@ public class PortalLogic : MonoBehaviour {
             _enterAudioSrc.volume = 1f;
             _enterAudioSrc.Play();
         }
+
         
 
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
@@ -167,7 +173,12 @@ public class PortalLogic : MonoBehaviour {
     }
 
     void OnTriggerStay(Collider other){
-       // Debug.Log(other.gameObject.name + " stay test");
+        if (other.GetComponent<DigitalRuby.PyroParticles.FireBaseScript>() != null)
+        {
+            return;
+        }
+
+        // Debug.Log(other.gameObject.name + " stay test");
         if (_player.GetInstanceID() == other.gameObject.GetInstanceID())
         {
             other.gameObject.GetComponent<WorldSwitch>().SetPortalStatus(true);
@@ -177,6 +188,7 @@ public class PortalLogic : MonoBehaviour {
             UpdateNonPlayerGOInPortal(other.gameObject);
         }
     }
+    
 
     void OnTriggerExit(Collider other){
         if (_prevLeaveColliderID != other.gameObject.GetInstanceID()) {
