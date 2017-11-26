@@ -5,6 +5,7 @@ using UnityEngine;
 public class TriggerLogic : MonoBehaviour {
     public bool _enableSlingShot = false;
     public bool _enableLaser = false;
+    public bool _disableObject = false;
     public GameObject _triggerEventObject;
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,7 @@ public class TriggerLogic : MonoBehaviour {
             return;
         }
         Debug.Log("Triggering!");
+        
         FireEvent();
     }
 
@@ -41,7 +43,11 @@ public class TriggerLogic : MonoBehaviour {
         {
             return;
         }
-
-        _triggerEventObject.SetActive(true);
+        if(_disableObject == false)
+            _triggerEventObject.SetActive(true);
+        else
+        {
+            _triggerEventObject.SetActive(false);
+        }
     }
 }
