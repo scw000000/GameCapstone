@@ -40,7 +40,7 @@ public class OutlineDetection : MonoBehaviour {
         //}
         int visibleLayer = _camera.cullingMask;
         RaycastHit hitResult;
-        if (!Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hitResult, 100f, visibleLayer))
+        if (!Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hitResult, 100f, visibleLayer, QueryTriggerInteraction.Ignore))
         {
             TryToDisableOutline();
             return;
