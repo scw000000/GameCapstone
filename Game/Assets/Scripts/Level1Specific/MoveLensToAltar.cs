@@ -18,10 +18,14 @@ public class MoveLensToAltar : MonoBehaviour {
         _player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(_player.GetComponent<WorldSwitch>().SetupLensMaterial(_lensCopy) );
         
+        Debug.Log("Disabled");
     }
 	
 	// Update is called once per frame
 	void Update () {
+        _player.GetComponent<ShootingLogic>().enabled = false;
+        _player.GetComponent<WorldSwitch>().enabled = false;
+
         if (( _insideTrigger && Input.GetButtonDown("Interaction") )) {
             Vector3 playerToLensCopy = _lensCopy.transform.position - _player.transform.position;
             playerToLensCopy.Normalize();
@@ -66,6 +70,9 @@ public class MoveLensToAltar : MonoBehaviour {
 
     public void AcquireLens()
     {
+        Debug.Log("Acquired");
+        _player.GetComponent<ShootingLogic>().enabled = true;
+        _player.GetComponent<WorldSwitch>().enabled = true;
         gameObject.GetComponent<Collider>().enabled = false;
         gameObject.GetComponent<GameMessageTriggerLogic>().TerminateGameMessage(true);
 
@@ -75,6 +82,7 @@ public class MoveLensToAltar : MonoBehaviour {
         _lens.GetComponent<OutlineControl>()._alwaysActive = true;
         _lens.GetComponent<OutlineControl>().SetEnableOutline(true);
         _lensCopy.SetActive(false);
-        gameObject.transform.Find("MagicRing").gameObject.SetActive(false);
+        // gameObject.transform.Find("MagicRing").gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

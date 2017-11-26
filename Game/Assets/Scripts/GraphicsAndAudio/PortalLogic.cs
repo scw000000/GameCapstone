@@ -142,7 +142,7 @@ public class PortalLogic : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         //    Debug.Log("enter portal");
-        Debug.Log(other.gameObject.name);
+        // Debug.Log(other.gameObject.name);
         if (_prevEnterColliderID != other.gameObject.GetInstanceID()) {
             _prevEnterColliderID = other.gameObject.GetInstanceID();
             if (_prevLeaveColliderID == _prevEnterColliderID)
@@ -179,7 +179,6 @@ public class PortalLogic : MonoBehaviour {
     }
 
     void OnTriggerExit(Collider other){
-        Debug.Log("Leave");
         if (_prevLeaveColliderID != other.gameObject.GetInstanceID()) {
             _prevLeaveColliderID = other.gameObject.GetInstanceID();
             if (_prevLeaveColliderID == _prevEnterColliderID) {
