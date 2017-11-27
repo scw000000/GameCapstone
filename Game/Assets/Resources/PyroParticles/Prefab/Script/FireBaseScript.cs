@@ -140,7 +140,7 @@ namespace DigitalRuby.PyroParticles
                 {
                     if (Player != null)
                     {
-                        Player.GetComponent<PlayerStatus>().AddHitPoints(-15f);
+                        Player.GetComponent<PlayerStatus>().AddHitPoints(-20f);
                         Invincible = true;
                     }
                 }
