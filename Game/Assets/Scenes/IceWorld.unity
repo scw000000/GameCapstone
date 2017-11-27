@@ -9406,6 +9406,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -25625,6 +25639,7 @@ MonoBehaviour:
   _cutSceneCameraGO: {fileID: 941472036}
   _enableTrigger: 0
   _cutsceneAudioListener: {fileID: 0}
+  _endCutScenetEventGO: {fileID: 0}
 --- !u!114 &930971900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26832,6 +26847,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -27612,6 +27641,7 @@ MonoBehaviour:
   _cutSceneCameraGO: {fileID: 941472036}
   _enableTrigger: 0
   _cutsceneAudioListener: {fileID: 0}
+  _endCutScenetEventGO: {fileID: 0}
 --- !u!114 &998152872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27641,6 +27671,7 @@ MonoBehaviour:
   _cutSceneCameraGO: {fileID: 941472036}
   _enableTrigger: 0
   _cutsceneAudioListener: {fileID: 0}
+  _endCutScenetEventGO: {fileID: 0}
 --- !u!114 &998152874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39219,7 +39250,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1458055314}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -180.7, y: -58.64, z: 163.1}
+  m_LocalPosition: {x: -180.78, y: -58.64, z: 163.1}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children:
   - {fileID: 1241686751}
@@ -42763,7 +42794,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   _isOpened: 0
-  _operationTime: 2
+  _openTime: 2
+  _closeTime: 2
 --- !u!4 &1604651179
 Transform:
   m_ObjectHideFlags: 0
@@ -46349,6 +46381,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -49101,7 +49147,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   _isOpened: 0
-  _operationTime: 2
+  _openTime: 2
+  _closeTime: 2
 --- !u!1001 &1833108434
 Prefab:
   m_ObjectHideFlags: 0
@@ -50959,6 +51006,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -55438,6 +55499,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0

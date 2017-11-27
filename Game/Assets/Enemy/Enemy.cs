@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
             {
                 Vector3 RandomPos = Random.insideUnitCircle * alertness;
                 NavMeshHit NavHit;
-                NavMesh.SamplePosition(_player.transform.position + RandomPos, out NavHit, 20f, NavMesh.AllAreas);
+                NavMesh.SamplePosition(_player.transform.position, out NavHit, 20f, NavMesh.AllAreas);
                 _nav.SetDestination(NavHit.position);
                 _nav.Resume();
                 state = "walk";
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
                     _anim.speed = 1.2f;
                     state = "search";
                     _anim.SetBool("charging", false);
-                    wait = 2f;
+                    wait = 1f;
                 }
             }
             if (state == "search")
@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour
                     {
                         _anim.SetBool("charging", false);
                         state = "search";
-                        wait = 2f;
+                        wait = 1f;
                     }
                 }
             }
@@ -165,7 +165,7 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "IceWall" && state == "chase")
+        if (col.gameObject.tag == "IceWall")
         {
             this.TakeDamage();
         }
