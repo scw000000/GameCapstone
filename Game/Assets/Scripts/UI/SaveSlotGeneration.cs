@@ -118,6 +118,12 @@ public class SaveSlotGeneration : MonoBehaviour {
             {
                 hudCanvas.SetActive(false);
             }
+            loadCanvas = GameObject.Find("LoadGameMenu");
+            if (loadCanvas != null)
+            {
+                loadCanvas.SetActive(false);
+            }
+            
             _loadingCompGO.GetComponent<LevelLoading>().LoadSavedSlot(slot);
             
         }

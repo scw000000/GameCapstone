@@ -97,7 +97,7 @@ namespace DigitalRuby.PyroParticles
         protected virtual void Start()
         {
             Player = GameObject.FindGameObjectWithTag("Player");
-            FlamethrowerTriggerComp = transform.parent.GetChild(0).GetChild(0).gameObject.GetComponent<FlamethrowerTrigger>();
+           // FlamethrowerTriggerComp = transform.parent.GetChild(0).GetChild(0).gameObject.GetComponent<FlamethrowerTrigger>();
             StoreDuration = Duration;
             StorePause = Pause;
             /*if (AudioSource != null)
@@ -136,7 +136,7 @@ namespace DigitalRuby.PyroParticles
                 bool goInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA");
                 bool playerInWorldA = (Player.layer == LayerMask.NameToLayer("WorldA") && !Player.GetComponent<WorldSwitch>()._insidePortal)
                     || (Player.layer == LayerMask.NameToLayer("WorldB") && Player.GetComponent<WorldSwitch>()._insidePortal);
-                if (Check == true && FlamethrowerTriggerComp._playerInFire == true && Invincible == false && goInWorldA == playerInWorldA)
+                if (false && Check == true &&  Invincible == false && goInWorldA == playerInWorldA)
                 {
                     if (Player != null)
                     {
