@@ -64,6 +64,8 @@ namespace DigitalRuby.PyroParticles
         private bool Invincible;
         private float InvincibleTime;
         private FlamethrowerTrigger FlamethrowerTriggerComp;
+
+        public GameObject TriggerGO;
         /*private IEnumerator CleanupEverythingCoRoutine()
         {
             // 2 extra seconds just to make sure animation and graphics have finished ending
@@ -97,7 +99,7 @@ namespace DigitalRuby.PyroParticles
         protected virtual void Start()
         {
             Player = GameObject.FindGameObjectWithTag("Player");
-           // FlamethrowerTriggerComp = transform.parent.GetChild(0).GetChild(0).gameObject.GetComponent<FlamethrowerTrigger>();
+            FlamethrowerTriggerComp = TriggerGO.GetComponent<FlamethrowerTrigger>();
             StoreDuration = Duration;
             StorePause = Pause;
             /*if (AudioSource != null)
@@ -136,7 +138,7 @@ namespace DigitalRuby.PyroParticles
                 bool goInWorldA = gameObject.layer == LayerMask.NameToLayer("WorldA");
                 bool playerInWorldA = (Player.layer == LayerMask.NameToLayer("WorldA") && !Player.GetComponent<WorldSwitch>()._insidePortal)
                     || (Player.layer == LayerMask.NameToLayer("WorldB") && Player.GetComponent<WorldSwitch>()._insidePortal);
-                if (false && Check == true &&  Invincible == false && goInWorldA == playerInWorldA)
+                if (FlamethrowerTriggerComp._playerInFire && Check == true &&  Invincible == false && goInWorldA == playerInWorldA)
                 {
                     if (Player != null)
                     {
