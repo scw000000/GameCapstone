@@ -62,7 +62,7 @@ public class SaveSlotGeneration : MonoBehaviour {
 
             clickEvent.RemoveAllListeners();
 
-            var loadedSprite = Resources.Load<Sprite>("ThumbNails/" + saveData._currentLevel + "_" + saveData._currentProgress );
+            var loadedSprite = Resources.Load<Sprite>("Thumbnails/" + saveData._currentLevel + "_" + saveData._currentProgress );
             if (loadedSprite != null)
             {
                 image.sprite = loadedSprite;
