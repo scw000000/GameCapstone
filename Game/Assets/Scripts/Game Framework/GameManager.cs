@@ -33,12 +33,33 @@ public class GameManager : MonoBehaviour {
 
     }
 
+    public void ApplyProgress(int progress)
+    {
+        GameObject spawnLoc = null;
+        progress = Mathf.Clamp(progress, 0, _spawnLocations.Length - 1);
+        spawnLoc = _spawnLocations[progress];
+        if (spawnLoc == null)
+        {
+            progress = 0;
+            spawnLoc = _spawnLocations[progress];
+        }
+
+        _playerInstance.transform.position = spawnLoc.transform.position;
+        _playerInstance.transform.rotation = spawnLoc.transform.rotation;
+        _playerInstance.GetComponent<PlayerStatus>()._currentProgress = progress;
+
+        if (_eventObject != null)
+        {
+            _eventObject.SetActive(true);
+        }
+    }
+
     private bool Init() {
         if (_spawnLocations == null) {
             Debug.LogError("Need to Specify player or spawn location");
             return false;
         }
-        GameObject spawnLoc = null;
+        // GameObject spawnLoc = null;
         int progress = 0;
         // Detect if we should load game data
         int loadSlot = PlayerPrefs.GetInt(GameCapstone.SaveData._loadPrefName);
@@ -50,30 +71,17 @@ public class GameManager : MonoBehaviour {
                 new GameCapstone.SaveData()
                 );
             Debug.Log("Progress is: " + saveData._currentProgress);
-            if (saveData._currentProgress < _spawnLocations.Length)
-            {
-                progress = saveData._currentProgress;
-                spawnLoc = _spawnLocations[saveData._currentProgress];
-            }
-            else // prevent array idx out of bound
-            {
-                spawnLoc = _spawnLocations[0];
-                progress = 0;
-            }
+            progress = saveData._currentProgress;
         }
         else
         {
             Debug.Log("Skip loading game");
-            spawnLoc = _spawnLocations[0];
             progress = 0;
         }
 
         _gameOverScreenInstance.SetActive(false);
 
-        // _playerInstance = Instantiate(_playerPrefab, spawnLoc.transform.position, spawnLoc.transform.rotation) as GameObject;
-        _playerInstance.transform.position = spawnLoc.transform.position;
-        _playerInstance.transform.rotation = spawnLoc.transform.rotation;
-        _playerInstance.GetComponent<PlayerStatus>()._currentProgress = progress;
+        ApplyProgress(progress);
         // We don't want to attach the camera set directly because it will make the camera not smooth
         // _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
         var camRootGO = _playerInstance.transform.Find("CameraRoot").gameObject;
@@ -89,10 +97,10 @@ public class GameManager : MonoBehaviour {
         _gameMessagePanelGO = _hudInstance.transform.Find("GameMessagePanel").gameObject;
         _systemMessagePanelGO = _hudInstance.transform.Find("SystemMessagePanel").gameObject;
 
-        if (_eventObject != null)
-        {
-            _eventObject.SetActive(true);
-        }
+        //if (_eventObject != null)
+        //{
+        //    _eventObject.SetActive(true);
+        //}
         
         return true;
     }
@@ -103,21 +111,13 @@ public class GameManager : MonoBehaviour {
             SetPlayerInput(true);
             Time.timeScale = 1f;
             _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().SetUpCursorLock(true);
-            // Cursor.visible = false;
-            // Cursor.lockState = CursorLockMode.Locked;
-            //When the player controller is ready, this line of code will resume user control
-            //Player.GetComponent<PonePlayerController> ().enable = true;
         }
         else
         {
             SetPlayerInput(false);
-            // Cursor.visible = true;
             _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().SetUpCursorLock(false);
-            // Cursor.lockState = CursorLockMode.None;
             // _gameManagerComp.AttachToMainCamera(canvas.gameObject);
             Time.timeScale = 0f;
-            //When the player controller is ready, this line of code will pause user control
-            //Player.GetComponent<PonePlayerController> ().enable = false;
 
         }
     }
@@ -195,7 +195,6 @@ public class GameManager : MonoBehaviour {
     public void SetPlayerInput(bool isEnabled)
     {
         var playerControl = _playerInstance.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
-        /// playerControl.enabled = isEnabled;
         playerControl.m_EnableInput = isEnabled;
         _playerInstance.GetComponent<ShootingLogic>().enabled = isEnabled;
         _playerInstance.GetComponent<WorldSwitch>().enabled = isEnabled;

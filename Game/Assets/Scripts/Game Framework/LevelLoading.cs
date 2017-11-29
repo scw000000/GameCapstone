@@ -10,11 +10,18 @@ public class LevelLoading : MonoBehaviour {
 	public GameObject Mainmenu;
 	public Text LoadingText;
     private AsyncOperation AsyncOp = null;
-
+    List<string> _validSceneNames;
     // Use this for initialization
     void Start () {
         // For testing purpose
         //StartLoadLevel("");
+        _validSceneNames = new List<string>();
+        for (int i = 1; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            int lastSlash = scenePath.LastIndexOf("/");
+            _validSceneNames.Add(scenePath.Substring(lastSlash + 1, scenePath.LastIndexOf(".") - lastSlash - 1));
+        }
     }
 	
 	// Update is called once per frame
@@ -27,6 +34,10 @@ public class LevelLoading : MonoBehaviour {
 
     // Hard coded, should be fixed later
     public void StartLoadLevel(string levelName) {
+        if (!IsLevelExist(levelName))
+        {
+            return;
+        }
         StartCoroutine(LoadLevel("Assets/Scenes/" + levelName + ".unity"));
         // StartCoroutine(LoadLevel("Assets/Scenes/StartingCave.unity"));
     }
@@ -37,11 +48,16 @@ public class LevelLoading : MonoBehaviour {
         SceneManager.LoadScene("Assets/Scenes/GameOverMenu.unity");
     }
 
+    public bool IsLevelExist(string levelName)
+    {
+        return _validSceneNames.Contains(levelName);
+    }
+
     public IEnumerator LoadLevel (string levelName){
         Debug.Log("Loadlevel start");
         AsyncOp = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelName);
         if (AsyncOp == null) {
-            Debug.LogError("Level loading failed");
+            // Debug.LogError("Level loading failed");
             yield break;
         }
         // Disable sceen switch until we are good to go;

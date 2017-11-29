@@ -40,7 +40,7 @@ public class MoveLensToAltar : MonoBehaviour {
         if (_hasFinished)
         {
             AcquireLens();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 	}
 
