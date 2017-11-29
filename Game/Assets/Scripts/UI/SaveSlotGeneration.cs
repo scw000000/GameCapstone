@@ -41,7 +41,7 @@ public class SaveSlotGeneration : MonoBehaviour {
         var progressGO = newSaveSlot.transform.Find("Detail").transform.Find("Progress");
         var timeGO = newSaveSlot.transform.Find("Detail").transform.Find("Time");
         var clickEvent = newSaveSlot.GetComponent<UnityEngine.UI.Button>().onClick;
-
+        var image = newSaveSlot.transform.Find("Image").gameObject.GetComponent<UnityEngine.UI.Image>();
         int saveSlotValid = PlayerPrefs.GetInt(GameCapstone.SaveData._saveSlotValidPrefName + index);
         if (saveSlotValid > 0)
         {
@@ -61,6 +61,14 @@ public class SaveSlotGeneration : MonoBehaviour {
                 + saveData._second;
 
             clickEvent.RemoveAllListeners();
+
+            var loadedSprite = Resources.Load<Sprite>("ThumbNails/" + saveData._currentLevel + "_" + saveData._currentProgress );
+            if (loadedSprite != null)
+            {
+                image.sprite = loadedSprite;
+                image.color = new Color(1f, 1f, 1f, 1f);
+            }
+
             if (_clickForLoad)
             {
                 // This is some stupid shit because delegate will try to setup the reference instead of 
