@@ -17,6 +17,9 @@ public class Slintshot : MonoBehaviour {
     public float _forceRate;
     private bool _isButtonPressed;
     private GameObject _cameraGO;
+    private AudioSource _pullAudioSrc;
+    private AudioSource _shootAudioSrc;
+
     // Use this for initialization
     void Start () {
         _left = transform.Find("LeftAttachPoint").transform.GetComponent<LineRenderer>();
@@ -33,6 +36,15 @@ public class Slintshot : MonoBehaviour {
         _isGrabbing = false;
 
         _cameraGO = GameObject.Find("CameraA");
+        var audioSrcs = GetComponents<AudioSource>();
+        if (0 < audioSrcs.Length)
+        {
+            _pullAudioSrc = audioSrcs[0];
+        }
+        if (1 < audioSrcs.Length)
+        {
+            _shootAudioSrc = audioSrcs[1];
+        }
     }
 
     void OnTriggerEnter(Collider obj)
@@ -87,7 +99,12 @@ public class Slintshot : MonoBehaviour {
         {
             if (_isButtonPressed)
             {
+                if (_pullAudioSrc != null && !_isGrabbing)
+                {
+                    _pullAudioSrc.Play();
+                }
                 _isGrabbing = true;
+                
                 //grabPos = Camera.main.ScreenToViewportPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
 
                 Vector3 shift = _player.transform.forward * 3.0f;// new Vector3(-3.0f,0.0f,0.0f);
@@ -95,6 +112,7 @@ public class Slintshot : MonoBehaviour {
                 _ball.position = _grabPos;
                 _left.SetPosition(0, new Vector3(_ball.localPosition.x, _ball.localPosition.y + 0.2f, _ball.localPosition.z + 2.0f));
                 _right.SetPosition(0, new Vector3(_ball.localPosition.x, _ball.localPosition.y + 0.2f, _ball.localPosition.z - 2.0f));
+                
             }
         }
         if (_isGrabbing && (!_canGrab || !_isButtonPressed))
@@ -124,6 +142,14 @@ public class Slintshot : MonoBehaviour {
                 _left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
                 _right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
 
+                if (_shootAudioSrc != null)
+                {
+                _shootAudioSrc.Play();
+                }
+                if (_pullAudioSrc != null && _pullAudioSrc.isPlaying)
+                {
+                _pullAudioSrc.Stop();
+                }
             //canGrab = false;
         }
     }

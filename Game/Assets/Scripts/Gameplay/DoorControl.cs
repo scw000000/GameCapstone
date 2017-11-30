@@ -11,18 +11,35 @@ public class DoorControl : MonoBehaviour {
     public float _openTime = 2f;
     public float _closeTime = 2f;
     private float _doorOpenLerp;
+    private AudioSource _moveAudioSrc;
     // Use this for initialization
     void Start()
     {
+        _moveAudioSrc = GetComponent<AudioSource>();
+        if (_moveAudioSrc != null)
+        {
+            _moveAudioSrc.playOnAwake = false;
+            _moveAudioSrc.loop = true;
+        }
+        
         ResetDoors();
     }
 	// Update is called once per frame
 	void Update () {
         // don't waste time to update the doors
         if ((_isOpened && _doorOpenLerp >= 1f) || (!_isOpened && _doorOpenLerp <= 0f)) {
+            
+            _doorOpenLerp = Mathf.Clamp01(_doorOpenLerp);
+            if (_moveAudioSrc != null)
+            {
+                _moveAudioSrc.Stop();
+            }
             return;
         }
-
+        if ( ( _doorOpenLerp == 0f || _doorOpenLerp == 1f ) && (_moveAudioSrc != null) )
+        {
+            _moveAudioSrc.Play();
+        }
         if (_isOpened)
         {
             _doorOpenLerp += Time.deltaTime / _openTime;
