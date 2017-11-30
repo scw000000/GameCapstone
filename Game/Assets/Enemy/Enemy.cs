@@ -43,7 +43,8 @@ public class Enemy : MonoBehaviour
         if (alive && state!="chase")
         {
             RaycastHit rayHit;
-            if (Physics.Linecast(_eyes.position, _player.transform.position, out rayHit))
+            int layerMask = ~((1 << LayerMask.NameToLayer("WorldB")) | (1 << LayerMask.NameToLayer("WorldAInPortal")));
+            if (Physics.Linecast(_eyes.position, _player.transform.position, out rayHit, layerMask, QueryTriggerInteraction.Ignore))
             {
                 print("hit " + rayHit.collider.gameObject.name);
                 if (rayHit.collider.gameObject.tag == "Player")
