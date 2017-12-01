@@ -102,6 +102,7 @@ public class WorldSwitch : MonoBehaviour {
                 && overlap.isTrigger == false )
             {
                 switchable = false;
+                break;
             }
         }
         if (switchable)

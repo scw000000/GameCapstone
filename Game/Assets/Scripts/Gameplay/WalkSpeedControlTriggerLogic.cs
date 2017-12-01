@@ -32,7 +32,7 @@ public class WalkSpeedControlTriggerLogic : MonoBehaviour {
         }
 
         bool insidePortal = _fpsComp.GetComponent<WorldSwitch>()._insidePortal;
-        if ( (_fpsComp.gameObject.layer == gameObject.layer && !insidePortal ) 
+        if (gameObject.layer == LayerMask.NameToLayer("Default") || (_fpsComp.gameObject.layer == gameObject.layer && !insidePortal ) 
             || ( (_fpsComp.gameObject.layer == LayerMask.NameToLayer("WorldA") && gameObject.layer == LayerMask.NameToLayer("WorldAInPortal") )
                 || (_fpsComp.gameObject.layer == LayerMask.NameToLayer("WorldB") && gameObject.layer == LayerMask.NameToLayer("WorldBInPortal"))
                 && insidePortal)
@@ -56,7 +56,12 @@ public class WalkSpeedControlTriggerLogic : MonoBehaviour {
         {
             return;
         }
-
+        if (_fpsComp == null)
+        {
+            _fpsComp = other.gameObject.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
+            _origWalkSpeed = _fpsComp.m_WalkSpeed;
+            _origRunSpeed = _fpsComp.m_RunSpeed;
+        }
         _fpsComp.m_WalkSpeed = _origWalkSpeed;
         _fpsComp.m_RunSpeed = _origRunSpeed;
     }
