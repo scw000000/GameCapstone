@@ -18,6 +18,7 @@ Shader "Olanigan/IceBreak" {
         [MaterialToggle] _LocalGlobal ("Local/Global", Float ) = 0
         _Transparency ("Transparency", Range(-1, 1)) = 0
         _Ice_fresnel ("Ice_fresnel", Range(0, 3)) = 0
+		_OutOrInScalar("Outside or inside scalar", Float) = 1
         [HideInInspector]_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
     }
     SubShader {
@@ -64,6 +65,10 @@ Shader "Olanigan/IceBreak" {
             uniform fixed _LocalGlobal;
             uniform float _Transparency;
             uniform float _Ice_fresnel;
+			float4 _SphereCenter;
+			float _SphereRadius;
+			float _OutOrInScalar;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -111,6 +116,9 @@ Shader "Olanigan/IceBreak" {
                 return o;
             }
             float4 frag(VertexOutput i) : COLOR {
+				// First decide if we need to draw the pixel or not
+				clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
+
                 #if UNITY_UV_STARTS_AT_TOP
                     float grabSign = -_ProjectionParams.x;
                 #else
@@ -274,6 +282,9 @@ Shader "Olanigan/IceBreak" {
             uniform fixed _LocalGlobal;
             uniform float _Transparency;
             uniform float _Ice_fresnel;
+			float4 _SphereCenter;
+			float _SphereRadius;
+			float _OutOrInScalar;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -312,6 +323,8 @@ Shader "Olanigan/IceBreak" {
                 return o;
             }
             float4 frag(VertexOutput i) : COLOR {
+				// First decide if we need to draw the pixel or not
+				clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
                 #if UNITY_UV_STARTS_AT_TOP
                     float grabSign = -_ProjectionParams.x;
                 #else
@@ -418,6 +431,10 @@ Shader "Olanigan/IceBreak" {
             uniform float _snow_slider;
             uniform float _Freezeeffectnormal;
             uniform fixed _LocalGlobal;
+			float4 _SphereCenter;
+			float _SphereRadius;
+			float _OutOrInScalar;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -444,6 +461,8 @@ Shader "Olanigan/IceBreak" {
                 return o;
             }
             float4 frag(VertexOutput i) : SV_Target {
+				// First decide if we need to draw the pixel or not
+				clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
                 i.normalDir = normalize(i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
                 float3 normalDirection = i.normalDir;
