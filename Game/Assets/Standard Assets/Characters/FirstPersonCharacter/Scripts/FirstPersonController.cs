@@ -46,6 +46,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Eject;
         private bool _bounceBox;
 
+        public void ReInitRotation()
+        {
+            m_MouseLook.Init(transform, m_Camera.transform);
+        }
+
         // Use this for initialization
         private void Start()
         {

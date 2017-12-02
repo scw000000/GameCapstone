@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
 
     public void ApplyProgress(int progress)
     {
+        SetPlayerInput(false);
         GameObject spawnLoc = null;
         progress = Mathf.Clamp(progress, 0, _spawnLocations.Length - 1);
         spawnLoc = _spawnLocations[progress];
@@ -43,15 +44,20 @@ public class GameManager : MonoBehaviour {
             progress = 0;
             spawnLoc = _spawnLocations[progress];
         }
-
+        
         _playerInstance.transform.position = spawnLoc.transform.position;
         _playerInstance.transform.rotation = spawnLoc.transform.rotation;
         _playerInstance.GetComponent<PlayerStatus>()._currentProgress = progress;
+
+        var camRootGO = _playerInstance.transform.Find("CameraRoot").gameObject;
+        _cameraSetInstance.transform.position = camRootGO.transform.position;
+        _cameraSetInstance.transform.rotation = camRootGO.transform.rotation;
 
         if (_eventObject != null)
         {
             _eventObject.SetActive(true);
         }
+        SetPlayerInput(true);
     }
 
     private bool Init() {
@@ -85,23 +91,23 @@ public class GameManager : MonoBehaviour {
         // We don't want to attach the camera set directly because it will make the camera not smooth
         // _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
         var camRootGO = _playerInstance.transform.Find("CameraRoot").gameObject;
-        _cameraSetInstance.transform.position = camRootGO.transform.position;
-        _cameraSetInstance.transform.rotation = camRootGO.transform.rotation;
+        // _cameraSetInstance.transform.position = camRootGO.transform.position;
+        // _cameraSetInstance.transform.rotation = camRootGO.transform.rotation;
         _cameraSetInstance.SetActive(true);
         _playerInstance.SendMessage("SetUpCamera", _cameraSetInstance);
-
+        
         // Setup HUD objects
         var healthBarLogicComp = _hudInstance.transform.Find("HealthUI").transform.Find("HealthBar").GetComponent<HealthBarLogic>();
         healthBarLogicComp._playerStatusComp = _playerInstance.GetComponent<PlayerStatus>();
 
         _gameMessagePanelGO = _hudInstance.transform.Find("GameMessagePanel").gameObject;
         _systemMessagePanelGO = _hudInstance.transform.Find("SystemMessagePanel").gameObject;
-
+        
         //if (_eventObject != null)
         //{
         //    _eventObject.SetActive(true);
         //}
-        
+
         return true;
     }
 
@@ -132,7 +138,6 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator GameStart() {
         Debug.Log("Game Start!");
-        // Disable portal effect at start
         SetPlayerInput(true);
         SetupPortalSetting();
         yield return new WaitForSeconds(1f);
@@ -142,8 +147,6 @@ public class GameManager : MonoBehaviour {
     private void SetupPortalSetting() {
         Shader.SetGlobalFloat("_SphereRadius", 0f);
         var goArray = FindObjectsOfType<GameObject>();
-        // int aLyaer = LayerMask.NameToLayer("WorldA");
-        // int bLyaer = LayerMask.NameToLayer("WorldB");
         foreach (var go in goArray) {
                 if ( ( go.GetComponent<MeshRenderer>() != null || go.GetComponent<SkinnedMeshRenderer>() != null )
                 && go.GetComponent<RenderTextureControl>() == null) {
@@ -198,6 +201,10 @@ public class GameManager : MonoBehaviour {
         playerControl.m_EnableInput = isEnabled;
         _playerInstance.GetComponent<ShootingLogic>().enabled = isEnabled;
         _playerInstance.GetComponent<WorldSwitch>().enabled = isEnabled;
+        if (isEnabled)
+        {
+            playerControl.ReInitRotation();
+        }
         // var playerMenuControl = gameObject.GetComponent<PauseMenuController>();
         // playerMenuControl.enabled = isEnabled;
     }
