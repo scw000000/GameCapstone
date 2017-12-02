@@ -16,7 +16,7 @@ public class LevelLoading : MonoBehaviour {
         // For testing purpose
         //StartLoadLevel("");
         _validSceneNames = new List<string>();
-        for (int i = 1; i < SceneManager.sceneCountInBuildSettings; i++)
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
             string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
             int lastSlash = scenePath.LastIndexOf("/");
@@ -36,6 +36,7 @@ public class LevelLoading : MonoBehaviour {
     public void StartLoadLevel(string levelName) {
         if (!IsLevelExist(levelName))
         {
+            Debug.Log("Error: level " + levelName + " doesn't exist!");
             return;
         }
         StartCoroutine(LoadLevel("Assets/Scenes/" + levelName + ".unity"));
@@ -135,5 +136,6 @@ public class LevelLoading : MonoBehaviour {
     }
 
     public void ClearSaveData() {
+        SetupLoadSlot(-1);
     }
 }
