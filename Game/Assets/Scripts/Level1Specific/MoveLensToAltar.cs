@@ -8,6 +8,9 @@ public class MoveLensToAltar : MonoBehaviour {
     public GameObject _lensCopy;
     private bool _insideTrigger = false;
     private GameObject _player;
+    private GameObject _leftEyeIcon;
+    private GameObject _rightEyeIcon;
+
     public bool _hasFinished = false;
 	// Use this for initialization
 	void Start () {
@@ -17,7 +20,10 @@ public class MoveLensToAltar : MonoBehaviour {
         _lens.GetComponent<OutlineControl>().SetEnableOutline(false);
         _player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(_player.GetComponent<WorldSwitch>().SetupLensMaterial(_lensCopy) );
-        
+        _leftEyeIcon = GameObject.Find("LeftEyeIcon");
+        _leftEyeIcon.SetActive(false);
+        _rightEyeIcon = GameObject.Find("RightEyeIcon");
+        _rightEyeIcon.SetActive(false);
         Debug.Log("Disabled");
     }
 	
@@ -40,7 +46,6 @@ public class MoveLensToAltar : MonoBehaviour {
         if (_hasFinished)
         {
             AcquireLens();
-            gameObject.SetActive(false);
         }
 	}
 
@@ -82,6 +87,9 @@ public class MoveLensToAltar : MonoBehaviour {
         _lens.GetComponent<OutlineControl>()._alwaysActive = true;
         _lens.GetComponent<OutlineControl>().SetEnableOutline(true);
         _lensCopy.SetActive(false);
+
+        _leftEyeIcon.SetActive(true);
+        _rightEyeIcon.SetActive(true);
         // gameObject.transform.Find("MagicRing").gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
