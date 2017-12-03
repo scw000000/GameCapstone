@@ -8956,6 +8956,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listeningGO: {fileID: 1504712985844136}
   _inactiveColor: {r: 1, g: 1, b: 1, a: 0.191}
+  _checkFrequency: 0.1
+  _inactiveAnimPeriod: 1.5
+  _activeAnimPeriod: 0.6
+  _activeAnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: -0.0018549757
+      outSlope: -0.0018549757
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7942594
+      value: 0.24685833
+      inSlope: 0.89088285
+      outSlope: 0.89088285
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 7.064177
+      outSlope: 7.064177
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  _inactiveAnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114287933893143040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9243,6 +9288,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _listeningGO: {fileID: 1544989733273128}
   _inactiveColor: {r: 1, g: 1, b: 1, a: 0.19215687}
+  _checkFrequency: 0.1
+  _inactiveAnimPeriod: 1.5
+  _activeAnimPeriod: 0.6
+  _activeAnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: -0.0018549757
+      outSlope: -0.0018549757
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7942594
+      value: 0.24685833
+      inSlope: 0.89088285
+      outSlope: 0.89088285
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 7.064177
+      outSlope: 7.064177
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  _inactiveAnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114322087513889862
 MonoBehaviour:
   m_ObjectHideFlags: 1
