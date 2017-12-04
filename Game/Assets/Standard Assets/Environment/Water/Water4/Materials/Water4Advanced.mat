@@ -112,6 +112,7 @@ Material:
     - _InvFadeDepthFade: 0.07197756
     - _InvFadeFoam: 0.1217
     - _NormalsDisplacement: 0
+    - _OutOrInScalar: 1
     - _ReflDistort: 0.9267696
     - _RefrDistort: 1.4393286
     - _Shininess: 313.21838

@@ -11,6 +11,7 @@ Properties
 	_MainTex ("_MainTex RGBA", 2D) = "white" {}
 	_Distort ("_Distort A", 2D) = "white" {}
 	_LavaTex ("_LavaTex RGB", 2D) = "white" {}
+	_OutOrInScalar("Outside or inside scalar", Float) = 1
 }
 SubShader 
 {

@@ -6,6 +6,7 @@ Properties {
 	//_Color ("Main Color", Color) = (1,1,1)
 	_MainTex ("_MainTex RGBA", 2D) = "white" {}
 	_LavaTex ("_LavaTex RGB", 2D) = "white" {}
+	_OutOrInScalar("Outside or inside scalar", Float) = 1
 }
 
 Category {
@@ -24,7 +25,10 @@ Category {
 
 			sampler2D _MainTex;
 			sampler2D _LavaTex;
-			
+			float4 _SphereCenter;
+			float _SphereRadius;
+			float _OutOrInScalar;
+
 			struct appdata_t {
 				fixed4 vertex : POSITION;
 				fixed2 texcoord : TEXCOORD0;
@@ -34,6 +38,7 @@ Category {
 				fixed4 vertex : SV_POSITION;
 				fixed2 texcoord : TEXCOORD0;
 				fixed2 texcoord1 : TEXCOORD1;
+				fixed4 posWorld : TEXCOORD2;
 			};
 			
 			fixed4 _MainTex_ST;
@@ -45,11 +50,16 @@ Category {
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord = TRANSFORM_TEX(v.texcoord,_MainTex);
 				o.texcoord1 = TRANSFORM_TEX(v.texcoord,_LavaTex);
+
+				o.posWorld = mul(unity_ObjectToWorld, v.vertex);
 				return o;
 			}
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
+				// First decide if we need to draw the pixel or not
+				clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
+
 				fixed4 tex = tex2D(_MainTex, i.texcoord);
 				fixed4 tex2 = tex2D(_LavaTex, i.texcoord1);
 				

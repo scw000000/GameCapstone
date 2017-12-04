@@ -53,7 +53,6 @@ public class PlayerStatus : MonoBehaviour
 
     public void InstantKill()
     {
-        Debug.Log("Instant killing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         _hitPoint = 0f;
     }
 

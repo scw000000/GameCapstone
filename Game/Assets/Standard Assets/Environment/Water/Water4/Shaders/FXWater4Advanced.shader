@@ -35,6 +35,7 @@ Properties {
 	_GSpeed ("Wave Speed", Vector) = (1.2, 1.375, 1.1, 1.5)
 	_GDirectionAB ("Wave Direction", Vector) = (0.3 ,0.85, 0.85, 0.25)
 	_GDirectionCD ("Wave Direction", Vector) = (0.1 ,0.9, 0.5, 0.5)
+		_OutOrInScalar("Outside or inside scalar", Float) = 1
 }
 
 
@@ -59,7 +60,8 @@ CGINCLUDE
 		float4 bumpCoords : TEXCOORD2;
 		float4 screenPos : TEXCOORD3;
 		float4 grabPassPos : TEXCOORD4;
-		UNITY_FOG_COORDS(5)
+		float4 posWorld : TEXCOORD5;
+		UNITY_FOG_COORDS(6)
 	};
 
 	struct v2f_noGrab
@@ -69,7 +71,8 @@ CGINCLUDE
 		float3 viewInterpolator : TEXCOORD1;
 		float4 bumpCoords : TEXCOORD2;
 		float4 screenPos : TEXCOORD3;
-		UNITY_FOG_COORDS(4)
+		float4 posWorld : TEXCOORD4;
+		UNITY_FOG_COORDS(5)
 	};
 	
 	struct v2f_simple
@@ -77,7 +80,8 @@ CGINCLUDE
 		float4 pos : SV_POSITION;
 		float4 viewInterpolator : TEXCOORD0;
 		float4 bumpCoords : TEXCOORD1;
-		UNITY_FOG_COORDS(2)
+		float4 posWorld : TEXCOORD2;
+		UNITY_FOG_COORDS(3)
 	};
 
 	// textures
@@ -115,6 +119,10 @@ CGINCLUDE
 	
 	// foam
 	uniform float4 _Foam;
+
+	float4 _SphereCenter;
+	float _SphereRadius;
+	float _OutOrInScalar;
 	
 	// shortcuts
 	#define PER_PIXEL_DISPLACE _DistortParams.x
@@ -164,13 +172,15 @@ CGINCLUDE
 		
 		o.viewInterpolator.w = saturate(offsets.y);
 		o.normalInterpolator.w = 1;//GetDistanceFadeout(o.screenPos.w, DISTANCE_SCALE);
-		
+		o.posWorld = mul(unity_ObjectToWorld, v.vertex);
 		UNITY_TRANSFER_FOG(o,o.pos);
 		return o;
 	}
 
 	half4 frag( v2f i ) : SV_Target
 	{
+		// First decide if we need to draw the pixel or not
+		clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
 		half3 worldNormal = PerPixelNormal(_BumpMap, i.bumpCoords, VERTEX_WORLD_NORMAL, PER_PIXEL_DISPLACE);
 		half3 viewVector = normalize(i.viewInterpolator.xyz);
 
@@ -266,13 +276,15 @@ CGINCLUDE
 		
 		o.normalInterpolator.xyz = nrml;
 		o.normalInterpolator.w = 1;//GetDistanceFadeout(o.screenPos.w, DISTANCE_SCALE);
-		
+		o.posWorld = mul(unity_ObjectToWorld, v.vertex);
 		UNITY_TRANSFER_FOG(o,o.pos);
 		return o;
 	}
 
 	half4 frag300( v2f_noGrab i ) : SV_Target
 	{
+		// First decide if we need to draw the pixel or not
+		clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
 		half3 worldNormal = PerPixelNormal(_BumpMap, i.bumpCoords, normalize(VERTEX_WORLD_NORMAL), PER_PIXEL_DISPLACE);
 
 		half3 viewVector = normalize(i.viewInterpolator.xyz);
@@ -333,7 +345,7 @@ CGINCLUDE
 		o.pos = UnityObjectToClipPos( v.vertex);
 		
 		o.viewInterpolator.w = 1;//GetDistanceFadeout(ComputeNonStereoScreenPos(o.pos).w, DISTANCE_SCALE);
-		
+		o.posWorld = mul(unity_ObjectToWorld, v.vertex);
 		UNITY_TRANSFER_FOG(o,o.pos);
 		return o;
 
@@ -341,6 +353,8 @@ CGINCLUDE
 
 	half4 frag200( v2f_simple i ) : SV_Target
 	{
+		// First decide if we need to draw the pixel or not
+		clip(_OutOrInScalar*(distance(_SphereCenter.xyz, i.posWorld) - _SphereRadius));
 		half3 worldNormal = PerPixelNormal(_BumpMap, i.bumpCoords, half3(0,1,0), PER_PIXEL_DISPLACE);
 		half3 viewVector = normalize(i.viewInterpolator.xyz);
 

@@ -19,10 +19,6 @@ public class InstantKill : MonoBehaviour {
         if (other.tag.Equals("Player")) {
             var statusComp = other.GetComponent<PlayerStatus>();
             statusComp.InstantKill();
-            if (statusComp == null)
-            {
-                Debug.Log("Null Player!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            }
         }
     }
 
@@ -32,10 +28,6 @@ public class InstantKill : MonoBehaviour {
         {
             var statusComp = collision.gameObject.GetComponent<PlayerStatus>();
             statusComp.InstantKill();
-            if (statusComp == null)
-            {
-                Debug.Log("Null Player!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            }
         }
     }
 }

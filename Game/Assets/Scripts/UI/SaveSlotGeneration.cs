@@ -49,7 +49,7 @@ public class SaveSlotGeneration : MonoBehaviour {
             GameCapstone.SaveData._saveSlotPrefName + index,
             new GameCapstone.SaveData()
             );
-            progressGO.GetComponent<UnityEngine.UI.Text>().text = saveData._currentLevel + ", Check Point " + saveData._currentProgress;
+            progressGO.GetComponent<UnityEngine.UI.Text>().text = saveData._currentLevel + ", Check Point " + ( saveData._currentProgress + 1 );
             timeGO.GetComponent<UnityEngine.UI.Text>().text =
                 saveData._dayOfWeek + ", "
                 + saveData._month + "/"
