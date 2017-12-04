@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public Transform _eyes;
     public AudioSource _roar;
     public AudioSource _hurt;
+    public AudioSource _hitWall;
     public AudioSource _death;
     public GameObject _key;
     private Animator _anim;
@@ -121,7 +122,7 @@ public class Enemy : MonoBehaviour
                     if (chargeTime > 0f)
                     {
                         chargeTime -= Time.deltaTime;
-                        _rb.AddForce(chargingPosition * 5f, ForceMode.VelocityChange);
+                        _rb.AddForce(chargingPosition * 4f, ForceMode.VelocityChange);
                     }
                     else
                     {
@@ -158,6 +159,7 @@ public class Enemy : MonoBehaviour
         }
 
         _hurt.Play();
+        _hitWall.Play();
 
         _anim.SetBool("charging", false);
         state = "search";
