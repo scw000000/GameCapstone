@@ -21,11 +21,6 @@ public class PlayerStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            AddHitPoints(-10f);
-        }
-
         if (Input.GetKeyDown(KeyCode.G))
         {
             InstantKill();
@@ -50,6 +45,10 @@ public class PlayerStatus : MonoBehaviour
     {
         _hitPoint += amount / _maxHitPoint;
         _hitPoint = Mathf.Clamp(_hitPoint, 0, 1);
+        if (amount < 0f)
+        {
+            GameObject.Find("CameraSet").GetComponent<CameraFollow>().PerformDamageShake();
+        }
     }
 
     public void InstantKill()
@@ -61,7 +60,7 @@ public class PlayerStatus : MonoBehaviour
     {
         if (wait < 0.1f)
         {
-            _hitPoint -= 0.2f;
+            AddHitPoints(-0.2f);
             wait = 3.0f;
         }
     }
