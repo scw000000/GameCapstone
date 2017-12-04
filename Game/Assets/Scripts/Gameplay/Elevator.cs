@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
-
+    public AudioSource _audio;
     private float _direction;
     private float _moveSpeed;
     public float _desHeight;
     // Use this for initialization
     void Start()
     {
+        var audios = gameObject.GetComponents<AudioSource>();
+        _audio = audios[0];
+        _audio.Play();
+        _audio.Pause();
         _direction = 0.0f;
         _moveSpeed = 3.0f;
     }
     void GoingDown()
     {
+        _audio.UnPause();
         _direction = -1.0f;
     }
     public void TriggerExecute()
     {
         GoingDown();
+
     }
     // Update is called once per frame
     void Update()
