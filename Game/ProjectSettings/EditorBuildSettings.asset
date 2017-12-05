@@ -15,29 +15,26 @@ EditorBuildSettings:
     path: Assets/Scenes/GameOverMenu.unity
     guid: 67fbfac934b403041ae8e1802d1e2e36
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: a1fce6b7cb3f69145b250b5b3bf565dd
-  - enabled: 1
-    path: Assets/Scenes/Level2.unity
-    guid: a106b35281f9fb444a990d7734428c68
-  - enabled: 1
     path: Assets/Scenes/LoadingScreen.unity
     guid: 6c6b101aeac8ad34caa9720433f3ffab
+  - enabled: 1
+    path: Assets/Scenes/Demo.unity
+    guid: a106b35281f9fb444a990d7734428c68
   - enabled: 1
     path: Assets/Scenes/LogoScreen.unity
     guid: fee4b0b7582aff14e91d257209d981db
   - enabled: 1
-    path: Assets/Scenes/SlingshotPuzzle.unity
-    guid: 9e9e5a2eba5137b4090c80e4d8d67dd1
+    path: Assets/Scenes/Level1.unity
+    guid: a1fce6b7cb3f69145b250b5b3bf565dd
   - enabled: 1
-    path: Assets/Scenes/Hallway.unity
-    guid: 506cea690fe5c764a8151b06d922b76e
+    path: Assets/Scenes/Level2.unity
+    guid: 76a87c485ace4ea4e94c126de0530ea1
   - enabled: 1
-    path: Assets/Scenes/Vincent.unity
+    path: Assets/Scenes/Level3.unity
+    guid: a8d081b04a585334b96134a06ffcbd4b
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
     guid: 8b990afa17037bc418dbb1e86d50da03
   - enabled: 1
-    path: Assets/Scenes/Chenhui.unity
+    path: Assets/Scenes/Level5.unity
     guid: d93435740c001c54eabae13525d550ac
-  - enabled: 1
-    path: Assets/Scenes/Arena2.unity
-    guid: 4f5c9c41532ebbd4a89f9d11b32fcb32
