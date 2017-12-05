@@ -8501,8 +8501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c7b608aff12444938d3220d395bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldAAmbientSound: {fileID: 8300000, guid: ede0b596204eb437ea5ebe77543bcbd7, type: 3}
-  _worldBAmbientSound: {fileID: 8300000, guid: 0c0a56b3607d15242a4e69507eefe52e, type: 3}
+  _worldAAmbientSound: {fileID: 8300000, guid: f652884085b960d4cbd4538e26256a9c, type: 3}
+  _worldBAmbientSound: {fileID: 8300000, guid: 1df500a6dc8004a058cc1edb053c4ba4, type: 3}
   _mixSoundPeriod: 4
 --- !u!65 &412876783
 BoxCollider:
@@ -33492,8 +33492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c7b608aff12444938d3220d395bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldAAmbientSound: {fileID: 8300000, guid: f8d4fed7f7b1fa1438f2dbef9c55e384, type: 3}
-  _worldBAmbientSound: {fileID: 8300000, guid: f8d4fed7f7b1fa1438f2dbef9c55e384, type: 3}
+  _worldAAmbientSound: {fileID: 8300000, guid: f652884085b960d4cbd4538e26256a9c, type: 3}
+  _worldBAmbientSound: {fileID: 8300000, guid: 1df500a6dc8004a058cc1edb053c4ba4, type: 3}
   _mixSoundPeriod: 4
 --- !u!65 &1427852746
 BoxCollider:
@@ -35946,8 +35946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c7b608aff12444938d3220d395bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldAAmbientSound: {fileID: 8300000, guid: f8d4fed7f7b1fa1438f2dbef9c55e384, type: 3}
-  _worldBAmbientSound: {fileID: 8300000, guid: f8d4fed7f7b1fa1438f2dbef9c55e384, type: 3}
+  _worldAAmbientSound: {fileID: 8300000, guid: f652884085b960d4cbd4538e26256a9c, type: 3}
+  _worldBAmbientSound: {fileID: 8300000, guid: 1df500a6dc8004a058cc1edb053c4ba4, type: 3}
   _mixSoundPeriod: 4
 --- !u!4 &1521359215 stripped
 Transform:
@@ -47690,8 +47690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24c7b608aff12444938d3220d395bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldAAmbientSound: {fileID: 8300000, guid: f8d4fed7f7b1fa1438f2dbef9c55e384, type: 3}
-  _worldBAmbientSound: {fileID: 8300000, guid: f8d4fed7f7b1fa1438f2dbef9c55e384, type: 3}
+  _worldAAmbientSound: {fileID: 8300000, guid: f652884085b960d4cbd4538e26256a9c, type: 3}
+  _worldBAmbientSound: {fileID: 8300000, guid: 1df500a6dc8004a058cc1edb053c4ba4, type: 3}
   _mixSoundPeriod: 4
 --- !u!4 &2056284169 stripped
 Transform:
