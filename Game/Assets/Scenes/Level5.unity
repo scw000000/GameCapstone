@@ -29705,7 +29705,7 @@ Prefab:
     - target: {fileID: 114879425747514412, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
         type: 2}
       propertyPath: _spawnLocations.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4503896957094810, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd, type: 2}
       propertyPath: m_LocalPosition.x
@@ -44446,7 +44446,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1151876393186984, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4467399247715392, guid: f25f61b5150a29d4fbc072846a4ceab8, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -48829,7 +48829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2084055791
 Transform:
   m_ObjectHideFlags: 0
