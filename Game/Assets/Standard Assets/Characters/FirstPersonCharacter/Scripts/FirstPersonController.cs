@@ -53,6 +53,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void ReInitRotation()
         {
+            if (m_Camera == null)
+            {
+                m_Camera = gameObject.transform.Find("CameraRoot").gameObject.GetComponent<Camera>();
+            }
             m_MouseLook.Init(transform, m_Camera.transform);
         }
 

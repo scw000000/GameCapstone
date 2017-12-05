@@ -8,7 +8,7 @@ public class Slintshot : MonoBehaviour {
 
     private LineRenderer _left;
     private LineRenderer _right;
-    private Transform _ball;
+    public Transform _ball;
     private GameObject _player;
     private bool _canGrab;
     private bool _isGrabbing;
@@ -19,7 +19,6 @@ public class Slintshot : MonoBehaviour {
     private GameObject _cameraGO;
     private AudioSource _pullAudioSrc;
     private AudioSource _shootAudioSrc;
-
     // Use this for initialization
     void Start () {
         _left = transform.Find("LeftAttachPoint").transform.GetComponent<LineRenderer>();
@@ -29,7 +28,10 @@ public class Slintshot : MonoBehaviour {
         {
             _forceRate = 13.0f;
         }
-        _ball = transform.Find("Ball");
+        if (_ball == null)
+        {
+            _ball = transform.Find("Ball");
+        }
         _ballOriginalPos = _ball.position;
         _stringOriginalLength = Vector3.Magnitude(_left.transform.position - _right.transform.position);
         _canGrab = false;
@@ -76,13 +78,13 @@ public class Slintshot : MonoBehaviour {
         }
     }
 
-    private void ResetPhysics()
+    public void ResetPhysics()
     {
         _canGrab = false;
-        _ball.position = _ballOriginalPos;
+        _ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         _ball.GetComponent<Rigidbody>().useGravity = false;
-        _ball.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f,0.0f,0.0f), ForceMode.Impulse);
-
+        _ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        _ball.position = _ballOriginalPos;
         _left.SetPosition(0, new Vector3(0.0f, 0.0f, 2.0f));
         _right.SetPosition(0, new Vector3(0.0f, 0.0f, -2.0f));
     }

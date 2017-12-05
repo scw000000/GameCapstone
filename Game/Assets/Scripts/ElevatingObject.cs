@@ -35,7 +35,6 @@ public class ElevatingObject : MonoBehaviour {
             {
                 ifPlayed = true;
                 _audio.Play();
-                Debug.Log("Playing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
             _myObject.transform.Translate(Vector3.up * Time.deltaTime * _moveSpeed * _direction, Space.World);
         }

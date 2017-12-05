@@ -5604,8 +5604,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1585316839540668}
-  m_LocalRotation: {x: 0.121869475, y: 0, z: 0, w: 0.99254614}
-  m_LocalPosition: {x: -0.0029237748, y: 0.72916085, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4614610910083510}
@@ -12936,12 +12936,6 @@ MonoBehaviour:
   _playerInstance: {fileID: 1029417503566996}
   _cameraSetInstance: {fileID: 1680885745504814}
   _spawnLocations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   _hudInstance: {fileID: 1784279927919636}
   _eventObject: {fileID: 0}
