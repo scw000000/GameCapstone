@@ -26,9 +26,9 @@ SubShader
 	sampler2D _LavaTex;
 	fixed _DistortX;
 	fixed _DistortY;
-	float4 _SphereCenter;
-	float _SphereRadius;
-	float _OutOrInScalar;
+	fixed4 _SphereCenter;
+	fixed _SphereRadius;
+	fixed _OutOrInScalar;
 
 	struct Input 
 	{

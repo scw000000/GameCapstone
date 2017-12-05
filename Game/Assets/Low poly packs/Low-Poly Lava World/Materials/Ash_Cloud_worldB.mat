@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ash_Cloud_worldB
-  m_Shader: {fileID: 4800000, guid: 0cd4d5e62adacc24c94550a0905d1308, type: 3}
+  m_Shader: {fileID: 4800000, guid: de795a51dfddbf94a836c97a37100ea4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
