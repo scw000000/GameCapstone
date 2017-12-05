@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour {
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_fpsComp.GetIsGrounded())
         {
@@ -89,19 +89,6 @@ public class CameraFollow : MonoBehaviour {
         _shakeXRange = 10f;
         _shakeYRange = 5f;
         _isShaking = true;
-    }
-
-    // Update is called once per frame
-    void FixedUpdate () {
-        //if (!_isShaking)
-        //{
-        //    gameObject.transform.position = Vector3.Lerp(
-        //    gameObject.transform.position, _followingRoot.transform.position, _followingSpeed * Time.deltaTime);
-
-        //    gameObject.transform.rotation = Quaternion.Lerp(
-        //        gameObject.transform.rotation, _followingRoot.transform.rotation, _followingSpeed * Time.deltaTime);
-        //}
-        
     }
 
     private void LateUpdate()

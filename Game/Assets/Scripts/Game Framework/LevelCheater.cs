@@ -29,6 +29,7 @@ public class LevelCheater : MonoBehaviour {
                 if (gameObject.GetComponent<LevelLoading>().IsLevelExist("Level" + i))
                 {
                     GameObject.Find("Canvas").SetActive(false);
+                    gameObject.GetComponent<LevelLoading>().SetupLoadSlot(-1);
                     gameObject.GetComponent<LevelLoading>().StartLoadLevel("Level" + i);
                     break;
                 }
