@@ -5,6 +5,7 @@ using UnityEngine;
 public class DestructionListener : MonoBehaviour
 {
     public string[] _destructableGONames;
+    public GameObject[] _eventObjects;
     private AudioSource _triggerSoundSrc;
     // Use this for initialization
     void Start()
@@ -25,27 +26,17 @@ public class DestructionListener : MonoBehaviour
             if (name.Equals(collision.gameObject.name))
             {
                 collision.transform.parent.gameObject.SendMessage("ResetPhysics");
-                StartCoroutine("DeactiveAfterPlayingSound");
+                foreach (var go in _eventObjects)
+                {
+                    if (go != null)
+                    {
+                        go.SetActive(true);
+                        gameObject.SetActive(false);
+                        break;
+                    }
+                }
             }
         }
         
-    }
-
-    IEnumerator DeactiveAfterPlayingSound()
-    {
-        if (_triggerSoundSrc == null)
-        {
-            gameObject.SetActive(false);
-            yield break;
-        }
-        _triggerSoundSrc.Play();
-        while (_triggerSoundSrc.isPlaying)
-        {
-            yield return null;
-        }
-
-        gameObject.SetActive(false);
-        yield return null;
-
     }
 }
