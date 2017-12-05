@@ -17,9 +17,9 @@ public class IceBlockLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.M)) {
-            Melt();                                                                
-        }
+        //if (Input.GetKeyDown(KeyCode.M)) {
+        //    Melt();                                                                
+        //}
 	}
 
     public void Melt() {

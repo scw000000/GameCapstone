@@ -24,7 +24,7 @@ public class CheckPointCheater : MonoBehaviour {
         {
             if (Input.GetKeyDown(_numberKeyCodes[i]))
             {
-                gameObject.GetComponent<GameManager>().ApplyProgress(i - 1);
+                gameObject.GetComponent<GameManager>().ApplyProgress(i - 1, false);
                 break;
             }   
         }

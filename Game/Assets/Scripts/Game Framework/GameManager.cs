@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    public void ApplyProgress(int progress)
+    public void ApplyProgress(int progress, bool updateComponent)
     {
         SetPlayerInput(false);
         GameObject spawnLoc = null;
@@ -47,7 +47,10 @@ public class GameManager : MonoBehaviour {
         
         _playerInstance.transform.position = spawnLoc.transform.position;
         _playerInstance.transform.rotation = spawnLoc.transform.rotation;
-        _playerInstance.GetComponent<PlayerStatus>()._currentProgress = progress;
+        if (updateComponent)
+        {
+            _playerInstance.GetComponent<PlayerStatus>()._currentProgress = progress;
+        }
 
         var camRootGO = _playerInstance.transform.Find("CameraRoot").gameObject;
         _cameraSetInstance.transform.position = camRootGO.transform.position;
@@ -87,7 +90,7 @@ public class GameManager : MonoBehaviour {
 
         _gameOverScreenInstance.SetActive(false);
 
-        ApplyProgress(progress);
+        ApplyProgress(progress, true);
         // We don't want to attach the camera set directly because it will make the camera not smooth
         // _cameraSetInstance = Instantiate(_cameraSetPrefab, _playerInstance.transform.Find("CameraRoot").position, _playerInstance.transform.Find("CameraRoot").rotation);
         var camRootGO = _playerInstance.transform.Find("CameraRoot").gameObject;
