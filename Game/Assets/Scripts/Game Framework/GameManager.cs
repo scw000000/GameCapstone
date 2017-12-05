@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Continue() {
+        gameObject.GetComponent<LevelLoading>().SetupLoadSlot(0);
         gameObject.GetComponent<LevelLoading>().StartLoadLevel(SceneManager.GetActiveScene().name);
     }
 

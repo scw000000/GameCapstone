@@ -3998,6 +3998,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!4 &177354867 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4943562919793362, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1280975815}
 --- !u!1 &179991083
 GameObject:
   m_ObjectHideFlags: 0
@@ -7835,8 +7840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 392319175}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &392319178
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8659,8 +8664,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 421221126}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &421221129
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11041,8 +11046,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 524622246}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &524622249
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14315,8 +14320,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 665519808}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!135 &665519816
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16128,6 +16133,34 @@ Transform:
   m_PrefabParentObject: {fileID: 4095283547866260, guid: 64ab7ce26a217b042b8ce4eda58bc3f9,
     type: 2}
   m_PrefabInternal: {fileID: 1777175708}
+--- !u!1 &747420764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 747420765}
+  m_Layer: 8
+  m_Name: HoldRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &747420765
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 747420764}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.41, z: 2.2999995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 177354867}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &748693054
 GameObject:
   m_ObjectHideFlags: 0
@@ -22623,8 +22656,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 1043704513}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!54 &1043704515
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29217,8 +29250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 1256798672}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &1256798675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29350,8 +29383,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 1259527297}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &1259527300
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29742,12 +29775,12 @@ Prefab:
     - target: {fileID: 224877423044163262, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224877423044163262, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114879425747514412, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
         type: 2}
@@ -29877,8 +29910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 1282669127}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &1282669130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33929,8 +33962,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 1454266662}
-  tempParent: {fileID: 0}
-  guide: {fileID: 0}
+  _tempParent: {fileID: 0}
+  _guide: {fileID: 0}
 --- !u!65 &1454266664
 BoxCollider:
   m_ObjectHideFlags: 0
