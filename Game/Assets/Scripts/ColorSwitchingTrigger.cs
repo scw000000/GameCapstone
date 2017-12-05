@@ -11,8 +11,12 @@ public class ColorSwitchingTrigger : MonoBehaviour {
     public GameObject _blueRing;
     public GameObject _lockedBox;
     public GameObject _unlockedBox;
-	// Use this for initialization
-	void Start () {
+
+    public GameObject[] _redEventObjects;
+    public GameObject[] _greenEventObjects;
+    public GameObject[] _BlueEventObjects;
+    // Use this for initialization
+    void Start () {
         _r = false;
         _g = false;
         _b = false;
@@ -20,22 +24,19 @@ public class ColorSwitchingTrigger : MonoBehaviour {
 	}
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.name.Equals("Ball_Red"))
+        if (other.transform.name.Equals("Ball_Red") && !_r)
         {
             _r = true;
-            Debug.Log("Red Ball");
             RedEvent();
             
         }
-        else if (other.transform.name.Equals("Ball_Green") && _r)
+        else if (other.transform.name.Equals("Ball_Green") && _r && !_b)
         {
-            Debug.Log("Greed Ball");
             GreenEvent();
             _g = true;
         }
-        else if (other.transform.name.Equals("Ball_Blue") && _r && _g)
+        else if (other.transform.name.Equals("Ball_Blue") && _r && _g && !_b)
         {
-            Debug.Log("Greed Ball");
             BlueEvent();
         }
     }
@@ -46,6 +47,13 @@ public class ColorSwitchingTrigger : MonoBehaviour {
         Vector3 temp = _redRing.transform.position;
         GameObject.Destroy(_redRing);
         _greenRing.transform.position = temp;
+        foreach (var go in _redEventObjects)
+        {
+            if (go != null)
+            {
+                go.SetActive(true);
+            }
+        }
 
     }
     private void GreenEvent()
@@ -53,12 +61,27 @@ public class ColorSwitchingTrigger : MonoBehaviour {
         Vector3 temp = _greenRing.transform.position;
         GameObject.Destroy(_greenRing);
         _blueRing.transform.position = temp;
+        foreach (var go in _greenEventObjects)
+        {
+            if (go != null)
+            {
+                go.SetActive(true);
+            }
+        }
     }
     private void BlueEvent()
     {
         Vector3 temp = _lockedBox.transform.position;
         GameObject.Destroy(_lockedBox);
         _unlockedBox.transform.position = temp;
+
+        foreach (var go in _BlueEventObjects)
+        {
+            if (go != null)
+            {
+                go.SetActive(true);
+            }
+        }
     }
     // Update is called once per frame
     void Update () {

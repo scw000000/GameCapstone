@@ -10,9 +10,9 @@ public class ElevatingObject : MonoBehaviour {
     private float _direction;
     private float _moveSpeed;
     public GameObject _myObject;
-
-	// Use this for initialization
-	void Start () {
+    public GameObject[] _eventObjects;
+    // Use this for initialization
+    void Start () {
         //_goalHeight = -0.5f;
         _ifElevating = false;
         _direction = 1.0f;
@@ -25,6 +25,13 @@ public class ElevatingObject : MonoBehaviour {
         if (other.transform.name.Equals("Ball"))
         {
             _ifElevating = true;
+            foreach (var eventGO in _eventObjects)
+            {
+                if (eventGO != null)
+                {
+                    eventGO.SetActive(true);
+                }
+            }
         }
     }
     // Update is called once per frame

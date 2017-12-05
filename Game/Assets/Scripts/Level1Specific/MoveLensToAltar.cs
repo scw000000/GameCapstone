@@ -21,9 +21,9 @@ public class MoveLensToAltar : MonoBehaviour {
         _player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(_player.GetComponent<WorldSwitch>().SetupLensMaterial(_lensCopy) );
         _leftEyeIcon = GameObject.Find("LeftEyeIcon");
-        _leftEyeIcon.SetActive(false);
+        _leftEyeIcon.GetComponent<UnityEngine.UI.Image>().enabled = false; //.SetActive(false);
         _rightEyeIcon = GameObject.Find("RightEyeIcon");
-        _rightEyeIcon.SetActive(false);
+        _rightEyeIcon.GetComponent<UnityEngine.UI.Image>().enabled = false; //.SetActive(false);
         Debug.Log("Disabled");
     }
 	
@@ -88,8 +88,8 @@ public class MoveLensToAltar : MonoBehaviour {
         _lens.GetComponent<OutlineControl>().SetEnableOutline(true);
         _lensCopy.SetActive(false);
 
-        _leftEyeIcon.SetActive(true);
-        _rightEyeIcon.SetActive(true);
+        _leftEyeIcon.GetComponent<UnityEngine.UI.Image>().enabled = true;// .SetActive(true);
+        _rightEyeIcon.GetComponent<UnityEngine.UI.Image>().enabled = true;// .SetActive(true);
         // gameObject.transform.Find("MagicRing").gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
