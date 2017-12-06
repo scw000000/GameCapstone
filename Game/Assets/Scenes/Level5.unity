@@ -30058,6 +30058,11 @@ Prefab:
       propertyPath: _spawnLocations.Array.data[0]
       value: 
       objectReference: {fileID: 1431368514}
+    - target: {fileID: 114879425747514412, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd,
+        type: 2}
+      propertyPath: _nextLevelName
+      value: EndGameCredit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2ba90e5d2798ebe4cbf4f7c840a345dd, type: 2}
   m_IsPrefabParent: 0
