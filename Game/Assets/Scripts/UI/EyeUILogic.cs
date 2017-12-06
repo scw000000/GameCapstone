@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EyeUILogic : MonoBehaviour {
     public GameObject _listeningGO;
+    public GameObject _listeningCutsceneGO;
     public Color _inactiveColor;
     public float _checkFrequency = 0.1f;
     public float _inactiveAnimPeriod = 0.8f;
@@ -13,6 +14,7 @@ public class EyeUILogic : MonoBehaviour {
 
 
     private AudioListener _listeningAudioListener;
+    private AudioListener _listeningCutsceneListener;
     private Color _origColor;
     private float _currAlpha;
     private AnimationCurve _currAnimCurve;
@@ -24,6 +26,7 @@ public class EyeUILogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _listeningAudioListener = _listeningGO.GetComponent<AudioListener>();
+        _listeningCutsceneListener = _listeningCutsceneGO.GetComponent<AudioListener>();
         _origColor = gameObject.GetComponent<UnityEngine.UI.Image>().color;
         StartCoroutine("UpdateCurve");
     }
@@ -58,11 +61,13 @@ public class EyeUILogic : MonoBehaviour {
     {
         while (true)
         {
-            if (_listeningAudioListener.enabled != _previousActive)
+            bool currentActive = (_listeningGO.activeInHierarchy && _listeningAudioListener.enabled ) 
+                || ( _listeningCutsceneGO.activeInHierarchy && _listeningCutsceneListener.enabled );
+            if (currentActive != _previousActive)
             {
                 _currAlpha = 0f;
                 // from inactive to active
-                if (_listeningAudioListener.enabled)
+                if (currentActive)
                 {
                     _fromColor = _inactiveColor;
                     _toColor = _origColor;
@@ -77,7 +82,7 @@ public class EyeUILogic : MonoBehaviour {
                     _currAnimCurve = _inactiveAnimCurve;
                 }
             }
-            _previousActive = _listeningAudioListener.enabled;
+            _previousActive = currentActive;
             yield return new WaitForSeconds(_checkFrequency);
         }
     }

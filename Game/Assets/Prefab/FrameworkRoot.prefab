@@ -8955,6 +8955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _listeningGO: {fileID: 1504712985844136}
+  _listeningCutsceneGO: {fileID: 1938426500127900}
   _inactiveColor: {r: 1, g: 1, b: 1, a: 0.191}
   _checkFrequency: 0.1
   _inactiveAnimPeriod: 1.5
@@ -9287,6 +9288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _listeningGO: {fileID: 1544989733273128}
+  _listeningCutsceneGO: {fileID: 1044363615597772}
   _inactiveColor: {r: 1, g: 1, b: 1, a: 0.19215687}
   _checkFrequency: 0.1
   _inactiveAnimPeriod: 1.5
@@ -12941,10 +12943,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _hudInstance: {fileID: 1784279927919636}
   _eventObject: {fileID: 0}
   _gameOverScreenInstance: {fileID: 1445290302569480}
-  _nextLevelName: Level3
+  _nextLevelName: Level2
   _endGameCreditSceneName: Assets/Scenes/EndGameCredit.unity
 --- !u!114 &114887309473232972
 MonoBehaviour:
